@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+  <Transactions>
+    <Transaction>2025.02.19 12:30:54.412,=C:\Users\alexb\OneDrive\Документы\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2025.02.19 12:31:14.473,D:\programs\gitHub_repository\Laba2OAIP\Unit1.pas=C:\Users\alexb\OneDrive\Документы\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2025.02.19 12:31:14.473,D:\programs\gitHub_repository\Laba2OAIP\Unit1.dfm=C:\Users\alexb\OneDrive\Документы\Embarcadero\Studio\Projects\Unit1.dfm</Transaction>
+    <Transaction>2025.02.19 12:50:11.763,D:\programs\gitHub_repository\Laba2OAIP\Project1.dproj=C:\Users\alexb\OneDrive\Документы\Embarcadero\Studio\Projects\Project1.dproj</Transaction>
+  </Transactions>
+</BorlandProject>
