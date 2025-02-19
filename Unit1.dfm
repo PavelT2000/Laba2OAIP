@@ -11,12 +11,14 @@ object Form1: TForm1
   Font.Name = 'Segoe UI'
   Font.Style = []
   TextHeight = 15
-  object Button1: TButton
-    Left = 408
-    Top = 208
-    Width = 75
-    Height = 25
-    Caption = 'Button1'
+  object MediaPlayer1: TMediaPlayer
+    Left = 8
+    Top = 8
+    Width = 253
+    Height = 30
+    DoubleBuffered = True
+    FileName = 'D:\programs\gitHub_repository\Laba2OAIP\calmMind.mp3'
+    ParentDoubleBuffered = False
     TabOrder = 0
   end
 end
