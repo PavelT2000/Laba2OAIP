@@ -10,10 +10,11 @@ object Form1: TForm1
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  OnPaint = FormPaint
   TextHeight = 15
   object MediaPlayer1: TMediaPlayer
-    Left = 8
-    Top = 8
+    Left = 264
+    Top = 168
     Width = 253
     Height = 30
     DoubleBuffered = True
