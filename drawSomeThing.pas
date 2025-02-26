@@ -11,9 +11,8 @@ type
   TAllLegPos = (RightLegPos1, LeftLegPos1);
 
 procedure DrawPerson(Canvas: TCanvas; rightHand, leftHand: TAllHandPos;
-rightLeg, leftLeg: TAllLegPos; handBody: TPoint);
-procedure DrawHand(Canvas: TCanvas; pos: TAllHandPos; startPoint: TPoint); overload;
-procedure DrawHand(Canvas: TCanvas; start, elbow, hand: TPoint); overload;
+rightLeg, leftLeg: TAllLegPos; handBody: TPoint; size: single);
+procedure DrawHand(Canvas: TCanvas; pos: TAllHandPos; startPoint: TPoint; size: single); overload;
 
 implementation
 
@@ -32,14 +31,14 @@ const
   );
 
   allLegPos: array[TAllLegPos] of T2Points = (
-  (firstPoint: (X: 40; Y: 40); secondPoint: (X: 40; Y: 80)),      //each line new hand pos
-  (firstPoint: (X: -40; Y: 40); secondPoint: (X: -40; Y: 80))
+  (firstPoint: (X: 40; Y: 50); secondPoint: (X: 40; Y: 100)),      //each line new hand pos
+  (firstPoint: (X: -40; Y: 50); secondPoint: (X: -40; Y: 100))
   );
 
   basicPenWidth: integer = 17;
   basicColor: TColor = clMaroon;
 
-procedure DrawHand(Canvas: TCanvas; start, elbow, hand: TPoint); overload;
+{procedure DrawHand(Canvas: TCanvas; start, elbow, hand: TPoint); overload;
 begin
   Canvas.Pen.Color:= basicColor;
   Canvas.Brush.Color:= clRed;
@@ -48,45 +47,45 @@ begin
 
   Canvas.Ellipse((start.X + elbow.X), (elbow.Y + start.Y),
   (hand.X  + start.X), (hand.Y  + start.Y));
-end;
+end;}
 
-procedure DrawHand(Canvas: TCanvas; pos: TAllHandPos; startPoint: TPoint); overload;
+procedure DrawHand(Canvas: TCanvas; pos: TAllHandPos; startPoint: TPoint; size: single); overload;
 var x, y: integer;
 begin
   Canvas.Pen.Color:= basicColor;
   Canvas.Brush.Color:= basicColor;
-  Canvas.Pen.Width := basicPenWidth;
+  Canvas.Pen.Width := Round(basicPenWidth / size);
   Canvas.MoveTo(startPoint.X, startPoint.Y);
 
-  x:= startPoint.X + AllHandPos[pos].firstPoint.X;
-  y:= startPoint.Y + AllHandPos[pos].firstPoint.Y;
+  x:= startPoint.X + Round(AllHandPos[pos].firstPoint.X /size);
+  y:= startPoint.Y + Round(AllHandPos[pos].firstPoint.Y /size);
   Canvas.LineTo(x, y);
 
-  x:= startPoint.X + AllHandPos[pos].secondPoint.X;
-  y:= startPoint.Y + AllHandPos[pos].secondPoint.Y;
+  x:= startPoint.X + Round(AllHandPos[pos].secondPoint.X /size);
+  y:= startPoint.Y + Round(AllHandPos[pos].secondPoint.Y /size);
   Canvas.LineTo(x, y);
 end;
 
-procedure DrawLeg(Canvas: TCanvas; pos: TAllLegPos; startPoint: TPoint); overload;
+procedure DrawLeg(Canvas: TCanvas; pos: TAllLegPos; startPoint: TPoint; size: single); overload;
 var x, y: integer;
 begin
   Canvas.Pen.Color:= basicColor;
-  Canvas.Pen.Width := basicPenWidth;
+  Canvas.Pen.Width := Round(basicPenWidth / size);
   Canvas.MoveTo(startPoint.X, startPoint.Y);
 
-  x:= startPoint.X + AllLegPos[pos].firstPoint.X;
-  y:= startPoint.Y + AllLegPos[pos].firstPoint.Y;
+  x:= startPoint.X + Round(AllLegPos[pos].firstPoint.X /size);
+  y:= startPoint.Y + Round(AllLegPos[pos].firstPoint.Y /size);
   Canvas.LineTo(x, y);
 
-  x:= startPoint.X + AllLegPos[pos].secondPoint.X;
-  y:= startPoint.Y + AllLegPos[pos].secondPoint.Y;
+  x:= startPoint.X + Round(AllLegPos[pos].secondPoint.X /size);
+  y:= startPoint.Y + Round(AllLegPos[pos].secondPoint.Y /size);
   Canvas.LineTo(x, y);
 end;
 
 //from body point create head point and second body point.
 //1 body poin for hands, second for Legs, in function first (hand) point
 procedure DrawPerson(Canvas: TCanvas; rightHand, leftHand: TAllHandPos;
-rightLeg, leftLeg: TAllLegPos; handBody: TPoint);
+rightLeg, leftLeg: TAllLegPos; handBody: TPoint; size: single);
 var legBody, head: TPoint;
     headRadius, bodyHeight, x, y: integer;
 {
@@ -97,28 +96,30 @@ var legBody, head: TPoint;
 }
 begin
   //head
-  headRadius:= 27;
-  bodyHeight:= 90;
+  headRadius:= Round(27 / size);
+  bodyHeight:= Round(90/ size);
+  //handBody.X:= Round(handBody.X / size);
+  //handBody.Y:= Round(handBody.Y / size);
 
   Canvas.Pen.Color:= basicColor;
   Canvas.Brush.Color:= basicColor;
   Canvas.Ellipse((handBody.X + headRadius), (handBody.Y),
   (handBody.X - headRadius), (handBody.Y - 2*headRadius));
 
-  DrawHand(Canvas, rightHand, handBody);
-  DrawHand(Canvas, leftHand, handBody);
+  DrawHand(Canvas, rightHand, handBody, size);
+  DrawHand(Canvas, leftHand, handBody, size);
 
   Canvas.Pen.Color:= basicColor;
   Canvas.Brush.Color:= basicColor;
-  Canvas.Pen.Width := basicPenWidth+5;
+  Canvas.Pen.Width := Round((basicPenWidth+5) / size);
   Canvas.MoveTo(handBody.X, handBody.Y);
   legBody.X:= handBody.X;
   legBody.Y:= handBody.Y + bodyHeight;
   Canvas.LineTo(legBody.X, legBody.Y);
 
 
-  DrawLeg(Canvas, rightLeg, legBody);
-  DrawLeg(Canvas, LeftLeg, legBody);
+  DrawLeg(Canvas, rightLeg, legBody, size);
+  DrawLeg(Canvas, LeftLeg, legBody, size);
 end;
 
 end.

@@ -56,7 +56,8 @@ var
   centerPoint: TPoint;
 begin
   centerPoint:= Point(Round(Form1.ClientWidth/2), Round(Form1.ClientHeight/2));
-  drawSomeThing.DrawPerson(Canvas, RightHandPos1, LeftHandPos1, RightLegPos1, LeftLegPos1, centerPoint);
+  drawSomeThing.DrawPerson(Canvas, RightHandPos1, LeftHandPos1, RightLegPos1,
+  LeftLegPos1, centerPoint, 1);
   {Paint1(Canvas, 10, 10, 20, 500);
   Paint1(Canvas, 400, 400, 200, 100);
   Canvas.Ellipse(100-50, 100-50, 100+50, 100+50);     // 150
