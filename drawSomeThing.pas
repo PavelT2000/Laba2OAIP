@@ -2,7 +2,7 @@
 
 interface
 
-uses Winapi.Windows, Vcl.Graphics, System.Types;
+uses Winapi.Windows, Vcl.Graphics, System.Types, PointConverter;
 
 type
   //R - right hand, L - left hand
@@ -51,6 +51,7 @@ end;}
 
 procedure DrawHand(Canvas: TCanvas; pos: TAllHandPos; startPoint: TPoint; size: single); overload;
 var x, y: integer;
+p1, p2, p3, p4: TPoint;
 begin
   Canvas.Pen.Color:= basicColor;
   Canvas.Brush.Color:= basicColor;
@@ -59,6 +60,7 @@ begin
 
   x:= startPoint.X + Round(AllHandPos[pos].firstPoint.X /size);
   y:= startPoint.Y + Round(AllHandPos[pos].firstPoint.Y /size);
+
   Canvas.LineTo(x, y);
 
   x:= startPoint.X + Round(AllHandPos[pos].secondPoint.X /size);
@@ -69,6 +71,7 @@ end;
 procedure DrawLeg(Canvas: TCanvas; pos: TAllLegPos; startPoint: TPoint; size: single); overload;
 var x, y: integer;
 begin
+
   Canvas.Pen.Color:= basicColor;
   Canvas.Pen.Width := Round(basicPenWidth / size);
   Canvas.MoveTo(startPoint.X, startPoint.Y);

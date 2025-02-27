@@ -2,8 +2,8 @@ object Form1: TForm1
   Left = 0
   Top = 0
   Caption = 'Form1'
-  ClientHeight = 566
-  ClientWidth = 935
+  ClientHeight = 577
+  ClientWidth = 1098
   Color = clBtnFace
   DoubleBuffered = True
   Font.Charset = DEFAULT_CHARSET
@@ -17,9 +17,10 @@ object Form1: TForm1
   object PaintBox1: TPaintBox
     Left = 0
     Top = 0
-    Width = 935
-    Height = 566
+    Width = 1098
+    Height = 577
     Align = alClient
+    OnMouseMove = PaintBox1MouseMove
     ExplicitLeft = -8
     ExplicitWidth = 937
     ExplicitHeight = 585
