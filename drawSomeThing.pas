@@ -14,6 +14,7 @@ procedure SetCanvas(canvas: TCanvas);
 procedure DrawPerson(rightHand, leftHand: TAllHandPos;
 rightLeg, leftLeg: TAllLegPos; handBody: TPoint; size: single);
 procedure DrawHand(Canvas: TCanvas; pos: TAllHandPos; startPoint: TPoint; size: single); overload;
+procedure DrawSnowflake(SFPos: TPoint; Length: Integer; Size, Ratio, OffsetAngle: single);
 
 implementation
 
@@ -38,6 +39,7 @@ const
 
   basicPenWidth: integer = 17;
   basicColor: TColor = clMaroon;
+  SFColor: TColor = clBlack;
   basicRightHandPos: TAllHandPos = RightHandPos1;
 
 var
@@ -138,6 +140,59 @@ begin
 
   DrawLeg(myCanvas, rightLeg, legBody, size);
   DrawLeg(myCanvas, LeftLeg, legBody, size);
+end;
+
+
+procedure DrawSnowflake(SFPos: TPoint; Length: Integer; Size, Ratio, OffsetAngle: single);
+// SFPos - координаты снежинки
+// length - длина любой из 6 полосок в пикселях
+// Size - ширина линий
+// Ratio - коэффициент должен быть от 0 до 1, от него зависит
+// на сколько далеко будут маленькие ответвления
+// OffsetAngle - задаешь угол в градусах и снежинка поворачивается
+var
+  i: Integer;
+  Angle: array[0..5] of Double;
+  EndPoints, BranchPoints: array[0..5] of TPoint;
+  Offset: Integer;
+begin
+  myCanvas.Pen.Color := SFColor;
+  myCanvas.Brush.Color := SFColor;
+  myCanvas.Pen.Width := Round((myCanvas.ClipRect.Width + myCanvas.ClipRect.Height) / 2 * 0.017);
+  myCanvas.Pen.Width := Round(myCanvas.Pen.Width / Size);
+
+  Offset := Round(Length * Ratio); // Длина и отдаленность маленьких веточек
+
+  // Нужные для лучей точки
+  for i := 0 to 5 do
+  begin
+    Angle[i] := i * 60 * Pi / 180 + OffsetAngle * Pi / 180;
+    EndPoints[i].X := SFPos.X + Round(cos(Angle[i]) * Length);
+    EndPoints[i].Y := SFPos.Y + Round(sin(Angle[i]) * Length);
+
+    BranchPoints[i].X := SFPos.X + Round(cos(Angle[i]) * (Length - Offset));
+    BranchPoints[i].Y := SFPos.Y + Round(sin(Angle[i]) * (Length - Offset));
+  end;
+
+  for i := 0 to 5 do
+  begin
+    // 6 Лучей
+    myCanvas.MoveTo(SFPos.X, SFPos.Y);
+    myCanvas.LineTo(EndPoints[i].X, EndPoints[i].Y);
+
+    // Маленькие ответвления
+    myCanvas.MoveTo(BranchPoints[i].X, BranchPoints[i].Y);
+    myCanvas.LineTo(
+      BranchPoints[i].X + Round(cos(Angle[i] + Pi / 6) * Offset),
+      BranchPoints[i].Y + Round(sin(Angle[i] + Pi / 6) * Offset)
+    );
+
+    myCanvas.MoveTo(BranchPoints[i].X, BranchPoints[i].Y);
+    myCanvas.LineTo(
+      BranchPoints[i].X + Round(cos(Angle[i] - Pi / 6) * Offset),
+      BranchPoints[i].Y + Round(sin(Angle[i] - Pi / 6) * Offset)
+    );
+  end;
 end;
 
 end.
