@@ -129,6 +129,7 @@
         <DCCReference Include="drawSomeThing.pas"/>
         <DCCReference Include="Location.pas"/>
         <DCCReference Include="PointConverter.pas"/>
+        <DCCReference Include="Music.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

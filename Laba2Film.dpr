@@ -5,7 +5,8 @@ uses
   Main in 'Main.pas' {Form1},
   drawSomeThing in 'drawSomeThing.pas',
   Location in 'Location.pas',
-  PointConverter in 'PointConverter.pas';
+  PointConverter in 'PointConverter.pas',
+  Music in 'Music.pas';
 
 {$R *.res}
 

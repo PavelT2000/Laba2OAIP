@@ -1,4 +1,4 @@
-unit Main;
+﻿unit Main;
 
 
 {$R *.dfm}
@@ -12,7 +12,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.MPlayer, Vcl.ExtCtrls,
 
   drawSomeThing, Music,
-  Location;
+  Location, PointConverter;
 
 type
   TForm1 = class(TForm)
@@ -38,7 +38,7 @@ var
 
 
 implementation
-var Location: TPointF;
+var PLocation: TPointF;
 var StartDrag, StopDrag: TPointF;
 var IsDragging: Boolean;
 
@@ -53,12 +53,10 @@ end;
 
 procedure TForm1.FormCreate(Sender: TObject);
 begin
-  Location := point(0, 0);
+
+  PLocation := point(0, 0);
   StopDrag := point(0, 0);
   IsDragging := false;
-  // drawSomeThing.DrawHand(Canvas, RightHandPos1);
-  // drawSomeThing.DrawPerson();
-  // Canvas.Draw(0, 0);
 end;
 
 procedure TForm1.FormPaint(Sender: TObject);
@@ -67,11 +65,14 @@ var
   centerPoint: TPoint;
   FormRect: TRect;
 begin
-  drawSomeThing.SetCanvas(Canvas);
-
-  //Music.TurnOn(CalmMind);
   FormRect := Rect(0, 0, ClientWidth, ClientHeight);
-  DrawLocation(Canvas, Location, FormRect);
+  PointConverter.SetFieldRect(FormRect);
+
+  drawSomeThing.SetCanvas(Canvas);
+  Location.SetCanvas(Canvas);
+  //Music.TurnOn(CalmMind);
+
+  DrawLocation(PLocation);
   centerPoint := point(Round(ClientWidth / 2),
     Round(Form1.ClientHeight / 2));
   drawSomeThing.DrawPerson(RightHandPos1, LeftHandPos1, RightLegPos1,
@@ -98,7 +99,7 @@ begin
   if IsDragging then
   begin
     // Берем координаты локации и прибавляем к ней координаты перетащенного курсора
-    Location := pointF(StopDrag.X + X/ ClientWidth - StartDrag.X, StopDrag.Y + Y/ ClientHeight - StartDrag.Y);
+    PLocation := pointF(StopDrag.X + X/ ClientWidth - StartDrag.X, StopDrag.Y + Y/ ClientHeight - StartDrag.Y);
     PaintBox1.Invalidate;
   end;
 end;
