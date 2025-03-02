@@ -1,18 +1,18 @@
-unit Location;
+﻿unit Location;
 
 interface
 
 uses Winapi.Windows, Vcl.Graphics, System.Types, PointConverter;
-procedure DrawLocation(Canvas: TCanvas;pos:TPointF);
+procedure DrawLocation(Canvas: TCanvas; pos: TPointF; FormRect: TRect);
 
 implementation
 
-procedure DrawLocation(Canvas: TCanvas;pos:TPointF);
+procedure DrawLocation(Canvas: TCanvas; pos: TPointF; FormRect: TRect);
 var
   p1, p2, p3, p4: TPoint;
 begin
-  TPointConverter.SetFieldRect(Canvas.ClipRect);
-  Canvas.Pen.Width := trunc((Canvas.ClipRect.Width + Canvas.ClipRect.Height) /
+  TPointConverter.SetFieldRect(FormRect);
+  Canvas.Pen.Width := trunc((FormRect.Width + FormRect.Height) /
     2 * 0.01);
   Canvas.Pen.Color:=clBlack;
 
