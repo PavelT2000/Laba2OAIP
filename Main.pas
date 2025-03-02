@@ -78,6 +78,8 @@ begin
   drawSomeThing.DrawPerson(RightHandPos1, LeftHandPos1, RightLegPos1,
     LeftLegPos1, centerPoint, P2, 1.2);
 
+  drawSomeThing.DrawSnowflake(point(300, 200), 50, 7, 0.4, 0);
+
   { Paint1(Canvas, 10, 10, 20, 500);
     Paint1(Canvas, 400, 400, 200, 100);
     Canvas.Ellipse(100-50, 100-50, 100+50, 100+50);     // 150
