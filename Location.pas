@@ -20,7 +20,7 @@ procedure DrawLocation(pos: TPointF);
 var
   p1, p2, p3, p4: TPoint;
 begin
-  myCanvas.Pen.Width:= PointConverter.GetBasicPenWidth();
+  myCanvas.Pen.Width:= PointConverter.GetPixels();
   myCanvas.Pen.Color:=clBlack;
 
   p1 := Convert(PointF(0+pos.x, 0.55+pos.y));
@@ -35,17 +35,6 @@ begin
   myCanvas.LineTo(p1.X, p1.Y);
   p1 := Convert(PointF(2+pos.x, 2+pos.y));
   myCanvas.LineTo(p1.X, p1.Y);
-
-
-
-
-
-
-
-
-
-
-
 
 end;
 

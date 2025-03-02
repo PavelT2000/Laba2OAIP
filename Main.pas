@@ -62,7 +62,7 @@ end;
 procedure TForm1.FormPaint(Sender: TObject);
 var
   grad: Integer;
-  centerPoint: TPoint;
+  centerPoint, P2: TPointF;
   FormRect: TRect;
 begin
   FormRect := Rect(0, 0, ClientWidth, ClientHeight);
@@ -73,10 +73,10 @@ begin
   //Music.TurnOn(CalmMind);
 
   DrawLocation(PLocation);
-  centerPoint := point(Round(ClientWidth / 2),
-    Round(Form1.ClientHeight / 2));
+  centerPoint := pointf(0.5, 0.5);
+  P2:= pointf(0.5, 0.65);
   drawSomeThing.DrawPerson(RightHandPos1, LeftHandPos1, RightLegPos1,
-    LeftLegPos1, centerPoint, 1.7);
+    LeftLegPos1, centerPoint, P2, 1.2);
 
   { Paint1(Canvas, 10, 10, 20, 500);
     Paint1(Canvas, 400, 400, 200, 100);

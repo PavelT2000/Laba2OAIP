@@ -6,8 +6,9 @@ uses
   System.Types;
 
 procedure SetFieldRect(const AFieldRect: TRect);
+function GetPixels(): integer;
 function Convert(const APoint: TPointF): TPoint;
-function GetBasicPenWidth(): integer;
+function ConvertRect(const ARect: TRectF): TRect;
 
 implementation
 
@@ -20,16 +21,23 @@ begin
   FFieldRect := AFieldRect;
 end;
 
-function GetBasicPenWidth(): integer;
+function GetPixels(): integer;
 begin
-  result:= Round((FFieldRect.Width + FFieldRect.Height) /
-    2 * 0.01);
+  result:= Round((FFieldRect.Width + FFieldRect.Height) / 2 * 0.01);
 end;
 
 function Convert(const APoint: TPointF): TPoint;
 begin
   Result.X := Round(APoint.X * (FFieldRect.Width));
   Result.Y := Round(APoint.Y * (FFieldRect.Height));
+end;
+
+function ConvertRect(const ARect: TRectF): TRect;
+begin
+  Result.Top:= Round(ARect.Top * FFieldRect.Height);
+  Result.Bottom:= Round(ARect.Bottom * FFieldRect.Height);
+  Result.Left:= Round(ARect.Left * FFieldRect.Width);
+  Result.Right:= Round(ARect.Right * FFieldRect.Width);
 end;
 
 end.
