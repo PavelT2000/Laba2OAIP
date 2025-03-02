@@ -19,7 +19,9 @@ object Form1: TForm1
     Width = 1098
     Height = 577
     Align = alClient
+    OnMouseDown = PaintBox1MouseDown
     OnMouseMove = PaintBox1MouseMove
+    OnMouseUp = PaintBox1MouseUp
     ExplicitLeft = -8
     ExplicitWidth = 937
     ExplicitHeight = 585
