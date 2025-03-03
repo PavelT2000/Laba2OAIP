@@ -187,7 +187,7 @@ begin
   begin
     // Берем координаты локации и прибавляем к ней координаты перетащенного курсора
     PLocation := pointF(StopDrag.X + X/ ClientWidth - StartDrag.X, StopDrag.Y + Y/ ClientHeight - StartDrag.Y);
-    PaintBox1.Invalidate;
+    Form1.Invalidate;
   end;
 end;
 
