@@ -92,7 +92,7 @@ begin
   drawSomeThing.SetCanvas(Form1.Canvas);
   Location.SetCanvas(Form1.Canvas);
 
-  DrawLocation(PLocation);
+  DrawLocation2(PLocation);
   centerPoint := pointf(0.5, 0.5);
   P2:= pointf(0.65, 0.65);
   drawSomeThing.DrawPerson(RightHandPos1, LeftHandPos1, RightLegPos1,
