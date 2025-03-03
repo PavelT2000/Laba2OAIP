@@ -66,7 +66,7 @@ begin
 
   DrawLocation(PLocation);
   centerPoint := pointf(0.5, 0.5);
-  P2:= pointf(0.7, 0.65);
+  P2:= pointf(0.65, 0.65);
   drawSomeThing.DrawPerson(RightHandPos1, LeftHandPos1, RightLegPos1,
     LeftLegPos1, centerPoint, P2, 1.6);
 

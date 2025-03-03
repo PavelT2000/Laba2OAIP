@@ -2,7 +2,7 @@
 
 interface
 
-uses Winapi.Windows, Vcl.Graphics, System.Types;
+uses Winapi.Windows, Vcl.Graphics, System.Types, Vcl.Dialogs, System.SysUtils, System.Math;
 
 type
   //R - right hand, L - left hand
@@ -73,6 +73,12 @@ begin
   (hand.X  + start.X), (hand.Y  + start.Y));
 end;}
 
+function CalculateAngleVectors(vector1, vector2: TPointF): Double;
+begin
+  result:= ArcCos(vector1.DotProduct(vector2)/(vector1.length * vector2.length))
+end;
+
+
 procedure DrawHand(pos: TAllHandPos; startPoint: TPointF; size: single); overload;
 var
     intP1: TPoint;
@@ -127,6 +133,7 @@ var
     IntP1: TPoint;
     Rect: TRect;
     headRadius: integer;
+    angle: Double;
 {
    o
  \/|\/
@@ -141,10 +148,16 @@ begin
   myCanvas.Brush.Color:= basicColor;
 
   IntP1:= PointConverter.Convert(handBody);
+
+  angle := CalculateAngleVectors(legbody-handbody, pointf(0, -1)) + Pi/2;
+  // showmessage(FloatToStr(angle));
+  IntP1.X := IntP1.X + Round(cos(angle) * headRadius);
+  IntP1.Y := IntP1.Y + Round(sin(angle) * headRadius);
+
   Rect.Left:= IntP1.X - headRadius;
-  Rect.Top:= IntP1.Y - 2*headRadius;
+  Rect.Top:= IntP1.Y - headRadius;
   Rect.Right:= IntP1.X + headRadius;
-  Rect.Bottom:= IntP1.Y;
+  Rect.Bottom:= IntP1.Y + headRadius;
   myCanvas.Ellipse(Rect);
 
   DrawHand(rightHand, handBody, size);
