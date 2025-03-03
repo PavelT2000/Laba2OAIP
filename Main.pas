@@ -27,6 +27,7 @@ type
       Shift: TShiftState; X, Y: Integer);
     procedure PaintBox1MouseUp(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
+    procedure FPSTimer(Sender: TObject);
   private
     { Private declarations }
   public
@@ -38,31 +39,58 @@ var
 
 
 implementation
+
+const
+  CountSF = 16;
+
+type
+  TSnowflake = record
+    X, Y: Single;
+    Length: Integer;
+    Ratio: Single;
+    Speed: Single;
+  end;
+
 var PLocation: TPointF;
-var StartDrag, StopDrag: TPointF;
-var IsDragging: Boolean;
+  StartDrag, StopDrag: TPointF;
+  IsDragging: Boolean;
+  SF_Y, SF_X, SF_ratio: Single;
+  SF_Length: Integer;
+  Snowflakes: array [1..CountSF] of TSnowflake;
+
 
 procedure TForm1.FormCreate(Sender: TObject);
+var i: Integer;
 begin
 
   PLocation := point(0, 0);
   StopDrag := point(0, 0);
   IsDragging := false;
+
+  // Snowflakes
+  for i := 1 to CountSF do
+  begin
+    Snowflakes[i].X := Random;
+    Snowflakes[i].Y := Random;
+    Snowflakes[i].Length := Random(11) + 10; // 10/20
+    Snowflakes[i].Ratio := Random(41) / 100 + 0.4; // 0.4/0.8
+    Snowflakes[i].Speed := Random(5) / 100 + 0.02; // 0.02/0.06
+  end;
+
   //Music.TurnOn(CalmMind);
 end;
 
-procedure TForm1.FormPaint(Sender: TObject);
+procedure NextPaint();
 var
-  grad: Integer;
   centerPoint, P2: TPointF;
   FormRect: TRect;
+  i: Integer;
 begin
-  FormRect := Rect(0, 0, ClientWidth, ClientHeight);
+  FormRect := Rect(0, 0, Form1.ClientWidth, Form1.ClientHeight);
   PointConverter.SetFieldRect(FormRect);
 
-  drawSomeThing.SetCanvas(Canvas);
-  Location.SetCanvas(Canvas);
-  //Music.TurnOn(CalmMind);
+  drawSomeThing.SetCanvas(Form1.Canvas);
+  Location.SetCanvas(Form1.Canvas);
 
   DrawLocation(PLocation);
   centerPoint := pointf(0.5, 0.5);
@@ -70,7 +98,53 @@ begin
   drawSomeThing.DrawPerson(RightHandPos1, LeftHandPos1, RightLegPos1,
     LeftLegPos1, centerPoint, P2, 1.6);
 
-  drawSomeThing.DrawSnowflake(pointf(0.3, 0.3), 30, 2, 0.5, 0);
+  // SnowFlakes
+  for i := 1 to CountSF do
+    drawSomeThing.DrawSnowflake(
+    PointF(Snowflakes[i].X, Snowflakes[i].Y),
+    Snowflakes[i].Length, 1.5, Snowflakes[i].Ratio, Snowflakes[i].Y*200
+    );
+
+end;
+
+procedure TForm1.FormPaint(Sender: TObject);
+//var
+//  grad: Integer;
+//  centerPoint, P2: TPointF;
+//  FormRect: TRect;
+begin
+  // При перекрывании окна или его сворачивании: нарисует текущий кадр
+  NextPaint();
+end;
+
+procedure TForm1.FPSTimer(Sender: TObject);
+var
+  i: Integer;
+begin
+  // Убирает все (вызывает OnPaint вручную)
+  Form1.Invalidate;
+
+  // Тута играемся с переменными для выставления определенных локаций, поз и т.д.
+
+  // SnowFlakes
+  for i := 1 to CountSF do
+  begin
+    Snowflakes[i].Y := Snowflakes[i].Y + Snowflakes[i].Speed;
+
+    if Snowflakes[i].Y > 1 then
+    begin
+      Snowflakes[i].Y := 0;
+      Snowflakes[i].X := Random;
+      Snowflakes[i].Length := Random(11) + 10; // 10/20
+      Snowflakes[i].Ratio := Random(41) / 100 + 0.4; // 0.4/0.8
+      Snowflakes[i].Speed := Random(5) / 100 + 0.02; // 0.02/0.06
+    end;
+  end;
+
+  //...
+
+  // Рисует следующий кадр
+  NextPaint();
 end;
 
 procedure TForm1.PaintBox1MouseDown(Sender: TObject; Button: TMouseButton;
