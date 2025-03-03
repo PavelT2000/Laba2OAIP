@@ -42,15 +42,6 @@ var PLocation: TPointF;
 var StartDrag, StopDrag: TPointF;
 var IsDragging: Boolean;
 
-procedure Paint1(Canvas: TCanvas; x1, y1, x2, y2: Integer);
-begin
-  Canvas.Pen.Color := clRed;
-  Canvas.Brush.Color := clRed;
-  Canvas.Pen.Width := 5;
-  Canvas.MoveTo(x1, y1);
-  Canvas.LineTo(x2, y2);
-end;
-
 procedure TForm1.FormCreate(Sender: TObject);
 begin
 
@@ -74,17 +65,11 @@ begin
 
   DrawLocation(PLocation);
   centerPoint := pointf(0.5, 0.5);
-  P2:= pointf(0.5, 0.65);
+  P2:= pointf(0.7, 0.65);
   drawSomeThing.DrawPerson(RightHandPos1, LeftHandPos1, RightLegPos1,
-    LeftLegPos1, centerPoint, P2, 1.2);
+    LeftLegPos1, centerPoint, P2, 1.6);
 
-  drawSomeThing.DrawSnowflake(point(300, 200), 50, 7, 0.4, 0);
-
-  { Paint1(Canvas, 10, 10, 20, 500);
-    Paint1(Canvas, 400, 400, 200, 100);
-    Canvas.Ellipse(100-50, 100-50, 100+50, 100+50);     // 150
-    grad := 0;
-    Paint1(Canvas, 100, 100, 200, 500); }
+  drawSomeThing.DrawSnowflake(point(300, 200), 50, 0.2, 0.4, 0);
 end;
 
 procedure TForm1.PaintBox1MouseDown(Sender: TObject; Button: TMouseButton;

@@ -81,18 +81,18 @@ var
 begin
   myCanvas.Pen.Color:= basicColor;
   myCanvas.Brush.Color:= basicColor;
-  myCanvas.Pen.Width:= Round(PointConverter.GetPixels * 1.75 / size);
+  myCanvas.Pen.Width:= Round(PointConverter.GetPixels * 1.75 * size);
 
   intP1:= PointConverter.Convert(StartPoint);
   myCanvas.MoveTo(intP1.X, intP1.Y);
 
-  p1.X:= startPoint.X + AllHandPos[pos].firstPoint.X /size;
-  p1.Y:= startPoint.Y + AllHandPos[pos].firstPoint.Y /size;
+  p1.X:= startPoint.X + AllHandPos[pos].firstPoint.X *size;
+  p1.Y:= startPoint.Y + AllHandPos[pos].firstPoint.Y *size;
   intP1:= PointConverter.Convert(p1);
   myCanvas.LineTo(intP1.X, intP1.Y);
 
-  p1.X:= startPoint.X + (AllHandPos[pos].secondPoint.X /size);
-  p1.Y:= startPoint.Y + AllHandPos[pos].secondPoint.Y /size;
+  p1.X:= startPoint.X + (AllHandPos[pos].secondPoint.X *size);
+  p1.Y:= startPoint.Y + AllHandPos[pos].secondPoint.Y *size;
   intP1:= PointConverter.Convert(p1);
   myCanvas.LineTo(intP1.X, intP1.Y);
 end;
@@ -104,18 +104,18 @@ var
 begin
   myCanvas.Pen.Color:= basicColor;
   myCanvas.Brush.Color:= basicColor;
-  myCanvas.Pen.Width:= Round(PointConverter.GetPixels * 1.75 / size);
+  myCanvas.Pen.Width:= Round(PointConverter.GetPixels * 1.75 * size);
 
   intP1:= PointConverter.Convert(StartPoint);
   myCanvas.MoveTo(intP1.X, intP1.Y);
 
-  p1.X:= startPoint.X + AllLegPos[pos].firstPoint.X /size;
-  p1.Y:= startPoint.Y + AllLegPos[pos].firstPoint.Y /size;
+  p1.X:= startPoint.X + AllLegPos[pos].firstPoint.X *size;
+  p1.Y:= startPoint.Y + AllLegPos[pos].firstPoint.Y *size;
   intP1:= PointConverter.Convert(p1);
   myCanvas.LineTo(intP1.X, intP1.Y);
 
-  p1.X:= startPoint.X + AllLegPos[pos].secondPoint.X /size;
-  p1.Y:= startPoint.Y + AllLegPos[pos].secondPoint.Y /size;
+  p1.X:= startPoint.X + AllLegPos[pos].secondPoint.X *size;
+  p1.Y:= startPoint.Y + AllLegPos[pos].secondPoint.Y *size;
   intP1:= PointConverter.Convert(p1);
   myCanvas.LineTo(intP1.X, intP1.Y);
 end;
@@ -136,7 +136,7 @@ var
 }
 begin
   //head
-  headRadius:= Round(PointConverter.GetPixels*3 / size); //значение в пиксилях
+  headRadius:= Round(PointConverter.GetPixels*3 * size); //значение в пиксилях
 
   myCanvas.Pen.Color:= basicColor;
   myCanvas.Brush.Color:= basicColor;
@@ -151,7 +151,7 @@ begin
   DrawHand(rightHand, handBody, size);
   DrawHand(leftHand, handBody, size);
 
-  myCanvas.Pen.Width := Round(PointConverter.GetPixels* 1.8/ size);
+  myCanvas.Pen.Width := Round(PointConverter.GetPixels* 1.8 *size);
   IntP1:= PointConverter.Convert(handBody);
   myCanvas.MoveTo(IntP1.X, IntP1.Y);
   IntP1:= PointConverter.Convert(legBody);
@@ -168,7 +168,7 @@ var
     headRadius: integer;
 begin
   //head
-  headRadius:= Round(PointConverter.GetPixels*3 / size); //значение в пиксилях
+  headRadius:= Round(PointConverter.GetPixels*3 * size); //значение в пиксилях
 
   myCanvas.Pen.Color:= basicColor;
   myCanvas.Brush.Color:= basicColor;
@@ -183,7 +183,7 @@ begin
   DrawHand(AllMenPos[menPos].RightHand, handBody, size);
   DrawHand(AllMenPos[menPos].LeftHand, handBody, size);
 
-  myCanvas.Pen.Width := Round(PointConverter.GetPixels* 1.8/ size);
+  myCanvas.Pen.Width := Round(PointConverter.GetPixels* 1.8 *size);
   IntP1:= PointConverter.Convert(handBody);
   myCanvas.MoveTo(IntP1.X, IntP1.Y);
   IntP1:= PointConverter.Convert(legBody);
@@ -209,7 +209,7 @@ begin
   myCanvas.Pen.Color := SFColor;
   myCanvas.Brush.Color := SFColor;
   myCanvas.Pen.Width := Round((myCanvas.ClipRect.Width + myCanvas.ClipRect.Height) / 2 * 0.017);
-  myCanvas.Pen.Width := Round(myCanvas.Pen.Width / Size);
+  myCanvas.Pen.Width := Round(myCanvas.Pen.Width * Size);
 
   Offset := Round(Length * Ratio); // Длина и отдаленность маленьких веточек
 
