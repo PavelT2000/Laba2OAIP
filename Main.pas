@@ -87,7 +87,7 @@ procedure NextPaint();
 var
   FormRect: TRect;
   i: Integer;
-  baseIncrease: Single;
+  //baseIncrease: Single;
 begin
   FormRect := Rect(0, 0, Form1.ClientWidth, Form1.ClientHeight);
   PointConverter.SetFieldRect(FormRect);
@@ -95,33 +95,26 @@ begin
   drawSomeThing.SetCanvas(Form1.Canvas);
   Location.SetCanvas(Form1.Canvas);
 
+  // Location
   DrawLocation(PLocation);
 
-  baseIncrease:= 0.013;
+  // Person
   case (cadrNum mod 4) of
     0: begin
       drawSomeThing.DrawPerson(RightHandSki1, LeftHandSki1, RightLegWalk1,
     leftLegSki1, centerPoint, P2, 0.8);
-    centerPoint.X:= centerPoint.X + baseIncrease;
-    P2.X:= P2.X + baseIncrease;
     end;
     1: begin
       drawSomeThing.DrawPerson(RightHandSki2, LeftHandSki2, RightLegWalk2,
     leftLegSki2, centerPoint, P2, 0.8);
-    centerPoint.X:= centerPoint.X + baseIncrease;
-    P2.X:= P2.X + baseIncrease;
     end;
     2: begin
       drawSomeThing.DrawPerson(RightHandSki3, LeftHandSki3, RightLegWalk3,
     leftLegSki3, centerPoint, P2, 0.8);
-    centerPoint.X:= centerPoint.X + baseIncrease;
-    P2.X:= P2.X + baseIncrease;
     end;
     3: begin
       drawSomeThing.DrawPerson(RightHandSki2, LeftHandSki2, RightLegWalk2,
     leftLegSki2, centerPoint, P2, 0.8);
-    centerPoint.X:= centerPoint.X + baseIncrease;
-    P2.X:= P2.X + baseIncrease;
     end;
   end;
 
@@ -145,6 +138,7 @@ end;
 procedure TForm1.FPSTimer(Sender: TObject);
 var
   i: Integer;
+  baseIncrease: Single;
 begin
   // Убирает все (вызывает OnPaint вручную)
   Form1.Invalidate;
@@ -165,6 +159,11 @@ begin
       Snowflakes[i].Speed := Random(5) / 100 + 0.02; // 0.02/0.06
     end;
   end;
+
+  // Person
+  baseIncrease:= 0.013;
+  centerPoint.X:= centerPoint.X + baseIncrease;
+  P2.X:= P2.X + baseIncrease;
 
   //...
 
