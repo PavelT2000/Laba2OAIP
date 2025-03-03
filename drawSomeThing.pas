@@ -15,8 +15,7 @@ procedure SetCanvas(canvas: TCanvas);
 procedure DrawPerson(rightHand, leftHand: TAllHandPos;
 rightLeg, leftLeg: TAllLegPos; handBody, legBody: TPointF; size: single);
 procedure DrawHand(pos: TAllHandPos; startPoint: TPointF; size: single); overload;
-procedure DrawSnowflake(SFPos: TPoint; Length: Integer; Size, Ratio, OffsetAngle: single);
-
+procedure DrawSnowflake(SFPosF: TPointF; Length: Integer; Size, Ratio, OffsetAngle: single);
 implementation
 
 uses PointConverter;
@@ -53,7 +52,7 @@ const
 
   basicColor: TColor = clMaroon;
   basicRightHandPos: TAllHandPos = RightHandPos1;
-  SFColor: TColor = clBlack;
+  SFColor: TColor = clAqua;
 
 var
     myCanvas: TCanvas;
@@ -193,8 +192,8 @@ begin
   DrawLeg(AllMenPos[menPos].LeftLeg, legBody, size);
 end;
 
-procedure DrawSnowflake(SFPos: TPoint; Length: Integer; Size, Ratio, OffsetAngle: single);
-// SFPos - координаты снежинки
+procedure DrawSnowflake(SFPosF: TPointF; Length: Integer; Size, Ratio, OffsetAngle: single);
+// SFPosF - координаты снежинки
 // length - длина любой из 6 полосок в пикселях
 // Size - ширина линий
 // Ratio - коэффициент должен быть от 0 до 1, от него зависит
@@ -205,11 +204,15 @@ var
   Angle: array[0..5] of Double;
   EndPoints, BranchPoints: array[0..5] of TPoint;
   Offset: Integer;
+  SFPos: TPoint;
 begin
   myCanvas.Pen.Color := SFColor;
   myCanvas.Brush.Color := SFColor;
-  myCanvas.Pen.Width := Round((myCanvas.ClipRect.Width + myCanvas.ClipRect.Height) / 2 * 0.017);
-  myCanvas.Pen.Width := Round(myCanvas.Pen.Width * Size);
+  myCanvas.Pen.Width:= Round(PointConverter.GetPixels * 0.1 * size);
+
+  Length := Round(PointConverter.GetPixels * 0.1 * Length);
+
+  SFPos:= PointConverter.Convert(SFPosF);
 
   Offset := Round(Length * Ratio); // Длина и отдаленность маленьких веточек
 

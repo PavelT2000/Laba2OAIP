@@ -48,6 +48,7 @@ begin
   PLocation := point(0, 0);
   StopDrag := point(0, 0);
   IsDragging := false;
+  //Music.TurnOn(CalmMind);
 end;
 
 procedure TForm1.FormPaint(Sender: TObject);
@@ -69,7 +70,7 @@ begin
   drawSomeThing.DrawPerson(RightHandPos1, LeftHandPos1, RightLegPos1,
     LeftLegPos1, centerPoint, P2, 1.6);
 
-  drawSomeThing.DrawSnowflake(point(300, 200), 50, 0.2, 0.4, 0);
+  drawSomeThing.DrawSnowflake(pointf(0.3, 0.3), 30, 2, 0.5, 0);
 end;
 
 procedure TForm1.PaintBox1MouseDown(Sender: TObject; Button: TMouseButton;
