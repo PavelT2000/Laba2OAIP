@@ -23,9 +23,7 @@ object Form1: TForm1
     OnMouseDown = PaintBox1MouseDown
     OnMouseMove = PaintBox1MouseMove
     OnMouseUp = PaintBox1MouseUp
-    ExplicitLeft = -8
-    ExplicitWidth = 937
-    ExplicitHeight = 585
+    ExplicitLeft = 8
   end
   object MediaPlayer1: TMediaPlayer
     Left = 8

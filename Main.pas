@@ -51,11 +51,11 @@ type
     Speed: Single;
   end;
 
-var PLocation: TPointF;
-  StartDrag, StopDrag: TPointF;
+var
+  PLocation, StartDrag, StopDrag, centerPoint, P2: TPointF;
   IsDragging: Boolean;
   SF_Y, SF_X, SF_ratio: Single;
-  SF_Length: Integer;
+  SF_Length, cadrNum: Integer;
   Snowflakes: array [1..CountSF] of TSnowflake;
 
 
@@ -66,6 +66,9 @@ begin
   PLocation := point(0, 0);
   StopDrag := point(0, 0);
   IsDragging := false;
+  cadrNum:= 0;
+  centerPoint := pointf(-0.2, 0.5);
+  P2:= pointf(-0.2, 0.64);
 
   // Snowflakes
   for i := 1 to CountSF do
@@ -82,9 +85,9 @@ end;
 
 procedure NextPaint();
 var
-  centerPoint, P2: TPointF;
   FormRect: TRect;
   i: Integer;
+  baseIncrease: Single;
 begin
   FormRect := Rect(0, 0, Form1.ClientWidth, Form1.ClientHeight);
   PointConverter.SetFieldRect(FormRect);
@@ -93,10 +96,36 @@ begin
   Location.SetCanvas(Form1.Canvas);
 
   DrawLocation(PLocation);
-  centerPoint := pointf(0.5, 0.5);
-  P2:= pointf(0.65, 0.65);
-  drawSomeThing.DrawPerson(RightHandPos1, LeftHandPos1, RightLegPos1,
-    LeftLegPos1, centerPoint, P2, 1.6);
+
+  baseIncrease:= 0.013;
+  case (cadrNum mod 4) of
+    0: begin
+      drawSomeThing.DrawPerson(RightHandSki1, LeftHandSki1, RightLegWalk1,
+    leftLegSki1, centerPoint, P2, 0.8);
+    centerPoint.X:= centerPoint.X + baseIncrease;
+    P2.X:= P2.X + baseIncrease;
+    end;
+    1: begin
+      drawSomeThing.DrawPerson(RightHandSki2, LeftHandSki2, RightLegWalk2,
+    leftLegSki2, centerPoint, P2, 0.8);
+    centerPoint.X:= centerPoint.X + baseIncrease;
+    P2.X:= P2.X + baseIncrease;
+    end;
+    2: begin
+      drawSomeThing.DrawPerson(RightHandSki3, LeftHandSki3, RightLegWalk3,
+    leftLegSki3, centerPoint, P2, 0.8);
+    centerPoint.X:= centerPoint.X + baseIncrease;
+    P2.X:= P2.X + baseIncrease;
+    end;
+    3: begin
+      drawSomeThing.DrawPerson(RightHandSki2, LeftHandSki2, RightLegWalk2,
+    leftLegSki2, centerPoint, P2, 0.8);
+    centerPoint.X:= centerPoint.X + baseIncrease;
+    P2.X:= P2.X + baseIncrease;
+    end;
+  end;
+
+
 
   // SnowFlakes
   for i := 1 to CountSF do
@@ -108,10 +137,6 @@ begin
 end;
 
 procedure TForm1.FormPaint(Sender: TObject);
-//var
-//  grad: Integer;
-//  centerPoint, P2: TPointF;
-//  FormRect: TRect;
 begin
   // При перекрывании окна или его сворачивании: нарисует текущий кадр
   NextPaint();
@@ -144,6 +169,7 @@ begin
   //...
 
   // Рисует следующий кадр
+  inc(cadrNum);
   NextPaint();
 end;
 
