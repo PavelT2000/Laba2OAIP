@@ -7,8 +7,10 @@ uses Winapi.Windows, Vcl.Graphics, System.Types, Vcl.Dialogs, System.SysUtils, S
 type
   //R - right hand, L - left hand
   //H - hand, LG - leg
-  TAllHandPos = (RightHandPos1, LeftHandPos1);
-  TAllLegPos = (RightLegPos1, LeftLegPos1);
+  TAllHandPos = (RightHandPos1, LeftHandPos1, RightHandSki1, LeftHandSki1,
+  RightHandSki2, LeftHandSki2, RightHandSki3, LeftHandSki3);
+  TAllLegPos = (RightLegPos1, LeftLegPos1, RightLegWalk1, leftLegSki1,
+  RightLegWalk2, leftLegSki2, RightLegWalk3, leftLegSki3);
   TAllMenPos = (MenPos1);
 
 procedure SetCanvas(canvas: TCanvas);
@@ -36,13 +38,25 @@ const
   //point have coordinates based on local system of coordinate.
   //Center of local coord system is handBody for hand and legBody point for leg
   allHandPos: array[TAllhandPos] of T2Points = (
-  (firstPoint: (X: 0.070; Y: 0.040); secondPoint: (X: 0.055; Y: -0.020)),    //each line new hand pos
-  (firstPoint: (X: -0.070; Y: 0.040); secondPoint: (X: -0.055; Y: -0.020))   //LeftHandPos1
+  (firstPoint: (X: 0.070; Y: 0.040); secondPoint: (X: 0.055; Y: -0.020)),       //each line new hand pos
+  (firstPoint: (X: -0.070; Y: 0.040); secondPoint: (X: -0.055; Y: -0.020)),     //LeftHandPos1
+  (firstPoint: (X: 0.028; Y: 0.062); secondPoint: (X: 0.065; Y: 0.05)),         //RightHandSki1
+  (firstPoint: (X: -0.04; Y: 0.055); secondPoint: (X: 0.005; Y: 0.075)),        //LeftHandSki1
+  (firstPoint: (X: 0.018; Y: 0.062); secondPoint: (X: 0.052; Y: 0.035)),         //RightHandSki2
+  (firstPoint: (X: -0.026; Y: 0.055); secondPoint: (X: 0.012; Y: 0.088)),          //LeftHandSki2
+  (firstPoint: (X: 0.008; Y: 0.062); secondPoint: (X: 0.042; Y: 0.052)),         //RightHandSki3
+  (firstPoint: (X: -0.015; Y: 0.055); secondPoint: (X: 0.027; Y: 0.075))         //LeftHandSki3
   );
 
   allLegPos: array[TAllLegPos] of T2Points = (
-  (firstPoint: (X: 0.040; Y: 0.050); secondPoint: (X: 0.040; Y: 0.100)),      //each line new hand pos
-  (firstPoint: (X: -0.040; Y: 0.050); secondPoint: (X: -0.040; Y: 0.100))
+  (firstPoint: (X: 0.040; Y: 0.050); secondPoint: (X: 0.040; Y: 0.100)),        //each line new hand pos
+  (firstPoint: (X: -0.040; Y: 0.050); secondPoint: (X: -0.040; Y: 0.100)),
+  (firstPoint: (X: 0.034; Y: 0.06); secondPoint: (X: 0.03; Y: 0.13)),          //RightLegWalk1
+  (firstPoint: (X: -0.02; Y: 0.062); secondPoint: (X: -0.05; Y: 0.13)),           //leftLegSki1
+  (firstPoint: (X: 0.025; Y: 0.06); secondPoint: (X: 0.013; Y: 0.13)),           //RightLegWalk2
+  (firstPoint: (X: -0.012; Y: 0.062); secondPoint: (X: -0.023; Y: 0.13)),            //leftLegSki2
+  (firstPoint: (X: 0.008; Y: 0.06); secondPoint: (X: 0.001; Y: 0.13)),           //RightLegWalk3
+  (firstPoint: (X: -0.004; Y: 0.062); secondPoint: (X: -0.015; Y: 0.13))        //leftLegSki3
   );
 
   allMenPos: array[TAllMenPos] of TMenParts = (
@@ -51,6 +65,7 @@ const
   );
 
   basicColor: TColor = clMaroon;
+  basicColor2: TColor = clBlack;
   basicRightHandPos: TAllHandPos = RightHandPos1;
   SFColor: TColor = clAqua;
 
@@ -125,32 +140,21 @@ begin
   myCanvas.LineTo(intP1.X, intP1.Y);
 end;
 
-//from body point create head point and second body point.
-//1 body poin for hands, second for Legs, in function first (hand) point
-procedure DrawPerson(rightHand, leftHand: TAllHandPos;
-rightLeg, leftLeg: TAllLegPos; handBody, legBody: TPointF; size: single); overload;
+procedure DrawHead(neck, legBody: TPointF; size: single);
 var
     IntP1: TPoint;
     Rect: TRect;
     headRadius: integer;
     angle: Double;
-{
-   o
- \/|\/
-  /\
- |  \
-}
 begin
-  //head
-  headRadius:= Round(PointConverter.GetPixels*3 * size); //значение в пиксилях
-
   myCanvas.Pen.Color:= basicColor;
   myCanvas.Brush.Color:= basicColor;
+  myCanvas.Pen.Width := Round(PointConverter.GetPixels* 1.8 *size);
+  headRadius:= Round(PointConverter.GetPixels*3 * size); //значение в пиксилях
 
-  IntP1:= PointConverter.Convert(handBody);
-
-  angle := CalculateAngleVectors(legbody-handbody, pointf(0, -1)) + Pi/2;
+  angle := CalculateAngleVectors(legbody-neck, pointf(0, -1)) + Pi/2;
   // showmessage(FloatToStr(angle));
+  IntP1:= PointConverter.Convert(neck);
   IntP1.X := IntP1.X + Round(cos(angle) * headRadius);
   IntP1.Y := IntP1.Y + Round(sin(angle) * headRadius);
 
@@ -159,10 +163,28 @@ begin
   Rect.Right:= IntP1.X + headRadius;
   Rect.Bottom:= IntP1.Y + headRadius;
   myCanvas.Ellipse(Rect);
+end;
+
+//from body point create head point and second body point.
+//1 body poin for hands, second for Legs, in function first (hand) point
+procedure DrawPerson(rightHand, leftHand: TAllHandPos;
+rightLeg, leftLeg: TAllLegPos; handBody, legBody: TPointF; size: single); overload;
+var
+    IntP1: TPoint;
+{
+   o
+ \/|\/
+  /\
+ |  \
+}
+begin
+  DrawHead(handBody, legBody, size);
 
   DrawHand(rightHand, handBody, size);
   DrawHand(leftHand, handBody, size);
 
+  myCanvas.Pen.Color:= basicColor;
+  myCanvas.Brush.Color:= basicColor;
   myCanvas.Pen.Width := Round(PointConverter.GetPixels* 1.8 *size);
   IntP1:= PointConverter.Convert(handBody);
   myCanvas.MoveTo(IntP1.X, IntP1.Y);
@@ -179,22 +201,13 @@ var
     Rect: TRect;
     headRadius: integer;
 begin
-  //head
-  headRadius:= Round(PointConverter.GetPixels*3 * size); //значение в пиксилях
-
-  myCanvas.Pen.Color:= basicColor;
-  myCanvas.Brush.Color:= basicColor;
-
-  IntP1:= PointConverter.Convert(handBody);
-  Rect.Left:= IntP1.X - headRadius;
-  Rect.Top:= IntP1.Y - 2*headRadius;
-  Rect.Right:= IntP1.X + headRadius;
-  Rect.Bottom:= IntP1.Y;
-  myCanvas.Ellipse(Rect);
+  DrawHead(handBody, legBody, size);
 
   DrawHand(AllMenPos[menPos].RightHand, handBody, size);
   DrawHand(AllMenPos[menPos].LeftHand, handBody, size);
 
+  myCanvas.Pen.Color:= basicColor;
+  myCanvas.Brush.Color:= basicColor;
   myCanvas.Pen.Width := Round(PointConverter.GetPixels* 1.8 *size);
   IntP1:= PointConverter.Convert(handBody);
   myCanvas.MoveTo(IntP1.X, IntP1.Y);
