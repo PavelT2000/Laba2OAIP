@@ -37,7 +37,7 @@ object Form1: TForm1
     TabOrder = 0
   end
   object FPS: TTimer
-    Interval = 250
+    Interval = 40
     OnTimer = FPSTimer
     Left = 296
     Top = 24

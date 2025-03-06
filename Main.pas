@@ -62,6 +62,8 @@ var PLocation: TPointF;
 procedure TForm1.FormCreate(Sender: TObject);
 var i: Integer;
 begin
+  drawSomeThing.SetSize(1);
+  drawSomeThing.SetCanvas(Canvas);
 
   PLocation := point(0, 0);
   StopDrag := point(0, 0);
@@ -74,7 +76,7 @@ begin
     Snowflakes[i].Y := Random;
     Snowflakes[i].Length := Random(11) + 10; // 10/20
     Snowflakes[i].Ratio := Random(41) / 100 + 0.4; // 0.4/0.8
-    Snowflakes[i].Speed := Random(5) / 100 + 0.02; // 0.02/0.06
+    Snowflakes[i].Speed := Random(5) / 500 + 0.004; // 0.004/0.012
   end;
 
   //Music.TurnOn(CalmMind);
@@ -96,7 +98,7 @@ begin
   centerPoint := pointf(0.5, 0.5);
   P2:= pointf(0.65, 0.65);
   drawSomeThing.DrawPerson(RightHandPos1, LeftHandPos1, RightLegPos1,
-    LeftLegPos1, centerPoint, P2, 1.6);
+    LeftLegPos1, centerPoint, P2, 1);
 
   // SnowFlakes
   for i := 1 to CountSF do
@@ -108,12 +110,9 @@ begin
 end;
 
 procedure TForm1.FormPaint(Sender: TObject);
-//var
-//  grad: Integer;
-//  centerPoint, P2: TPointF;
-//  FormRect: TRect;
 begin
   // При перекрывании окна или его сворачивании: нарисует текущий кадр
+  // Рисует следующий кадр
   NextPaint();
 end;
 
@@ -121,8 +120,6 @@ procedure TForm1.FPSTimer(Sender: TObject);
 var
   i: Integer;
 begin
-  // Убирает все (вызывает OnPaint вручную)
-  Form1.Invalidate;
 
   // Тута играемся с переменными для выставления определенных локаций, поз и т.д.
 
@@ -137,14 +134,14 @@ begin
       Snowflakes[i].X := Random;
       Snowflakes[i].Length := Random(11) + 10; // 10/20
       Snowflakes[i].Ratio := Random(41) / 100 + 0.4; // 0.4/0.8
-      Snowflakes[i].Speed := Random(5) / 100 + 0.02; // 0.02/0.06
+      Snowflakes[i].Speed := Random(5) / 500 + 0.004; // 0.004/0.012
     end;
   end;
 
   //...
 
-  // Рисует следующий кадр
-  NextPaint();
+  // Убирает все (вызывает OnPaint вручную)
+  Form1.Invalidate;
 end;
 
 procedure TForm1.PaintBox1MouseDown(Sender: TObject; Button: TMouseButton;

@@ -14,16 +14,16 @@ type
   TAllMenPos = (MenPos1);
 
 procedure SetCanvas(canvas: TCanvas);
+procedure SetSize(size: single);
 procedure DrawPerson(rightHand, leftHand: TAllHandPos;
-rightLeg, leftLeg: TAllLegPos; handBody, legBody: TPointF; size: single);
-procedure DrawHand(pos: TAllHandPos; startPoint: TPointF; size: single); overload;
+rightLeg, leftLeg: TAllLegPos; neck, legBody: TPointF; size: single);
 procedure DrawSnowflake(SFPosF: TPointF; Length: Integer; Size, Ratio, OffsetAngle: single);
 implementation
 
 uses PointConverter;
 
 type
-  T2Points = Record
+  T2PointF = Record
     firstPoint: TPointF;
     secondPoint: TPointF;
   End;
@@ -33,11 +33,20 @@ type
     RightLeg: TAllLegPos;
     LeftLeg: TAllLegPos;
   End;
+  TMenPosPointF = Record
+    RightHand: T2PointF;
+    LeftHand: T2PointF;
+    RightLeg: T2PointF;
+    LeftLeg: T2PointF;
+  end;
+  TPointFArr = array of TPointF;
+  T2PointFArr = array of T2PointF;
+  TMenPosArr = array of TMenPosPointF;
 
 const
   //point have coordinates based on local system of coordinate.
   //Center of local coord system is handBody for hand and legBody point for leg
-  allHandPos: array[TAllhandPos] of T2Points = (
+  allHandPos: array[TAllhandPos] of T2PointF = (
   (firstPoint: (X: 0.070; Y: 0.040); secondPoint: (X: 0.055; Y: -0.020)),       //each line new hand pos
   (firstPoint: (X: -0.070; Y: 0.040); secondPoint: (X: -0.055; Y: -0.020)),     //LeftHandPos1
   (firstPoint: (X: 0.028; Y: 0.062); secondPoint: (X: 0.065; Y: 0.05)),         //RightHandSki1
@@ -48,7 +57,7 @@ const
   (firstPoint: (X: -0.015; Y: 0.055); secondPoint: (X: 0.027; Y: 0.075))         //LeftHandSki3
   );
 
-  allLegPos: array[TAllLegPos] of T2Points = (
+  allLegPos: array[TAllLegPos] of T2PointF = (
   (firstPoint: (X: 0.040; Y: 0.050); secondPoint: (X: 0.040; Y: 0.100)),        //each line new hand pos
   (firstPoint: (X: -0.040; Y: 0.050); secondPoint: (X: -0.040; Y: 0.100)),
   (firstPoint: (X: 0.034; Y: 0.06); secondPoint: (X: 0.03; Y: 0.13)),          //RightLegWalk1
@@ -66,33 +75,96 @@ const
 
   basicColor: TColor = clMaroon;
   basicColor2: TColor = clBlack;
+  basicWitdh: Single = 1.4;
   basicRightHandPos: TAllHandPos = RightHandPos1;
   SFColor: TColor = clAqua;
 
 var
     myCanvas: TCanvas;
+    RHand, LHand: TAllhandPos;
+    RLeg, LLeg: TAllLegPos;
+    myNeck, myLegBody: TPointF;
+    mySize: single;
 
 procedure SetCanvas(canvas: TCanvas);
 begin
   myCanvas:= canvas;
 end;
 
-{procedure DrawHand(Canvas: TCanvas; start, elbow, hand: TPoint); overload;
+procedure SetSize(size: single);
 begin
-  Canvas.Pen.Color:= basicColor;
-  Canvas.Brush.Color:= clRed;
-
-  Canvas.Ellipse(start.X, start.Y, (start.X + elbow.X), (elbow.Y + start.Y));
-
-  Canvas.Ellipse((start.X + elbow.X), (elbow.Y + start.Y),
-  (hand.X  + start.X), (hand.Y  + start.Y));
-end;}
+  mySize:= size;
+end;
 
 function CalculateAngleVectors(vector1, vector2: TPointF): Double;
 begin
   result:= ArcCos(vector1.DotProduct(vector2)/(vector1.length * vector2.length))
 end;
 
+//создаёт массив из cadrs элементов для создания анимации включая заданные точки
+function createArrPointF(pStart, pEnd:TPointF; cadrs: integer): TPointFArr;
+var
+    deltaX, deltaY: single;
+begin
+  if (Cadrs > 1) then begin
+    setLength(result, cadrs);
+    deltaX:= (pStart.X - pEnd.X)/(cadrs-1);
+    deltaY:= (pStart.Y - pEnd.Y)/(cadrs-1);
+    for var i := 0 to cadrs-1 do begin
+      result[i].X:= pStart.X + deltaX*i;
+      result[i].Y:= pStart.Y + deltaY*i;
+    end;
+  end;
+end;
+
+function createArr2PointF(pStart, pEnd: T2PointF; cadrs: integer): T2PointFArr;
+var
+    arr1, arr2: TPointFArr;
+begin
+  arr1:= createArrPointF(pStart.firstPoint, pEnd.firstPoint, cadrs);
+  arr2:= createArrPointF(pStart.secondPoint, pEnd.secondPoint, cadrs);
+  setLength(result, cadrs);
+  for var i:= 0 to cadrs-1 do
+  begin
+    result[i].firstPoint:= arr1[i];
+    result[i].secondPoint:= arr2[i];
+  end;
+end;
+
+function createArrMenPos(pos1, pos2: TAllMenPos; cadrs: integer): TMenPosArr;
+var
+    RH, LH, RL, LL: T2PointFArr;         //R - right, L - left; H - hand, L - leg
+begin
+  RH:= createArr2PointF(allHandPos[allMenPos[pos1].RightHand],
+  allHandPos[allMenPos[pos2].RightHand], cadrs);
+  LH:= createArr2PointF(allHandPos[allMenPos[pos1].LeftHand],
+  allHandPos[allMenPos[pos2].LeftHand], cadrs);
+  RL:= createArr2PointF(allLegPos[allMenPos[pos1].RightLeg],
+  allLegPos[allMenPos[pos2].RightLeg], cadrs);
+  LL:= createArr2PointF(allLegPos[allMenPos[pos1].LeftLeg],
+  allLegPos[allMenPos[pos2].LeftLeg], cadrs);
+
+  setLength(result, cadrs);
+  for var i:= 0 to cadrs-1 do
+  begin
+    result[i].RightHand:= RH[i];
+    result[i].LeftHand:= LH[i];
+    result[i].RightLeg:= RL[i];
+    result[i].LeftLeg:= LL[i];
+  end;
+end;
+
+//подготовка переменных для последующей отрисовки
+procedure PrCoord(setRHand, setLHand: TAllhandPos; setRLeg, setLLeg: TAllLegPos;
+setNeck, setLegBody: TPointF);
+begin
+  RHand:= setRHand;
+  LHand:= setLHand;
+  RLeg:= setRLeg;
+  LLeg:= setLLeg;
+  myNeck:= setNeck;
+  myLegBody:= setlegBody;
+end;
 
 procedure DrawHand(pos: TAllHandPos; startPoint: TPointF; size: single); overload;
 var
@@ -101,7 +173,7 @@ var
 begin
   myCanvas.Pen.Color:= basicColor;
   myCanvas.Brush.Color:= basicColor;
-  myCanvas.Pen.Width:= Round(PointConverter.GetPixels * 1.75 * size);
+  myCanvas.Pen.Width:= Round(PointConverter.GetPixels * basicWitdh * size);
 
   intP1:= PointConverter.Convert(StartPoint);
   myCanvas.MoveTo(intP1.X, intP1.Y);
@@ -124,7 +196,7 @@ var
 begin
   myCanvas.Pen.Color:= basicColor;
   myCanvas.Brush.Color:= basicColor;
-  myCanvas.Pen.Width:= Round(PointConverter.GetPixels * 1.75 * size);
+  myCanvas.Pen.Width:= Round(PointConverter.GetPixels * basicWitdh * size);
 
   intP1:= PointConverter.Convert(StartPoint);
   myCanvas.MoveTo(intP1.X, intP1.Y);
@@ -149,7 +221,7 @@ var
 begin
   myCanvas.Pen.Color:= basicColor;
   myCanvas.Brush.Color:= basicColor;
-  myCanvas.Pen.Width := Round(PointConverter.GetPixels* 1.8 *size);
+  myCanvas.Pen.Width := Round(PointConverter.GetPixels* basicWitdh *size);
   headRadius:= Round(PointConverter.GetPixels*3 * size); //значение в пиксилях
 
   angle := CalculateAngleVectors(legbody-neck, pointf(0, -1)) + Pi/2;
@@ -165,57 +237,52 @@ begin
   myCanvas.Ellipse(Rect);
 end;
 
-//from body point create head point and second body point.
-//1 body poin for hands, second for Legs, in function first (hand) point
-procedure DrawPerson(rightHand, leftHand: TAllHandPos;
-rightLeg, leftLeg: TAllLegPos; handBody, legBody: TPointF; size: single); overload;
+procedure DrawBody(neck, legBody: TPointF; size: single);
 var
     IntP1: TPoint;
-{
-   o
- \/|\/
-  /\
- |  \
-}
 begin
-  DrawHead(handBody, legBody, size);
-
-  DrawHand(rightHand, handBody, size);
-  DrawHand(leftHand, handBody, size);
-
   myCanvas.Pen.Color:= basicColor;
   myCanvas.Brush.Color:= basicColor;
-  myCanvas.Pen.Width := Round(PointConverter.GetPixels* 1.8 *size);
-  IntP1:= PointConverter.Convert(handBody);
+  myCanvas.Pen.Width := Round(PointConverter.GetPixels* basicWitdh *size);
+
+  IntP1:= PointConverter.Convert(neck);
   myCanvas.MoveTo(IntP1.X, IntP1.Y);
   IntP1:= PointConverter.Convert(legBody);
   myCanvas.LineTo(IntP1.X, IntP1.Y);
+end;
 
+//from body point create head point and second body point.
+//1 body poin for hands, second for Legs, in function first (hand) point
+procedure DrawPerson(rightHand, leftHand: TAllHandPos;
+rightLeg, leftLeg: TAllLegPos; neck, legBody: TPointF; size: single); overload;
+begin
+  DrawHead(neck, legBody, size);                  //   o
+  DrawHand(rightHand, neck, size);                // \/|\/
+  DrawHand(leftHand, neck, size);                 //  /\
+  DrawBody(neck, legBody, size);                  // |  \
   DrawLeg(rightLeg, legBody, size);
   DrawLeg(LeftLeg, legBody, size);
 end;
 
-procedure DrawPerson(menPos: TAllMenPos; handBody, legBody: TPointF; size: single); overload;
-var
-    IntP1: TPoint;
-    Rect: TRect;
-    headRadius: integer;
+procedure DrawPerson(menPos: TAllMenPos; neck, legBody: TPointF; size: single); overload;
 begin
-  DrawHead(handBody, legBody, size);
-
-  DrawHand(AllMenPos[menPos].RightHand, handBody, size);
-  DrawHand(AllMenPos[menPos].LeftHand, handBody, size);
-
-  myCanvas.Pen.Color:= basicColor;
-  myCanvas.Brush.Color:= basicColor;
-  myCanvas.Pen.Width := Round(PointConverter.GetPixels* 1.8 *size);
-  IntP1:= PointConverter.Convert(handBody);
-  myCanvas.MoveTo(IntP1.X, IntP1.Y);
-  IntP1:= PointConverter.Convert(legBody);
-  myCanvas.LineTo(IntP1.X, IntP1.Y);
-
+  DrawHead(neck, legBody, size);
+  DrawHand(AllMenPos[menPos].RightHand, neck, size);
+  DrawHand(AllMenPos[menPos].LeftHand, neck, size);
+  DrawBody(neck, legBody, size);
   DrawLeg(AllMenPos[menPos].RightLeg, legBody, size);
   DrawLeg(AllMenPos[menPos].LeftLeg, legBody, size);
+end;
+
+//рисование по заготовленным данным
+procedure prDrawPerson();
+begin
+  DrawHead(myNeck, myLegBody, mySize);
+  DrawHand(RHand, myNeck, mySize);
+  DrawHand(LHand, myNeck, mySize);
+  DrawBody(myNeck, myLegBody, mySize);
+  DrawLeg(RLeg, myLegBody, mySize);
+  DrawLeg(LLeg, myLegBody, mySize);
 end;
 
 procedure DrawSnowflake(SFPosF: TPointF; Length: Integer; Size, Ratio, OffsetAngle: single);
