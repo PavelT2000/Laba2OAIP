@@ -14,17 +14,6 @@ object Form1: TForm1
   OnCreate = FormCreate
   OnPaint = FormPaint
   TextHeight = 15
-  object PaintBox1: TPaintBox
-    Left = 0
-    Top = 0
-    Width = 1098
-    Height = 577
-    Align = alClient
-    OnMouseDown = PaintBox1MouseDown
-    OnMouseMove = PaintBox1MouseMove
-    OnMouseUp = PaintBox1MouseUp
-    ExplicitLeft = 8
-  end
   object MediaPlayer1: TMediaPlayer
     Left = 8
     Top = 24

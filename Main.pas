@@ -18,7 +18,6 @@ type
   TForm1 = class(TForm)
     MediaPlayer1: TMediaPlayer;
     FPS: TTimer;
-    PaintBox1: TPaintBox;
     procedure FormPaint(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure PaintBox1MouseMove(Sender: TObject; Shift: TShiftState; X,
@@ -57,6 +56,7 @@ var PLocation: TPointF;
   SF_Y, SF_X, SF_ratio: Single;
   SF_Length: Integer;
   Snowflakes: array [1..CountSF] of TSnowflake;
+  allCadrs: integer = 0;
 
 
 procedure TForm1.FormCreate(Sender: TObject);
@@ -64,6 +64,9 @@ var i: Integer;
 begin
   drawSomeThing.SetSize(1);
   drawSomeThing.SetCanvas(Canvas);
+  Location.SetCanvas(Canvas);
+  drawSomeThing.myNeck:= PointF(0.5, 0.5);
+  drawSomeThing.myLegBody:= PointF(0.5, 0.65);
 
   PLocation := point(0, 0);
   StopDrag := point(0, 0);
@@ -84,21 +87,19 @@ end;
 
 procedure NextPaint();
 var
-  centerPoint, P2: TPointF;
   FormRect: TRect;
   i: Integer;
 begin
   FormRect := Rect(0, 0, Form1.ClientWidth, Form1.ClientHeight);
   PointConverter.SetFieldRect(FormRect);
 
-  drawSomeThing.SetCanvas(Form1.Canvas);
-  Location.SetCanvas(Form1.Canvas);
-
   DrawLocation2(PLocation);
-  centerPoint := pointf(0.5, 0.5);
-  P2:= pointf(0.65, 0.65);
-  drawSomeThing.DrawPerson(RightHandPos1, LeftHandPos1, RightLegPos1,
-    LeftLegPos1, centerPoint, P2, 1);
+
+  if (allCadrs > 0) and (allCadrs <= 200) then begin
+    prDrawPerson;
+  end;
+  //DrawPerson(drawSomeThing.MenSki1);
+  //DrawPerson(drawSomeThing.MenSki2);
 
   // SnowFlakes
   for i := 1 to CountSF do
@@ -120,8 +121,23 @@ procedure TForm1.FPSTimer(Sender: TObject);
 var
   i: Integer;
 begin
-
+  if (allCadrs = 64) then begin
+    allCadrs:= 0;
+  end;
   // Тута играемся с переменными для выставления определенных локаций, поз и т.д.
+  if (allCadrs = 0) then begin
+    createArrMenPos(MenSki1, MenSki2, 16);
+  end;
+  if (allCadrs = 16) then begin
+    createArrMenPos(MenSki2, MenSki3, 16);
+  end;
+  if (allCadrs = 32) then begin
+    createArrMenPos(MenSki3, MenSki2, 16);
+  end;
+  if (allCadrs = 48) then begin
+    createArrMenPos(MenSki2, MenSki1, 16);
+  end;
+
 
   // SnowFlakes
   for i := 1 to CountSF do
@@ -142,6 +158,7 @@ begin
 
   // Убирает все (вызывает OnPaint вручную)
   Form1.Invalidate;
+  inc(allCadrs);
 end;
 
 procedure TForm1.PaintBox1MouseDown(Sender: TObject; Button: TMouseButton;
@@ -159,7 +176,7 @@ begin
   begin
     // Берем координаты локации и прибавляем к ней координаты перетащенного курсора
     PLocation := pointF(StopDrag.X + X/ ClientWidth - StartDrag.X, StopDrag.Y + Y/ ClientHeight - StartDrag.Y);
-    PaintBox1.Invalidate;
+    Form1.Invalidate;
   end;
 end;
 
