@@ -36,7 +36,6 @@ type
 var
   Form1: TForm1;
 
-
 implementation
 
 const
@@ -49,6 +48,17 @@ type
     Ratio: Single;
     Speed: Single;
   end;
+  MainCadr = record
+    PrCadr: TAllMenPos; //кадр с которого начать, следующий элемент на котором закончить
+    numCadrs: integer;  //количество кадров сколько надо создать и отрисовать
+  end;
+
+const
+    ArrMainCadrs1: array[0..3] of MainCadr = (
+    (PrCadr: MenSki1; numCadrs: 16),
+    (PrCadr: MenSki2; numCadrs: 16),
+    (PrCadr: MenSki3; numCadrs: 16),
+    (PrCadr: MenSki4; numCadrs: 16) );
 
 var PLocation: TPointF;
   StartDrag, StopDrag: TPointF;
@@ -56,7 +66,6 @@ var PLocation: TPointF;
   SF_Y, SF_X, SF_ratio: Single;
   SF_Length: Integer;
   Snowflakes: array [1..CountSF] of TSnowflake;
-  allCadrs: integer = 0;
 
 
 procedure TForm1.FormCreate(Sender: TObject);
@@ -95,7 +104,7 @@ begin
 
   DrawLocation2(PLocation);
 
-  if (allCadrs > 0) and (allCadrs <= 200) then begin
+  if (allCadrs > 0) and (allCadrs <= 1000) then begin
     prDrawPerson;
   end;
   //DrawPerson(drawSomeThing.MenSki1);
@@ -121,6 +130,7 @@ procedure TForm1.FPSTimer(Sender: TObject);
 var
   i: Integer;
 begin
+  incCadrs();
   if (allCadrs = 80) then begin
     allCadrs:= 0;
   end;
@@ -161,7 +171,6 @@ begin
 
   // Убирает все (вызывает OnPaint вручную)
   Form1.Invalidate;
-  inc(allCadrs);
 end;
 
 procedure TForm1.PaintBox1MouseDown(Sender: TObject; Button: TMouseButton;
