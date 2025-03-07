@@ -12,7 +12,7 @@ type
     RightHandSki2, LeftHandSki2, RightHandSki3, LeftHandSki3);
   TAllLegPos = (RightLegPos1, LeftLegPos1, RightLegSki1, leftLegSki1,
     RightLegSki2, leftLegSki2, RightLegSki3, leftLegSki3);
-  TAllMenPos = (MenSki1, MenSki2, MenSki3);
+  TAllMenPos = (MenSki1, MenSki2, MenSki3, menSki4);
 
 var myNeck, myLegBody: TPointF;
 
@@ -100,8 +100,11 @@ const
   rightLeg: RightLegSki2; leftLeg: leftLegSki2),
   //menSki2
   (rightHand: RightHandSki3; leftHand: LeftHandSki3;
-  rightLeg: RightLegSki3; leftLeg: leftLegSki3)
+  rightLeg: RightLegSki3; leftLeg: leftLegSki3),
   //menSki3
+  (rightHand: LeftHandSki3; leftHand: RightHandSki3;
+  rightLeg: LeftLegSki3; leftLeg: RightLegSki3)
+  //menSki4
   );
 
   basicColor: TColor = clMaroon;

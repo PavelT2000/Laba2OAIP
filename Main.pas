@@ -121,7 +121,7 @@ procedure TForm1.FPSTimer(Sender: TObject);
 var
   i: Integer;
 begin
-  if (allCadrs = 64) then begin
+  if (allCadrs = 80) then begin
     allCadrs:= 0;
   end;
   // Тута играемся с переменными для выставления определенных локаций, поз и т.д.
@@ -132,9 +132,12 @@ begin
     createArrMenPos(MenSki2, MenSki3, 16);
   end;
   if (allCadrs = 32) then begin
-    createArrMenPos(MenSki3, MenSki2, 16);
+    createArrMenPos(MenSki3, MenSki4, 16);
   end;
   if (allCadrs = 48) then begin
+    createArrMenPos(MenSki3, MenSki2, 16);
+  end;
+  if (allCadrs = 64) then begin
     createArrMenPos(MenSki2, MenSki1, 16);
   end;
 
