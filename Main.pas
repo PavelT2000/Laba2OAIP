@@ -48,17 +48,6 @@ type
     Ratio: Single;
     Speed: Single;
   end;
-  MainCadr = record
-    PrCadr: TAllMenPos; //кадр с которого начать, следующий элемент на котором закончить
-    numCadrs: integer;  //количество кадров сколько надо создать и отрисовать
-  end;
-
-const
-    ArrMainCadrs1: array[0..3] of MainCadr = (
-    (PrCadr: MenSki1; numCadrs: 16),
-    (PrCadr: MenSki2; numCadrs: 16),
-    (PrCadr: MenSki3; numCadrs: 16),
-    (PrCadr: MenSki4; numCadrs: 16) );
 
 var PLocation: TPointF;
   StartDrag, StopDrag: TPointF;
@@ -76,6 +65,8 @@ begin
   Location.SetCanvas(Canvas);
   drawSomeThing.myNeck:= PointF(0.5, 0.5);
   drawSomeThing.myLegBody:= PointF(0.5, 0.65);
+  drawSomeThing.createCadrArr();
+  MakeAllCadrs(drawSomeThing.ArrMainCadrs1);
 
   PLocation := point(0, 0);
   StopDrag := point(0, 0);
@@ -130,26 +121,8 @@ procedure TForm1.FPSTimer(Sender: TObject);
 var
   i: Integer;
 begin
-  incCadrs();
-  if (allCadrs = 80) then begin
-    allCadrs:= 0;
-  end;
+  inc(allCadrs);
   // Тута играемся с переменными для выставления определенных локаций, поз и т.д.
-  if (allCadrs = 0) then begin
-    createArrMenPos(MenSki1, MenSki2, 16);
-  end;
-  if (allCadrs = 16) then begin
-    createArrMenPos(MenSki2, MenSki3, 16);
-  end;
-  if (allCadrs = 32) then begin
-    createArrMenPos(MenSki3, MenSki4, 16);
-  end;
-  if (allCadrs = 48) then begin
-    createArrMenPos(MenSki3, MenSki2, 16);
-  end;
-  if (allCadrs = 64) then begin
-    createArrMenPos(MenSki2, MenSki1, 16);
-  end;
 
 
   // SnowFlakes

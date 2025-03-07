@@ -8,13 +8,21 @@ uses Winapi.Windows, Vcl.Graphics, System.Types, Vcl.Dialogs, System.SysUtils,
 type
   TAllMenPos = (MenSki1, MenSki2, MenSki3, menSki4);
 
-var myNeck, myLegBody: TPointF;
-    allCadrs: integer = -1;
+  MainCadr = record
+    PrCadr: TAllMenPos; //кадр с которого начать, следующий элемент на котором закончить
+    numCadrs: integer;  //количество кадров сколько надо создать и отрисовать
+  end;
+  TArrMainCadr = array of MainCadr;
 
+var myNeck, myLegBody: TPointF;
+    allCadrs: integer;
+    ArrMainCadrs1: TArrMainCadr;
+
+procedure createCadrArr();
+procedure MakeAllCadrs(const ArrCadr: TArrMainCadr);
 procedure SetCanvas(canvas: TCanvas);
 procedure SetSize(size: single);
-procedure incCadrs();
-procedure createArrMenPos(pos1, pos2: TAllMenPos; cadrs: Integer);
+procedure createArrMenPos(pos1, pos2: TAllMenPos; cadrs, firstFreePos: Integer);
 procedure prDrawPerson();
 procedure DrawPerson(menPos: TAllMenPos); overload;
 
@@ -77,12 +85,33 @@ var
   myCanvas: TCanvas;
   mySize: single;
   PrPointF: array of TMenPosPointF;
-  cadrNow: integer = -1;
 
-procedure incCadrs();
+procedure createCadrArr();
 begin
-  inc(allCadrs);
-  inc(CadrNow);
+  setLength(ArrMainCadrs1, 4);
+  ArrMainCadrs1[0].PrCadr:= MenSki1; ArrMainCadrs1[0].numCadrs:= 16;
+  ArrMainCadrs1[1].PrCadr:= MenSki2; ArrMainCadrs1[1].numCadrs:= 16;
+  ArrMainCadrs1[2].PrCadr:= MenSki3; ArrMainCadrs1[2].numCadrs:= 16;
+  ArrMainCadrs1[3].PrCadr:= MenSki4; ArrMainCadrs1[3].numCadrs:= 16;
+end;
+
+procedure MakeAllCadrs(const ArrCadr: TArrMainCadr);
+var
+    sumNumCadrs, firstFreePos: integer;
+begin
+  sumNumCadrs:= 0;
+  for var i := 0 to length(ArrCadr)-2 do begin
+    inc(sumNumCadrs, ArrCadr[i].numCadrs);
+  end;
+  setLength(PrPointF, sumNumCadrs);
+
+  firstFreePos:= 0;
+  for var i := 0 to length(ArrCadr)-2 do begin
+    createArrMenPos(ArrCadr[i].PrCadr, ArrCadr[i+1].PrCadr,
+    ArrCadr[i].numCadrs, firstFreePos);
+    inc(firstFreePos, ArrCadr[i].numCadrs);
+  end;
+  allCadrs:= 0;
 end;
 
 procedure SetCanvas(canvas: TCanvas);
@@ -135,7 +164,7 @@ begin
 end;
 
 // хакидываем в PrPointF заготовленные точки для последующей рисовки
-procedure createArrMenPos(pos1, pos2: TAllMenPos; cadrs: Integer);
+procedure createArrMenPos(pos1, pos2: TAllMenPos; cadrs, firstFreePos: Integer);
 var
   RH, LH, RL, LL: T2PointFArr; // R - right, L - left; H - hand, L - leg
 begin
@@ -148,15 +177,13 @@ begin
   LL := createArr2PointF(allMenPos[pos1].leftLeg,
     allMenPos[pos2].leftLeg, cadrs);
 
-  setLength(PrPointF, cadrs);
   for var i := 0 to cadrs - 1 do
   begin
-    PrPointF[i].rightHand := RH[i];
-    PrPointF[i].leftHand := LH[i];
-    PrPointF[i].rightLeg := RL[i];
-    PrPointF[i].leftLeg := LL[i];
+    PrPointF[firstFreePos+i].rightHand := RH[i];
+    PrPointF[firstFreePos+i].leftHand := LH[i];
+    PrPointF[firstFreePos+i].rightLeg := RL[i];
+    PrPointF[firstFreePos+i].leftLeg := LL[i];
   end;
-  cadrNow:= 0;
 end;
 
 procedure DrawHandPointF(pos: T2PointF; startPoint: TPointF; size: single);
@@ -260,14 +287,14 @@ end;
 // рисование по заготовленным данным
 procedure prDrawPerson();
 begin
-  if (cadrNow < length(PrPointF)) then
+  if (allCadrs < length(PrPointF)) then
   begin
     DrawHead(myNeck, myLegBody, mySize);
-    DrawHandPointF(PrPointF[cadrNow].rightHand, myNeck, mySize);
-    DrawHandPointF(PrPointF[cadrNow].leftHand, myNeck, mySize);
+    DrawHandPointF(PrPointF[allCadrs].rightHand, myNeck, mySize);
+    DrawHandPointF(PrPointF[allCadrs].leftHand, myNeck, mySize);
     DrawBody(myNeck, myLegBody, mySize);
-    DrawLegPointF(PrPointF[cadrNow].rightLeg, myLegBody, mySize);
-    DrawLegPointF(PrPointF[cadrNow].leftLeg, myLegBody, mySize);
+    DrawLegPointF(PrPointF[allCadrs].rightLeg, myLegBody, mySize);
+    DrawLegPointF(PrPointF[allCadrs].leftLeg, myLegBody, mySize);
   end;
 end;
 
