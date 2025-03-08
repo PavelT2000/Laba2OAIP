@@ -11,7 +11,7 @@ uses
   System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.MPlayer, Vcl.ExtCtrls,
 
-  drawSomeThing, Music, NikManTest,
+  drawSomeThing, Music, NikManTest, Clipbrd,
   Location, PointConverter;
 
 type
@@ -183,16 +183,15 @@ begin
   'q':
     begin
       CursorPos := Form1.ScreenToClient(Mouse.CursorPos);
-      //CursorPosF := PointConverter.ConvertBack(CursorPos);
       TempCursorStart := CursorPos;
-
       CursorPos := TempCursorEnd - TempCursorStart;
       CursorPosF := PointConverter.ConvertBack(CursorPos);
 
       X := FloatToStr(RoundTo(CursorPosF.X, -3));
+      X := StringReplace(X, ',', '.', [rfReplaceAll]);
       Y := FloatToStr(RoundTo(CursorPosF.Y, -3));
+      Y := StringReplace(X, ',', '.', [rfReplaceAll]);
 
-      //ShowMessage(X + ' ' + Y);
       Form1.CursorPosition.Caption := X + ', ' + Y;
     end;
   'e':
@@ -204,11 +203,25 @@ begin
       CursorPosF := PointConverter.ConvertBack(CursorPos);
 
       X := FloatToStr(RoundTo(CursorPosF.X, -3));
+      X := StringReplace(X, ',', '.', [rfReplaceAll]);
       Y := FloatToStr(RoundTo(CursorPosF.Y, -3));
+      Y := StringReplace(X, ',', '.', [rfReplaceAll]);
 
-      //ShowMessage(X + ' ' + Y);
       Form1.CursorPosition.Caption := X + ', ' + Y;
 
+    end;
+  'r':
+    begin
+      CursorPos := TempCursorEnd - TempCursorStart;
+      CursorPosF := PointConverter.ConvertBack(CursorPos);
+
+      X := FloatToStr(RoundTo(CursorPosF.X, -3));
+      X := StringReplace(X, ',', '.', [rfReplaceAll]);
+      Y := FloatToStr(RoundTo(CursorPosF.Y, -3));
+      Y := StringReplace(X, ',', '.', [rfReplaceAll]);
+
+      Clipboard.AsText := X + ', ' + Y;
+      ShowMessage(X + ', ' + Y + ' <-- это скопировано в буфер обмена');
     end;
   end;
 end;

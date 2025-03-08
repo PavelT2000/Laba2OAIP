@@ -32,7 +32,7 @@ object Form1: TForm1
   object CursorPosition: TStaticText
     Left = 8
     Top = 8
-    Width = 30
+    Width = 22
     Height = 19
     Caption = '0, 0'
     TabOrder = 1
