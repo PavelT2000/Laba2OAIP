@@ -8,6 +8,7 @@ uses
 procedure SetFieldRect(const AFieldRect: TRect);
 function GetPixels(): integer;
 function Convert(const APoint: TPointF): TPoint;
+function ConvertBack(const APoint: TPoint): TPointF;
 function ConvertRect(const ARect: TRectF): TRect;
 
 implementation
@@ -30,6 +31,12 @@ function Convert(const APoint: TPointF): TPoint;
 begin
   Result.X := Round(APoint.X * (FFieldRect.Width));
   Result.Y := Round(APoint.Y * (FFieldRect.Height));
+end;
+
+function ConvertBack(const APoint: TPoint): TPointF;
+begin
+  Result.X := APoint.X / FFieldRect.Width;
+  Result.Y := APoint.Y / FFieldRect.Height;
 end;
 
 function ConvertRect(const ARect: TRectF): TRect;

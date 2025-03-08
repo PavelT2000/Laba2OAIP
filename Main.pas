@@ -7,7 +7,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.Types, System.SysUtils,
-  System.Variants,
+  System.Variants, System.Math,
   System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.MPlayer, Vcl.ExtCtrls,
 
@@ -18,6 +18,8 @@ type
   TForm1 = class(TForm)
     MediaPlayer1: TMediaPlayer;
     FPS: TTimer;
+    CursorPosition: TStaticText;
+    CursorHint: TStaticText;
     procedure FormPaint(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FPSTimer(Sender: TObject);
@@ -26,6 +28,7 @@ type
     procedure FormMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
     procedure FormMouseUp(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
+    procedure FormKeyPress(Sender: TObject; var Key: Char);
   private
     { Private declarations }
   public
@@ -55,6 +58,8 @@ var PLocation: TPointF;
   SF_Length: Integer;
   Snowflakes: array [1..CountSF] of TSnowflake;
   NikTestMaxCadrsCount: Integer;
+  TempCursorStart: TPoint;
+  TempCursorEnd: TPoint;
 
 
 procedure TForm1.FormCreate(Sender: TObject);
@@ -120,6 +125,16 @@ begin
     Snowflakes[i].Length, 1.5, Snowflakes[i].Ratio, Snowflakes[i].Y*200
     );
 
+
+
+  // Cursor hint
+  Form1.Canvas.Pen.Color := clRed;
+  Form1.Canvas.Brush.Color := clRed;
+  Form1.Canvas.Pen.Width := Round(PointConverter.GetPixels * 1.4);
+
+  Form1.Canvas.MoveTo(TempCursorStart.X, TempCursorStart.Y);
+  Form1.Canvas.LineTo(TempCursorEnd.X, TempCursorEnd.Y);
+
 end;
 
 procedure TForm1.FormPaint(Sender: TObject);
@@ -156,6 +171,46 @@ begin
 
   // Убирает все (вызывает OnPaint вручную)
   Form1.Invalidate;
+end;
+
+procedure TForm1.FormKeyPress(Sender: TObject; var Key: Char);
+var
+  CursorPos: TPoint;
+  CursorPosF: TPointF;
+  X, Y: String;
+begin
+  case key of
+  'q':
+    begin
+      CursorPos := Form1.ScreenToClient(Mouse.CursorPos);
+      //CursorPosF := PointConverter.ConvertBack(CursorPos);
+      TempCursorStart := CursorPos;
+
+      CursorPos := TempCursorEnd - TempCursorStart;
+      CursorPosF := PointConverter.ConvertBack(CursorPos);
+
+      X := FloatToStr(RoundTo(CursorPosF.X, -3));
+      Y := FloatToStr(RoundTo(CursorPosF.Y, -3));
+
+      //ShowMessage(X + ' ' + Y);
+      Form1.CursorPosition.Caption := X + ', ' + Y;
+    end;
+  'e':
+    begin
+
+      CursorPos := Form1.ScreenToClient(Mouse.CursorPos);
+      TempCursorEnd := CursorPos;
+      CursorPos := TempCursorEnd - TempCursorStart;
+      CursorPosF := PointConverter.ConvertBack(CursorPos);
+
+      X := FloatToStr(RoundTo(CursorPosF.X, -3));
+      Y := FloatToStr(RoundTo(CursorPosF.Y, -3));
+
+      //ShowMessage(X + ' ' + Y);
+      Form1.CursorPosition.Caption := X + ', ' + Y;
+
+    end;
+  end;
 end;
 
 procedure TForm1.FormMouseDown(Sender: TObject; Button: TMouseButton;
