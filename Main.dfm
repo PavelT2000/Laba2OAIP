@@ -12,6 +12,9 @@ object Form1: TForm1
   Font.Name = 'Segoe UI'
   Font.Style = []
   OnCreate = FormCreate
+  OnMouseDown = FormMouseDown
+  OnMouseMove = FormMouseMove
+  OnMouseUp = FormMouseUp
   OnPaint = FormPaint
   TextHeight = 15
   object MediaPlayer1: TMediaPlayer
