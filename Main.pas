@@ -11,7 +11,7 @@ uses
   System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.MPlayer, Vcl.ExtCtrls,
 
-  drawSomeThing, Music,
+  drawSomeThing, Music, NikManTest,
   Location, PointConverter;
 
 type
@@ -54,6 +54,7 @@ var PLocation: TPointF;
   SF_Y, SF_X, SF_ratio: Single;
   SF_Length: Integer;
   Snowflakes: array [1..CountSF] of TSnowflake;
+  NikTestMaxCadrsCount: Integer;
 
 
 procedure TForm1.FormCreate(Sender: TObject);
@@ -66,6 +67,11 @@ begin
   drawSomeThing.myLegBody:= PointF(0.5, 0.65);
   drawSomeThing.createCadrArr();
   MakeAllCadrs(drawSomeThing.ArrMainCadrs1);
+
+  NikManTest.SetSize(1);
+  NikManTest.SetCanvas(Canvas);
+  NikManTest.Start;
+  NikTestMaxCadrsCount := NikManTest.GetMaxCadrsCount;
 
   PLocation := point(0, 0);
   StopDrag := point(0, 0);
@@ -97,6 +103,13 @@ begin
   if (allCadrs > 0) and (allCadrs <= 1000) then begin
     prDrawPerson;
   end;
+
+  //if (allCadrs > 0) and (allCadrs <= NikTestMaxCadrsCount) then
+
+  // mod не обязателен, он для повторения анимации
+  NikManTest.DrawPerson(allCadrs mod (NikTestMaxCadrsCount)+1);
+
+
   //DrawPerson(drawSomeThing.MenSki1);
   //DrawPerson(drawSomeThing.MenSki2);
 
