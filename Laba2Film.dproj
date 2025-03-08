@@ -131,6 +131,7 @@
         <DCCReference Include="PointConverter.pas"/>
         <DCCReference Include="Music.pas"/>
         <DCCReference Include="StikMan.pas"/>
+        <DCCReference Include="NikManTest.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

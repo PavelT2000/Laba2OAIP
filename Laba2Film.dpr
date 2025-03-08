@@ -7,7 +7,8 @@ uses
   Location in 'Location.pas',
   PointConverter in 'PointConverter.pas',
   Music in 'Music.pas',
-  StikMan in 'StikMan.pas';
+  StikMan in 'StikMan.pas',
+  NikManTest in 'NikManTest.pas';
 
 {$R *.res}
 
