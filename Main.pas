@@ -103,20 +103,21 @@ begin
   FormRect := Rect(0, 0, Form1.ClientWidth, Form1.ClientHeight);
   PointConverter.SetFieldRect(FormRect);
 
-  DrawLocation2(PLocation);
+  DrawLocation3(PLocation);
 
-  if (allCadrs > 0) and (allCadrs <= 1000) then begin
+  {if (allCadrs > 0) and (allCadrs <= 1000) then begin
     prDrawPerson;
-  end;
-
-  //if (allCadrs > 0) and (allCadrs <= NikTestMaxCadrsCount) then
-
-  // mod не обязателен, он для повторения анимации
-  NikManTest.DrawPerson(allCadrs mod (NikTestMaxCadrsCount)+1);
-
-
+  end;}
   //DrawPerson(drawSomeThing.MenSki1);
   //DrawPerson(drawSomeThing.MenSki2);
+
+  if (allCadrs > 0) and (allCadrs <= NikTestMaxCadrsCount) then NikManTest.DrawPerson(allCadrs);
+
+  // mod не обязателен, он для повторения анимации
+  //NikManTest.DrawPerson(allCadrs+1);
+
+
+
 
   // SnowFlakes
   for i := 1 to CountSF do

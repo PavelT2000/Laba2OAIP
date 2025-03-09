@@ -181,48 +181,72 @@ end;
 procedure SetPersonPositions;
 var
   Person: TPersonPos;
-begin  
-  // Установка позиций каждой конечности
-  Person.RightHand.Create (0.028, 0.062, 0.065, 0.05);
-  Person.LeftHand.Create  (- 0.04, 0.055, 0.005, 0.075);
-  Person.RightLeg.Create  (0.034, 0.06, 0.03, 0.13);
-  Person.LeftLeg.Create   (- 0.02, 0.062, -0.05, 0.13);
-  Person.Neck := PointF   (0.7, 0.5);
-  Person.LegBody := PointF(0.7, 0.65);
+  step: single;
+  baseFrames: integer;
+begin
+  SetLength(FavoritePositions, 100);
+  step:= 0.01;
+  baseFrames:= 5;
+  //стартовая позиция
+  Person.Neck := PointF   (-0.1, 0.5);
+  Person.LegBody := PointF(-0.1, 0.65);
 
-  //FavoritePositions[1] := Person;
+  for var i := 0 to 9 do
+  begin
+    // Установка позиций каждой конечности
+    //1
+    Person.RightHand.Create (0.028, 0.062, 0.065, 0.05);
+    Person.LeftHand.Create  (- 0.04, 0.055, 0.005, 0.075);
+    Person.RightLeg.Create  (0.034, 0.06, 0.03, 0.13);
+    Person.LeftLeg.Create   (- 0.02, 0.062, -0.05, 0.13);
+    Person.Neck.X:= Person.Neck.X + step;
+    person.LegBody.X:= person.LegBody.X + step;
 
-  // Позиция и кол-во кадров для плавного перехода к следующей позиции
-  PushToQueue(Person, 16);
+    // Позиция и кол-во кадров для плавного перехода к следующей позиции
+    PushToQueue(Person, baseFrames);
+    //2
+    Person.RightHand.Create ( 0.018, 0.062, 0.052, 0.035);
+    Person.LeftHand.Create  (- 0.026, 0.055, 0.012, 0.088);
+    Person.RightLeg.Create  (0.025, 0.06, 0.013, 0.13);
+    Person.LeftLeg.Create   (- 0.012, 0.062, - 0.023, 0.13);
+    Person.Neck.X:= Person.Neck.X + step;
+    person.LegBody.X:= person.LegBody.X + step;
+    PushToQueue(Person, baseFrames);
 
-  Person.RightHand.Create ( 0.018, 0.062, 0.052, 0.035);
-  Person.LeftHand.Create  (- 0.026, 0.055, 0.012, 0.088);
-  Person.RightLeg.Create  (0.025, 0.06, 0.013, 0.13);
-  Person.LeftLeg.Create   (- 0.012, 0.062, - 0.023, 0.13);
-//  Person.Neck := PointF   (0.5, 0.5);
-//  Person.LegBody := PointF(0.5, 0.65);
-  
-  PushToQueue(Person, 16);
+    //3
+    Person.RightHand.Create (0.008, 0.062, 0.042, 0.052);
+    Person.LeftHand.Create  (-0.015, 0.055, 0.027, 0.075);
+    Person.RightLeg.Create  (0.008, 0.06, 0.001, 0.13);
+    Person.LeftLeg.Create   (-0.004, 0.062, -0.015, 0.13);
+    Person.Neck.X:= Person.Neck.X + step;
+    person.LegBody.X:= person.LegBody.X + step;
+    PushToQueue(Person, baseFrames);
 
+    //4
+    Person.RightHand.Create (-0.015, 0.055, 0.027, 0.075);
+    Person.LeftHand.Create  (0.008, 0.062, 0.042, 0.052);
+    Person.RightLeg.Create  (-0.004, 0.062, -0.015, 0.13);
+    Person.LeftLeg.Create   (0.008, 0.06, 0.001, 0.13);
+    Person.Neck.X:= Person.Neck.X + step;
+    person.LegBody.X:= person.LegBody.X + step;
+    PushToQueue(Person, 0);
 
-  Person.RightHand.Create (0.008, 0.062, 0.042, 0.052);
-  Person.LeftHand.Create  (-0.015, 0.055, 0.027, 0.075);
-  Person.RightLeg.Create  (0.008, 0.06, 0.001, 0.13);
-  Person.LeftLeg.Create   (-0.004, 0.062, -0.015, 0.13);
-//  Person.Neck := PointF   (0.5, 0.5);
-//  Person.LegBody := PointF(0.5, 0.65);
-  
-  PushToQueue(Person, 16);
-  
+    //switch
+    Person.RightHand.Create (0.008, 0.062, 0.042, 0.052);
+    Person.LeftHand.Create  (-0.015, 0.055, 0.027, 0.075);
+    Person.RightLeg.Create  (0.008, 0.06, 0.001, 0.13);
+    Person.LeftLeg.Create   (-0.004, 0.062, -0.015, 0.13);
+    PushToQueue(Person, baseFrames);
 
-  Person.RightHand.Create (-0.015, 0.055, 0.027, 0.075);
-  Person.LeftHand.Create  (0.008, 0.062, 0.042, 0.052);
-  Person.RightLeg.Create  (-0.004, 0.062, -0.015, 0.13);
-  Person.LeftLeg.Create   (0.008, 0.06, 0.001, 0.13);
-//  Person.Neck := PointF   (0.5, 0.5);
-//  Person.LegBody := PointF(0.5, 0.65);
-
-  PushToQueue(Person, 16);
+    //2
+    Person.RightHand.Create ( 0.018, 0.062, 0.052, 0.035);
+    Person.LeftHand.Create  (- 0.026, 0.055, 0.012, 0.088);
+    Person.RightLeg.Create  (0.025, 0.06, 0.013, 0.13);
+    Person.LeftLeg.Create   (- 0.012, 0.062, - 0.023, 0.13);
+    Person.Neck.X:= Person.Neck.X + step;
+    person.LegBody.X:= person.LegBody.X + step;
+    PushToQueue(Person, baseFrames);
+  end;
 
 
 end;
@@ -250,11 +274,11 @@ var
   PersonBetween: TPersonPos;
 begin
 
-  countCadrs := countCadrs + 1;
-  setLength(result, countCadrs + 1);
+  countCadrs := countCadrs+1;
+  setLength(result, countCadrs);
   // Эт чтоб при 0 были как минимум крайние кадры
-  
-  for i := 0 to countCadrs do
+
+  for i := 0 to countCadrs-1 do
   begin
     result[i].RightHand := DeltaRectF(pStart.RightHand, pEnd.RightHand, countCadrs, i);
     result[i].LeftHand:= DeltaRectF(pStart.LeftHand, pEnd.LeftHand, countCadrs, i);
@@ -280,14 +304,14 @@ begin
   begin
     cadrsCount := QueuePositions[i].CadrsCount;
     // cadrsCount+2 = Length(TempCadrs)
-    
+
     TempCadrs := MakeCadrsBetween(
     QueuePositions[i].PersonPositions,
     QueuePositions[i+1].PersonPositions,
     cadrsCount);
 
     oldLength := Length(PersonAllPos);
-    SetLength(PersonAllPos, OldLength + cadrsCount+2);
+    SetLength(PersonAllPos, OldLength + cadrsCount+1);
 
     for j := Low(TempCadrs) to High(TempCadrs) do
       PersonAllPos[OldLength + j] := TempCadrs[j];
