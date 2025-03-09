@@ -1,5 +1,5 @@
 ﻿unit drawSomeThing;
-
+//DrowSomething
 interface
 
 uses Winapi.Windows, Vcl.Graphics, System.Types, Vcl.Dialogs, System.SysUtils,
@@ -87,6 +87,7 @@ var
   PrPointF: array of TMenPosPointF;
 
 procedure createCadrArr();
+//DrowSomething/CreateCadrArray
 begin
   setLength(ArrMainCadrs1, 4);
   ArrMainCadrs1[0].PrCadr:= MenSki1; ArrMainCadrs1[0].numCadrs:= 16;
@@ -96,6 +97,7 @@ begin
 end;
 
 procedure MakeAllCadrs(const ArrCadr: TArrMainCadr);
+//DrowSomething/MakeAllCadrs
 var
     sumNumCadrs, firstFreePos: integer;
 begin
@@ -115,16 +117,19 @@ begin
 end;
 
 procedure SetCanvas(canvas: TCanvas);
+//DrowSomething/SetCanvas
 begin
   myCanvas := canvas;
 end;
 
 procedure SetSize(size: single);
+//DrowSomething/SetSize
 begin
   mySize := size;
 end;
 
 function CalculateAngleVectors(vector1, vector2: TPointF): Double;
+//DrowSomething/CalculateAngleVectors
 begin
   result := ArcCos(vector1.DotProduct(vector2) /
     (vector1.Length * vector2.Length))
@@ -133,6 +138,7 @@ end;
 // создаёт массив из cadrs элементов для создания анимации включая заданные точки
 //первый кадр не отрисовывается
 function createArrPointF(pStart, pEnd: TPointF; cadrs: Integer): TPointFArr;
+//DrowSomething/createArrPointF
 var
   deltaX, deltaY: single;
 begin
@@ -150,6 +156,7 @@ begin
 end;
 
 function createArr2PointF(pStart, pEnd: T2PointF; cadrs: Integer): T2PointFArr;
+//DrowSomething/createArr2PointF
 var
   arr1, arr2: TPointFArr;
 begin
@@ -165,6 +172,7 @@ end;
 
 // хакидываем в PrPointF заготовленные точки для последующей рисовки
 procedure createArrMenPos(pos1, pos2: TAllMenPos; cadrs, firstFreePos: Integer);
+//DrowSomething/createArrMenPos
 var
   RH, LH, RL, LL: T2PointFArr; // R - right, L - left; H - hand, L - leg
 begin
@@ -187,6 +195,7 @@ begin
 end;
 
 procedure DrawHandPointF(pos: T2PointF; startPoint: TPointF; size: single);
+//DrowSomething/DrawHandPointF
 var
   intP1: TPoint;
   p1: TPointF;
@@ -210,6 +219,7 @@ begin
 end;
 
 procedure DrawLegPointF(pos: T2PointF; startPoint: TPointF; size: single);
+//DrowSomething/DrawLegPointF
 var
   intP1: TPoint;
   p1: TPointF;
@@ -233,6 +243,7 @@ begin
 end;
 
 procedure DrawHead(neck, legBody: TPointF; size: single);
+//DrowSomething/DrawHead
 var
   intP1: TPoint;
   Rect: TRect;
@@ -259,6 +270,7 @@ begin
 end;
 
 procedure DrawBody(neck, legBody: TPointF; size: single);
+//DrowSomething/DrawBody
 var
   intP1: TPoint;
 begin
@@ -275,6 +287,7 @@ end;
 // from body point create head point and second body point.
 // 1 body poin for hands, second for Legs, in function first (hand) point
 procedure DrawPerson(menPos: TAllMenPos); overload;
+//DrowSomething/DrawPerson
 begin
   DrawHead(myNeck, myLegBody, mySize);
   DrawHandPointF(allMenPos[menPos].rightHand, myNeck, mySize);
@@ -286,6 +299,7 @@ end;
 
 // рисование по заготовленным данным
 procedure prDrawPerson();
+//DrowSomething/prDrawPerson
 begin
   if (allCadrs < length(PrPointF)) then
   begin
@@ -300,6 +314,9 @@ end;
 
 procedure DrawSnowflake(SFPosF: TPointF; Length: Integer;
   size, Ratio, OffsetAngle: single);
+//DrowSomething/DrawSnowflake
+
+
 // SFPosF - координаты снежинки
 // length - длина любой из 6 полосок в пикселях
 // Size - ширина линий
