@@ -255,36 +255,118 @@ begin
 
 //  PushToQueue(Person, baseFrames+9999999);
 
-   //take1
-  Person.RightHand.Create ( 0.027, 0.043, 0.039, -0.015);
-  Person.LeftHand.Create  ( 0.046, 0.023, 0.074, -0.009);
+   // Тянется к лыжам
+  Person.RightHand.Create ( 0.027, 0.043, 0.050, -0.015);
+  Person.LeftHand.Create  ( 0.046, 0.023, 0.075, -0.015);
   Person.RightLeg.Create  ( 0.012, 0.062,  0.023, 0.13);
   Person.LeftLeg.Create   (- 0.012, 0.062, - 0.023, 0.13);
-  PushToQueue(Person, 3);
+  PushToQueue(Person, 2); // Пауза
 
-  PushToQueue(Person, 5);
+  PushToQueue(Person, 15);
 
-  //take2
-  Person.RightHand.Create ( 0.027, 0.038, 0.039, -0.020);
-  Person.LeftHand.Create  ( 0.046, 0.018, 0.074, -0.014);
+  // Поднимает лыжи
+  Person.RightHand.Create ( 0.027, 0.038, 0.050, -0.020);
+  Person.LeftHand.Create  ( 0.046, 0.018, 0.075, -0.020);
   PushToQueue(Person, 10);
 
-  //take3
-  Person.RightHand.Create ( 0.027, 0.043, 0.039, -0.015);
-  Person.LeftHand.Create  ( 0.046, 0.023, 0.074, -0.009);
-  PushToQueue(Person, 10);
+  // Опускает лыжи
+  Person.RightHand.Create ( 0.027, 0.043, 0.050, -0.015);
+  Person.LeftHand.Create  ( 0.046, 0.023, 0.075, -0.015);
+  PushToQueue(Person, 15);
 
-  //take4
+  // сгибается и надевает лыжи
   Person.RightLeg.Create  ( 0.012, 0.062-0.05,  0.023, 0.13-0.05);
   Person.LeftLeg.Create   (- 0.012, 0.062-0.05, - 0.023, 0.13-0.05);
   Person.LegBody := Person.LegBody + PointF(0, 0.05);
   Person.Neck := Person.LegBody + PointF(0.024, -0.057);
-  PushToQueue(Person, 10);
 
-  //take5
   Person.RightHand.Create  ( -0.021, 0.072, 0.003, 0.105);
   Person.LeftHand.Create   (0.008, 0.08, 0.032, 0.105);
+  PushToQueue(Person, 10);
 
+
+  PushToQueue(Person, 15);
+
+
+  // Тянется к палкам
+  Person.RightHand.Create ( 0.017, 0.043, 0.030, -0.015);
+  Person.LeftHand.Create  ( 0.036, 0.023, 0.040, -0.015);
+  Person.RightLeg.Create  ( 0.012, 0.062,  0.023, 0.13);
+  Person.LeftLeg.Create   (- 0.012, 0.062, - 0.023, 0.13);
+  Person.LegBody := Person.LegBody + PointF(0, -0.05);
+  Person.Neck := Person.LegBody + PointF(0, -0.15);
+  PushToQueue(Person, 10); // Пауза
+
+  PushToQueue(Person, 10);
+
+
+//  // Дальше ходьба, но уже с лыжами и палками
+//  Person.RightHand.Create (0.028, 0.062, 0.065, 0.05);
+//  Person.LeftHand.Create  (- 0.04, 0.055, 0.005, 0.075);
+//  Person.RightLeg.Create  (0.034, 0.06, 0.03, 0.13);
+//  Person.LeftLeg.Create   (- 0.02, 0.062, -0.05, 0.13);
+//  PushToQueue(Person, 10);
+
+
+
+    for var i := 0 to 3 do
+  begin
+    // Установка позиций каждой конечности
+    //1
+    Person.RightHand.Create (0.028, 0.062, 0.065, 0.05);
+    Person.LeftHand.Create  (- 0.04, 0.055, 0.005, 0.075);
+    Person.RightLeg.Create  (0.034, 0.06, 0.03, 0.13);
+    Person.LeftLeg.Create   (- 0.02, 0.062, -0.05, 0.13);
+    Person.Neck.X:= Person.Neck.X + step;
+    person.LegBody.X:= person.LegBody.X + step;
+
+    // Позиция и кол-во кадров для плавного перехода к следующей позиции
+    PushToQueue(Person, baseFrames);
+    //2
+    Person.RightHand.Create ( 0.018, 0.062, 0.052, 0.035);
+    Person.LeftHand.Create  (- 0.026, 0.055, 0.012, 0.088);
+    Person.RightLeg.Create  (0.025, 0.06, 0.013, 0.13);
+    Person.LeftLeg.Create   (- 0.012, 0.062, - 0.023, 0.13);
+    Person.Neck.X:= Person.Neck.X + step;
+    person.LegBody.X:= person.LegBody.X + step;
+    PushToQueue(Person, baseFrames);
+
+    //3
+    Person.RightHand.Create (0.008, 0.062, 0.042, 0.052);
+    Person.LeftHand.Create  (-0.015, 0.055, 0.027, 0.075);
+    Person.RightLeg.Create  (0.008, 0.06, 0.001, 0.13);
+    Person.LeftLeg.Create   (-0.004, 0.062, -0.015, 0.13);
+    Person.Neck.X:= Person.Neck.X + step;
+    person.LegBody.X:= person.LegBody.X + step;
+    PushToQueue(Person, baseFrames);
+
+    //4
+    Person.RightHand.Create (-0.015, 0.055, 0.027, 0.075);
+    Person.LeftHand.Create  (0.008, 0.062, 0.042, 0.052);
+    Person.RightLeg.Create  (-0.004, 0.062, -0.015, 0.13);
+    Person.LeftLeg.Create   (0.008, 0.06, 0.001, 0.13);
+    Person.Neck.X:= Person.Neck.X + step;
+    person.LegBody.X:= person.LegBody.X + step;
+    PushToQueue(Person, 0);
+
+    //switch
+    Person.RightHand.Create (0.008, 0.062, 0.042, 0.052);
+    Person.LeftHand.Create  (-0.015, 0.055, 0.027, 0.075);
+    Person.RightLeg.Create  (0.008, 0.06, 0.001, 0.13);
+    Person.LeftLeg.Create   (-0.004, 0.062, -0.015, 0.13);
+//    Person.Neck.X:= Person.Neck.X + step/baseFrames;
+//    person.LegBody.X:= person.LegBody.X + step/baseFrames;
+    PushToQueue(Person, baseFrames);
+
+    //2
+    Person.RightHand.Create ( 0.018, 0.062, 0.052, 0.035);
+    Person.LeftHand.Create  (- 0.026, 0.055, 0.012, 0.088);
+    Person.RightLeg.Create  (0.025, 0.06, 0.013, 0.13);
+    Person.LeftLeg.Create   (- 0.012, 0.062, - 0.023, 0.13);
+    Person.Neck.X:= Person.Neck.X + step;
+    person.LegBody.X:= person.LegBody.X + step;
+    PushToQueue(Person, baseFrames);
+  end;
 
 
   PushToQueue(Person, baseFrames+9999999);
