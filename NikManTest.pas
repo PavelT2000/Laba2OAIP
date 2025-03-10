@@ -369,8 +369,8 @@ begin
   end;
 
 
-  PushToQueue(Person, baseFrames+9999999);
-  PushToQueue(Person, baseFrames+9999999);
+  PushToQueue(Person, baseFrames+999);
+  PushToQueue(Person, baseFrames+999);
 
 end;
 
