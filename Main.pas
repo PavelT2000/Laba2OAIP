@@ -78,8 +78,8 @@ begin
   NikManTest.Start;
   NikTestMaxCadrsCount := NikManTest.GetMaxCadrsCount;
 
-  PLocation := point(0, 0);
-  StopDrag := point(0, 0);
+  PLocation := pointF(0, 0);
+  StopDrag := PLocation;
   IsDragging := false;
 
   // Snowflakes
