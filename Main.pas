@@ -191,7 +191,7 @@ begin
       X := FloatToStr(RoundTo(CursorPosF.X, -3));
       X := StringReplace(X, ',', '.', [rfReplaceAll]);
       Y := FloatToStr(RoundTo(CursorPosF.Y, -3));
-      Y := StringReplace(X, ',', '.', [rfReplaceAll]);
+      Y := StringReplace(Y, ',', '.', [rfReplaceAll]);
 
       Form1.CursorPosition.Caption := X + ', ' + Y;
     end;
@@ -206,7 +206,7 @@ begin
       X := FloatToStr(RoundTo(CursorPosF.X, -3));
       X := StringReplace(X, ',', '.', [rfReplaceAll]);
       Y := FloatToStr(RoundTo(CursorPosF.Y, -3));
-      Y := StringReplace(X, ',', '.', [rfReplaceAll]);
+      Y := StringReplace(Y, ',', '.', [rfReplaceAll]);
 
       Form1.CursorPosition.Caption := X + ', ' + Y;
 
@@ -219,7 +219,7 @@ begin
       X := FloatToStr(RoundTo(CursorPosF.X, -3));
       X := StringReplace(X, ',', '.', [rfReplaceAll]);
       Y := FloatToStr(RoundTo(CursorPosF.Y, -3));
-      Y := StringReplace(X, ',', '.', [rfReplaceAll]);
+      Y := StringReplace(Y, ',', '.', [rfReplaceAll]);
 
       Clipboard.AsText := X + ', ' + Y;
       ShowMessage(X + ', ' + Y + ' <-- это скопировано в буфер обмена');

@@ -72,7 +72,10 @@ end;
 function CalculateAngleVectors(vector1, vector2: TPointF): Double;
 begin
   result := ArcCos(vector1.DotProduct(vector2) /
-    (vector1.Length * vector2.Length))
+    (vector1.Length * vector2.Length));
+  if vector1.X < vector2.X then
+    result := - result;
+
 end;
 
 
@@ -186,12 +189,12 @@ var
 begin
   SetLength(FavoritePositions, 100);
   step:= 0.01;
-  baseFrames:= 5;
+  baseFrames:= 10;
   //стартовая позиция
-  Person.Neck := PointF   (-0.1, 0.5);
-  Person.LegBody := PointF(-0.1, 0.65);
+  Person.Neck := PointF   (0.1, 0.5);
+  Person.LegBody := PointF(0.1, 0.65);
 
-  for var i := 0 to 9 do
+  for var i := 0 to 0 do
   begin
     // Установка позиций каждой конечности
     //1
@@ -236,6 +239,8 @@ begin
     Person.LeftHand.Create  (-0.015, 0.055, 0.027, 0.075);
     Person.RightLeg.Create  (0.008, 0.06, 0.001, 0.13);
     Person.LeftLeg.Create   (-0.004, 0.062, -0.015, 0.13);
+//    Person.Neck.X:= Person.Neck.X + step/baseFrames;
+//    person.LegBody.X:= person.LegBody.X + step/baseFrames;
     PushToQueue(Person, baseFrames);
 
     //2
@@ -248,6 +253,42 @@ begin
     PushToQueue(Person, baseFrames);
   end;
 
+//  PushToQueue(Person, baseFrames+9999999);
+
+   //take1
+  Person.RightHand.Create ( 0.027, 0.043, 0.039, -0.015);
+  Person.LeftHand.Create  ( 0.046, 0.023, 0.074, -0.009);
+  Person.RightLeg.Create  ( 0.012, 0.062,  0.023, 0.13);
+  Person.LeftLeg.Create   (- 0.012, 0.062, - 0.023, 0.13);
+  PushToQueue(Person, 3);
+
+  PushToQueue(Person, 5);
+
+  //take2
+  Person.RightHand.Create ( 0.027, 0.038, 0.039, -0.020);
+  Person.LeftHand.Create  ( 0.046, 0.018, 0.074, -0.014);
+  PushToQueue(Person, 10);
+
+  //take3
+  Person.RightHand.Create ( 0.027, 0.043, 0.039, -0.015);
+  Person.LeftHand.Create  ( 0.046, 0.023, 0.074, -0.009);
+  PushToQueue(Person, 10);
+
+  //take4
+  Person.RightLeg.Create  ( 0.012, 0.062-0.05,  0.023, 0.13-0.05);
+  Person.LeftLeg.Create   (- 0.012, 0.062-0.05, - 0.023, 0.13-0.05);
+  Person.LegBody := Person.LegBody + PointF(0, 0.05);
+  Person.Neck := Person.LegBody + PointF(0.024, -0.057);
+  PushToQueue(Person, 10);
+
+  //take5
+  Person.RightHand.Create  ( -0.021, 0.072, 0.003, 0.105);
+  Person.LeftHand.Create   (0.008, 0.08, 0.032, 0.105);
+
+
+
+  PushToQueue(Person, baseFrames+9999999);
+  PushToQueue(Person, baseFrames+9999999);
 
 end;
 
