@@ -10,6 +10,7 @@ function GetPixels(): integer;
 function Convert(const APoint: TPointF): TPoint;
 function ConvertBack(const APoint: TPoint): TPointF;
 function ConvertRect(const ARect: TRectF): TRect;
+function AddPosRect(rect: TRectF; pos: TPointF): TRectF;
 
 implementation
 
@@ -45,6 +46,14 @@ begin
   Result.Bottom:= Round(ARect.Bottom * FFieldRect.Height);
   Result.Left:= Round(ARect.Left * FFieldRect.Width);
   Result.Right:= Round(ARect.Right * FFieldRect.Width);
+end;
+
+function AddPosRect(rect: TRectF; pos: TPointF): TRectF;
+begin
+  result.Left:= rect.Left + pos.X;
+  result.Right:= rect.Right + pos.X;
+  result.Top:= rect.Top + pos.y;
+  result.Bottom:= rect.Bottom + pos.y;
 end;
 
 end.

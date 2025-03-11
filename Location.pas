@@ -24,14 +24,6 @@ begin
   result.y:= point.y + pos.y;
 end;
 
-function AddPosRect(rect: TRectF; pos: TPointF): TRectF;
-begin
-  result.Left:= rect.Left + pos.X;
-  result.Right:= rect.Right + pos.X;
-  result.Top:= rect.Top + pos.y;
-  result.Bottom:= rect.Bottom + pos.y;
-end;
-
 procedure DrawLocation(pos: TPointF);
 var
   p1, p2, p3, p4: TPoint;

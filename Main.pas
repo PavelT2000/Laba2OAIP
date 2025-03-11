@@ -73,13 +73,15 @@ begin
   drawSomeThing.createCadrArr();
   MakeAllCadrs(drawSomeThing.ArrMainCadrs1);
 
+  PLocation := pointF(0, 0);
+  StopDrag := PLocation;
+
   NikManTest.SetSize(1);
   NikManTest.SetCanvas(Canvas);
   NikManTest.Start;
   NikTestMaxCadrsCount := NikManTest.GetMaxCadrsCount;
 
-  PLocation := pointF(0, 0);
-  StopDrag := PLocation;
+
   IsDragging := false;
 
   // Snowflakes
@@ -104,6 +106,7 @@ begin
   PointConverter.SetFieldRect(FormRect);
 
   DrawLocation3(PLocation);
+  NikManTest.SetPos(PLocation);
 
   {if (allCadrs > 0) and (allCadrs <= 1000) then begin
     prDrawPerson;

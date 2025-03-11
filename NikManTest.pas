@@ -35,6 +35,17 @@ type
   TPersonPosArr = array of TPersonPos;
   TQueuePosArr = array of TQueuePos;
 
+procedure SetCanvas(canvas: TCanvas);
+procedure SetSize(size: single);
+procedure DrawPerson(nowCadr: Integer);
+procedure Start;
+procedure SetPos(newPos: TPointF);
+function GetMaxCadrsCount: Integer;
+
+implementation
+
+uses PointConverter;
+
 var
   PersonAllPos: TPersonPosArr;
   FavoritePositions: TPersonPosArr;
@@ -45,19 +56,7 @@ var
 
   basicCanvas: TCanvas;
   basicSize: single;
-
-procedure SetCanvas(canvas: TCanvas);
-procedure SetSize(size: single);
-procedure DrawPerson(nowCadr: Integer);
-procedure Start;
-function GetMaxCadrsCount: Integer;
-
-implementation
-
-uses PointConverter;
-
-
-
+  pos: TPointF;
 
 procedure SetCanvas(canvas: TCanvas);
 begin
@@ -69,6 +68,11 @@ begin
   basicSize := size;
 end;
 
+procedure SetPos(newPos: TPointF);
+begin
+  pos:= newPos;
+end;
+
 function CalculateAngleVectors(vector1, vector2: TPointF): Double;
 begin
   result := ArcCos(vector1.DotProduct(vector2) /
@@ -78,9 +82,7 @@ begin
 
 end;
 
-
-
-procedure DrawHand(pos: TRectF; startPoint: TPointF; size: single);
+procedure DrawHand(menPos: TRectF; startPoint: TPointF; size: single);
 var
   intP1: TPoint;
   p1: TPointF;
@@ -88,23 +90,25 @@ begin
   basicCanvas.Pen.Color := basicColor;
   basicCanvas.Brush.Color := basicColor;
   basicCanvas.Pen.Width := Round(PointConverter.GetPixels * basicWitdh * size);
+  startPoint:= startPoint + pos;
 
   intP1 := PointConverter.Convert(startPoint);
   basicCanvas.MoveTo(intP1.X, intP1.Y);
 
-  p1.X := startPoint.X + pos.Left * size;
-  p1.Y := startPoint.Y + pos.Top * size;
+  p1:= p1 + pos;
+  p1.X := startPoint.X + menPos.Left * size;
+  p1.Y := startPoint.Y + menPos.Top * size;
   intP1 := PointConverter.Convert(p1);
   basicCanvas.LineTo(intP1.X, intP1.Y);
   
-
-  p1.X := startPoint.X + pos.Right * size;
-  p1.Y := startPoint.Y + pos.Bottom * size;
+  p1:= p1 + pos;
+  p1.X := startPoint.X + menPos.Right * size;
+  p1.Y := startPoint.Y + menPos.Bottom * size;
   intP1 := PointConverter.Convert(p1);
   basicCanvas.LineTo(intP1.X, intP1.Y);
 end;
 
-procedure DrawLeg(pos: TRectF; startPoint: TPointF; size: single);
+procedure DrawLeg(menPos: TRectF; startPoint: TPointF; size: single);
 var
   intP1: TPoint;
   p1: TPointF;
@@ -112,18 +116,20 @@ begin
   basicCanvas.Pen.Color := basicColor;
   basicCanvas.Brush.Color := basicColor;
   basicCanvas.Pen.Width := Round(PointConverter.GetPixels * basicWitdh * size);
+  startPoint:= startPoint + pos;
 
   intP1 := PointConverter.Convert(startPoint);
   basicCanvas.MoveTo(intP1.X, intP1.Y);
 
-  p1.X := startPoint.X + pos.Left * size;
-  p1.Y := startPoint.Y + pos.Top * size;
+  p1:= p1 + pos;
+  p1.X := startPoint.X + menPos.Left * size;
+  p1.Y := startPoint.Y + menPos.Top * size;
   intP1 := PointConverter.Convert(p1);
   basicCanvas.LineTo(intP1.X, intP1.Y);
 
-
-  p1.X := startPoint.X + pos.Right * size;
-  p1.Y := startPoint.Y + pos.Bottom * size;
+  p1:= p1 + pos;
+  p1.X := startPoint.X + menPos.Right * size;
+  p1.Y := startPoint.Y + menPos.Bottom * size;
   intP1 := PointConverter.Convert(p1);
   basicCanvas.LineTo(intP1.X, intP1.Y);
 end;
@@ -140,6 +146,8 @@ begin
   basicCanvas.Pen.Width := Round(PointConverter.GetPixels * basicWitdh * size);
   headRadius := Round(PointConverter.GetPixels * 2.4 * size);
   // значение в пиксилях
+  neck:= neck + pos;
+  legBody:= legBody + pos;
 
   angle := CalculateAngleVectors(legBody - neck, pointf(0, -1)) + Pi / 2;
   // showmessage(FloatToStr(angle));
@@ -161,6 +169,8 @@ begin
   basicCanvas.Pen.Color := basicColor;
   basicCanvas.Brush.Color := basicColor;
   basicCanvas.Pen.Width := Round(PointConverter.GetPixels * basicWitdh * size);
+  neck:= neck + pos;
+  legBody:= legBody + pos;
 
   intP1 := PointConverter.Convert(neck);
   basicCanvas.MoveTo(intP1.X, intP1.Y);
@@ -189,12 +199,12 @@ var
 begin
   SetLength(FavoritePositions, 100);
   step:= 0.01;
-  baseFrames:= 10;
+  baseFrames:= 5;
   //стартовая позиция
   Person.Neck := PointF   (0.1, 0.5);
   Person.LegBody := PointF(0.1, 0.65);
 
-  for var i := 0 to 0 do
+  for var i := 0 to 5 do
   begin
     // Установка позиций каждой конечности
     //1
@@ -308,8 +318,8 @@ begin
 //  PushToQueue(Person, 10);
 
 
-
-    for var i := 0 to 3 do
+  baseFrames:= 4;
+    for var i := 0 to 15 do
   begin
     // Установка позиций каждой конечности
     //1
@@ -447,14 +457,29 @@ begin
   result := Length(PersonAllPos);
 end;
 
-
-
 procedure DrawPerson(nowCadr: Integer);
 var
   ToDrawPos: TPersonPos;
+
+  {myRightHand, myLeftHand, myRightLeg, myLeftLeg: TRectF;
+  myNeck, myLegBody: TPointF;}
 begin
 
   ToDrawPos := PersonAllPos[nowCadr-1];
+
+  {myRightHand:= AddPosRect(ToDrawPos.RightHand, pos);
+  myLeftHand:=  AddPosRect(ToDrawPos.LeftHand, pos);
+  myRightLeg:= AddPosRect(ToDrawPos.RightLeg, pos);
+  myLeftLeg:= AddPosRect(ToDrawPos.LeftLeg, pos);
+  myNeck:= ToDrawPos.Neck + pos;
+  myLegBody:= ToDrawPos.LegBody + pos;
+
+  DrawHead(myNeck, myLegBody, basicSize);
+  DrawBody(myNeck, myLegBody, basicSize);
+  DrawHand(myRightHand, myNeck, basicSize);
+  DrawHand(myLeftHand, myNeck, basicSize);
+  DrawLeg(myRightLeg, myLegBody, basicSize);
+  DrawLeg(myLeftLeg, myLegBody, basicSize);}
 
   DrawHead(ToDrawPos.Neck, ToDrawPos.LegBody, basicSize);
   DrawBody(ToDrawPos.Neck, ToDrawPos.LegBody, basicSize);
