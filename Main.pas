@@ -11,7 +11,7 @@ uses
   System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.MPlayer, Vcl.ExtCtrls,
 
-  drawSomeThing, Music, NikManTest, Clipbrd,
+  drawSomeThing, Music, NikManTest, SkisPoles, Clipbrd,
   Location, PointConverter;
 
 type
@@ -54,10 +54,8 @@ type
 var PLocation: TPointF;
   StartDrag, StopDrag: TPointF;
   IsDragging: Boolean;
-  SF_Y, SF_X, SF_ratio: Single;
-  SF_Length: Integer;
   Snowflakes: array [1..CountSF] of TSnowflake;
-  NikTestMaxCadrsCount: Integer;
+  NikTestMaxCadrsCount, SkisPolesMaxCadrsCount: Integer;
   TempCursorStart: TPoint;
   TempCursorEnd: TPoint;
 
@@ -80,6 +78,11 @@ begin
   NikManTest.SetCanvas(Canvas);
   NikManTest.Start;
   NikTestMaxCadrsCount := NikManTest.GetMaxCadrsCount;
+
+  SkisPoles.SetSize(1);
+  SkisPoles.SetCanvas(Canvas);
+  SkisPoles.Start;
+  SkisPolesMaxCadrsCount := NikManTest.GetMaxCadrsCount;
 
 
   IsDragging := false;
@@ -107,6 +110,7 @@ begin
 
   DrawLocation3(PLocation);
   NikManTest.SetPos(PLocation);
+  SkisPoles.SetPos(PLocation);
 
   {if (allCadrs > 0) and (allCadrs <= 1000) then begin
     prDrawPerson;
@@ -114,7 +118,10 @@ begin
   //DrawPerson(drawSomeThing.MenSki1);
   //DrawPerson(drawSomeThing.MenSki2);
 
+  if (allCadrs > 0) and (allCadrs <= SkisPolesMaxCadrsCount) then SkisPoles.DrawSkisPoles(allCadrs);
+
   if (allCadrs > 0) and (allCadrs <= NikTestMaxCadrsCount) then NikManTest.DrawPerson(allCadrs);
+
 
   // mod не обязателен, он для повторения анимации
   //NikManTest.DrawPerson(allCadrs+1);

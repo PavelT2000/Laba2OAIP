@@ -198,11 +198,11 @@ var
   baseFrames: integer;
 begin
   SetLength(FavoritePositions, 100);
-  step:= 0.01;
+  step:= 0.009;
   baseFrames:= 5;
   //стартовая позиция
-  Person.Neck := PointF   (0.1, 0.5);
-  Person.LegBody := PointF(0.1, 0.65);
+  Person.Neck := PointF   (0.1, 0.45);
+  Person.LegBody := PointF(0.1, 0.6);
 
   for var i := 0 to 5 do
   begin
@@ -242,7 +242,9 @@ begin
     Person.LeftLeg.Create   (0.008, 0.06, 0.001, 0.13);
     Person.Neck.X:= Person.Neck.X + step;
     person.LegBody.X:= person.LegBody.X + step;
-    PushToQueue(Person, 0);
+    PushToQueue(Person, -1);
+    // при -1 никаких кадров создаваться не будет
+    // Подробнее в функции MakeCadrsBetween
 
     //switch
     Person.RightHand.Create (0.008, 0.062, 0.042, 0.052);
@@ -357,15 +359,13 @@ begin
     Person.LeftLeg.Create   (0.008, 0.06, 0.001, 0.13);
     Person.Neck.X:= Person.Neck.X + step;
     person.LegBody.X:= person.LegBody.X + step;
-    PushToQueue(Person, 0);
+    PushToQueue(Person, -1);
 
     //switch
     Person.RightHand.Create (0.008, 0.062, 0.042, 0.052);
     Person.LeftHand.Create  (-0.015, 0.055, 0.027, 0.075);
     Person.RightLeg.Create  (0.008, 0.06, 0.001, 0.13);
     Person.LeftLeg.Create   (-0.004, 0.062, -0.015, 0.13);
-//    Person.Neck.X:= Person.Neck.X + step/baseFrames;
-//    person.LegBody.X:= person.LegBody.X + step/baseFrames;
     PushToQueue(Person, baseFrames);
 
     //2
@@ -409,7 +409,10 @@ begin
 
   countCadrs := countCadrs+1;
   setLength(result, countCadrs);
-  // Эт чтоб при 0 были как минимум крайние кадры
+  // при -1 никакие кадры (промежуточные и крайние) создаваться не будут
+  // при 0 будет создаваться только начальный кадр (без промежуточных и конечного)
+  // при 1 будут создаваться 2 крайних кадра без промежуточных
+  // при >1 будут создаваться countCadrs-1 промежуточных кадров
 
   for i := 0 to countCadrs-1 do
   begin
