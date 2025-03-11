@@ -132,6 +132,7 @@
         <DCCReference Include="Music.pas"/>
         <DCCReference Include="StikMan.pas"/>
         <DCCReference Include="NikManTest.pas"/>
+        <DCCReference Include="SkisPoles.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
