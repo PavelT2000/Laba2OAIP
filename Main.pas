@@ -78,8 +78,8 @@ begin
   NikManTest.Start;
   NikTestMaxCadrsCount := NikManTest.GetMaxCadrsCount;
 
-  PLocation := point(0, 0);
-  StopDrag := point(0, 0);
+  PLocation := pointF(0, 0);
+  StopDrag := PLocation;
   IsDragging := false;
 
   // Snowflakes
@@ -103,20 +103,21 @@ begin
   FormRect := Rect(0, 0, Form1.ClientWidth, Form1.ClientHeight);
   PointConverter.SetFieldRect(FormRect);
 
-  DrawLocation2(PLocation);
+  DrawLocation3(PLocation);
 
-  if (allCadrs > 0) and (allCadrs <= 1000) then begin
+  {if (allCadrs > 0) and (allCadrs <= 1000) then begin
     prDrawPerson;
-  end;
-
-  //if (allCadrs > 0) and (allCadrs <= NikTestMaxCadrsCount) then
-
-  // mod не обязателен, он для повторения анимации
-  NikManTest.DrawPerson(allCadrs mod (NikTestMaxCadrsCount)+1);
-
-
+  end;}
   //DrawPerson(drawSomeThing.MenSki1);
   //DrawPerson(drawSomeThing.MenSki2);
+
+  if (allCadrs > 0) and (allCadrs <= NikTestMaxCadrsCount) then NikManTest.DrawPerson(allCadrs);
+
+  // mod не обязателен, он для повторения анимации
+  //NikManTest.DrawPerson(allCadrs+1);
+
+
+
 
   // SnowFlakes
   for i := 1 to CountSF do
@@ -190,7 +191,7 @@ begin
       X := FloatToStr(RoundTo(CursorPosF.X, -3));
       X := StringReplace(X, ',', '.', [rfReplaceAll]);
       Y := FloatToStr(RoundTo(CursorPosF.Y, -3));
-      Y := StringReplace(X, ',', '.', [rfReplaceAll]);
+      Y := StringReplace(Y, ',', '.', [rfReplaceAll]);
 
       Form1.CursorPosition.Caption := X + ', ' + Y;
     end;
@@ -205,7 +206,7 @@ begin
       X := FloatToStr(RoundTo(CursorPosF.X, -3));
       X := StringReplace(X, ',', '.', [rfReplaceAll]);
       Y := FloatToStr(RoundTo(CursorPosF.Y, -3));
-      Y := StringReplace(X, ',', '.', [rfReplaceAll]);
+      Y := StringReplace(Y, ',', '.', [rfReplaceAll]);
 
       Form1.CursorPosition.Caption := X + ', ' + Y;
 
@@ -218,7 +219,7 @@ begin
       X := FloatToStr(RoundTo(CursorPosF.X, -3));
       X := StringReplace(X, ',', '.', [rfReplaceAll]);
       Y := FloatToStr(RoundTo(CursorPosF.Y, -3));
-      Y := StringReplace(X, ',', '.', [rfReplaceAll]);
+      Y := StringReplace(Y, ',', '.', [rfReplaceAll]);
 
       Clipboard.AsText := X + ', ' + Y;
       ShowMessage(X + ', ' + Y + ' <-- это скопировано в буфер обмена');
