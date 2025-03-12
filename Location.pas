@@ -78,9 +78,7 @@ var
 begin
   myCanvas.Pen.Width:= Round(PointConverter.GetPixels()/3.2);
   myCanvas.Pen.Color:=clBlack;
-  //colorArr[0]:= clSilver;
-  //colorArr[1]:= clFuchsia;
-  //flore
+  //pos:= pos - PointF(0.2, 0);
   high:= 0.07;
   width:= 0.114;
   p1.y:= 0.55;
@@ -214,6 +212,12 @@ begin
   p6 := p5;
   p4 := Convert(PointF(2, 2.1)+pos);
   p5 := Convert(PointF(1.95, 1.95+0.4)+pos);
+  myCanvas.Polygon([p3, p4, p5, p6]);
+
+  p3 := p4;
+  p6 := p5;
+  p4 := Convert(PointF(3, 2.1)+pos);
+  p5 := Convert(PointF(2.95, 1.95+0.4)+pos);
   myCanvas.Polygon([p3, p4, p5, p6]);
 
   //black side

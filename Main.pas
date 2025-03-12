@@ -98,6 +98,7 @@ begin
   end;
 
   //Music.TurnOn(CalmMind);
+  allCadrs:= 150;
 end;
 
 procedure NextPaint();
