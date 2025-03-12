@@ -1,4 +1,4 @@
-unit SkisPoles;
+﻿unit SkisPoles;
 
 interface
 
@@ -88,19 +88,29 @@ var
   SkisPoles: TSkisPolesPos;
   step: single;
   baseFrames: integer;
+  skiLength: real;
 begin
   //SetLength(FavoritePositions, 100);
   step:= 0.01;
-  baseFrames:= 5;
+  baseFrames:= 25;
+  skiLength := 0.24;
   //��������� �������
-  SkisPoles.RightSki.Create (0.445, 0.3, 0.445, 0.54);
-  SkisPoles.LeftSki.Create  (0.42, 0.3, 0.42, 0.54);
+  SkisPoles.RightSki.Create (0.445, 0.3, 0.445, 0.3+skiLength);
+  SkisPoles.LeftSki.Create  (0.42, 0.3, 0.42, 0.3+skiLength);
   SkisPoles.RightPole.Create(0.41, 0.3, 0.41, 0.54);
   SkisPoles.LeftPole.Create (0.4, 0.3, 0.4, 0.54);
 
   PushToQueue(SkisPoles, startDraw); // �����
 
+  PushToQueue(SkisPoles, 40);
+
+  SkisPoles.RightSki.Create (0.44, 0.7, 0.44-skiLength, 0.7);
+  SkisPoles.LeftSki.Create  (0.4, 0.75, 0.4-skiLength, 0.75);
+
+
+
   // ��� ��� ����� ��� � � ������
+  PushToQueue(SkisPoles, baseFrames+1232);
   PushToQueue(SkisPoles, baseFrames);
 
 end;

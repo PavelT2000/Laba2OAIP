@@ -267,7 +267,6 @@ begin
 
 //  PushToQueue(Person, baseFrames+9999999);
 
-  SkisPoles.startDraw:= NikManTest.GetMaxCadrsCount();
 
    // Тянется к лыжам
   Person.RightHand.Create ( 0.027, 0.043, 0.050, -0.015);
@@ -282,6 +281,15 @@ begin
   Person.RightHand.Create ( 0.027, 0.038, 0.050, -0.020);
   Person.LeftHand.Create  ( 0.046, 0.018, 0.075, -0.020);
   PushToQueue(Person, 10);
+
+
+  SkisPoles.startDraw:= Length(QueuePositions);
+
+  for var i := Low(QueuePositions) to High(QueuePositions) do
+  begin
+    SkisPoles.startDraw := SkisPoles.startDraw + QueuePositions[i].CadrsCount;
+  end;
+
 
   // Опускает лыжи
   Person.RightHand.Create ( 0.027, 0.043, 0.050, -0.015);
