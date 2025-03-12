@@ -5,6 +5,8 @@ interface
 uses Winapi.Windows, Vcl.Graphics, System.Types, Vcl.Dialogs, System.SysUtils,
   System.Math;
 
+var startDraw: integer;
+
 procedure SetCanvas(canvas: TCanvas);
 procedure SetSize(size: single);
 procedure DrawSkisPoles(nowCadr: Integer);
@@ -90,15 +92,15 @@ begin
   //SetLength(FavoritePositions, 100);
   step:= 0.01;
   baseFrames:= 5;
-  //стартовая позиция
+  //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
   SkisPoles.RightSki.Create (0.445, 0.3, 0.445, 0.54);
   SkisPoles.LeftSki.Create  (0.42, 0.3, 0.42, 0.54);
   SkisPoles.RightPole.Create(0.41, 0.3, 0.41, 0.54);
   SkisPoles.LeftPole.Create (0.4, 0.3, 0.4, 0.54);
 
-  PushToQueue(SkisPoles, 9999); // пауза
+  PushToQueue(SkisPoles, startDraw); // пїЅпїЅпїЅпїЅпїЅ
 
-  // тут все также как и в челике
+  // пїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
   PushToQueue(SkisPoles, baseFrames);
 
 end;
@@ -124,7 +126,7 @@ begin
 end;
 
 
-// Составление всех кадров
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 
 procedure MakeAllCadrs;
 var
@@ -156,7 +158,6 @@ function GetMaxCadrsCount: Integer;
 begin
   result := Length(SkisPolesAllPos);
 end;
-
 
 procedure DrawSkiOrPole(skiPos: TRectF; size: single);
 var

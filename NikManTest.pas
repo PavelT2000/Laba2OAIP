@@ -44,7 +44,7 @@ function GetMaxCadrsCount: Integer;
 
 implementation
 
-uses PointConverter;
+uses PointConverter, SkisPoles;
 
 var
   PersonAllPos: TPersonPosArr;
@@ -267,6 +267,8 @@ begin
 
 //  PushToQueue(Person, baseFrames+9999999);
 
+  SkisPoles.startDraw:= NikManTest.GetMaxCadrsCount();
+
    // Тянется к лыжам
   Person.RightHand.Create ( 0.027, 0.043, 0.050, -0.015);
   Person.LeftHand.Create  ( 0.046, 0.023, 0.075, -0.015);
@@ -459,6 +461,8 @@ function GetMaxCadrsCount: Integer;
 begin
   result := Length(PersonAllPos);
 end;
+
+
 
 procedure DrawPerson(nowCadr: Integer);
 var

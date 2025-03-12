@@ -82,7 +82,7 @@ begin
   SkisPoles.SetSize(1);
   SkisPoles.SetCanvas(Canvas);
   SkisPoles.Start;
-  SkisPolesMaxCadrsCount := NikManTest.GetMaxCadrsCount;
+  SkisPolesMaxCadrsCount := SkisPoles.GetMaxCadrsCount;
 
 
   IsDragging := false;
