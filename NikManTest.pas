@@ -343,9 +343,11 @@ begin
  // Дальше ходьба, но уже с лыжами и палками
 
   baseFrames:= 10;
-  step:= 0.06;
+  step:= 0.00;
   for var i := 0 to 3 do
   begin
+    if (i = 0) then step:= 0
+    else step:= 0.06;
     // Установка позиций каждой конечности
     //1
     Person.RightHand.Create ( 0.026, 0.031, 0.06, 0);
@@ -364,6 +366,7 @@ begin
     //PushToQueue(Person, 10000);
     PushToQueue(Person, baseFrames);
 
+    step:= 0.06;
     //3
     Person.RightHand.Create ( -0.012, 0.017, 0.025, 0.037);
     Person.LeftHand.Create  (-0.023, 0.044, 0.012, 0.074);
