@@ -1,4 +1,4 @@
-unit StikMan;
+﻿unit StikMan;
 
 interface
 
