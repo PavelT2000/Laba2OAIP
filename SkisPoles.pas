@@ -130,7 +130,7 @@ begin
   baseFrames:= 10;
   for var i := 0 to 3 do
   begin
-    if (i = 0) then step:= 0 else step:= 0.06;
+    if (i = 0) then step:= 0 else step:= 0.08;
     // Установка позиций каждой конечности
     //1
     SkisPoles.LeftSki:= Add2Rect(SkisPoles.LeftSki, RectF(step, 0, step, 0));

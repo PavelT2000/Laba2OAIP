@@ -347,7 +347,7 @@ begin
   for var i := 0 to 3 do
   begin
     if (i = 0) then step:= 0
-    else step:= 0.06;
+    else step:= 0.08;
     // Установка позиций каждой конечности
     //1
     Person.RightHand.Create ( 0.026, 0.031, 0.06, 0);
@@ -388,6 +388,7 @@ begin
     Person.Neck:= Person.Neck - PointF(0.019, 0.022);
 
   end;
+
 
   PushToQueue(Person, baseFrames);
   PushToQueue(Person, 20);
