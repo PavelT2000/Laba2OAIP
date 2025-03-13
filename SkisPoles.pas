@@ -176,7 +176,10 @@ begin
     SkisPoles.RightPole:= Add2Rect(SkisPoles.RightPole, RectF(-0.005, -0.048, 0.02, 0.005));
 
   end;
+  PushToQueue(SkisPoles, 15);
 
+  SkisPoles.LeftSki:= Add2Rect(SkisPoles.LeftSki, RectF(step, 0, step, 0));
+  SkisPoles.RightSki:= Add2Rect(SkisPoles.RightSki, RectF(step, 0, step, 0));
   // ��� ��� ����� ��� � � ������
   PushToQueue(SkisPoles, baseFrames+9999);
   PushToQueue(SkisPoles, baseFrames);

@@ -391,7 +391,7 @@ begin
 
 
   PushToQueue(Person, baseFrames);
-  PushToQueue(Person, 20);
+  PushToQueue(Person, 15);
 
   Person.RightHand.Create (-0.008, 0.05, 0.017, 0.024);
   Person.LeftHand.Create  (-0.014, 0.051, 0.017, 0.033);

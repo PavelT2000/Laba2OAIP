@@ -130,7 +130,6 @@
         <DCCReference Include="Location.pas"/>
         <DCCReference Include="PointConverter.pas"/>
         <DCCReference Include="Music.pas"/>
-        <DCCReference Include="StikMan.pas"/>
         <DCCReference Include="NikManTest.pas"/>
         <DCCReference Include="SkisPoles.pas"/>
         <BuildConfiguration Include="Base">
