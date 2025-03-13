@@ -400,21 +400,21 @@ begin
   Person.LegBody := Person.LegBody + PointF(-0.02, 0.06);
   Person.Neck := Person.LegBody + PointF(0.04, -0.077);
 
-  PushToQueue(Person, 4);
+  PushToQueue(Person, 3);
 
   // Толчек
-  PushToQueue(Person, 4);
+  PushToQueue(Person, 3);
   Person.RightHand.Create (-0.041, 0.03, -0.005, 0.051);
   Person.LeftHand.Create  (-0.039, 0.031, -0.005, 0.047);
   Person.LegBody := Person.LegBody + PointF(0.02, 0.025);
   Person.Neck := Person.LegBody + PointF(0.04, -0.077);
-  PushToQueue(Person, 4);
+  PushToQueue(Person, 3);
   Person.RightHand.Create (-0.008, 0.05, 0.017, 0.024);
   Person.LeftHand.Create  (-0.014, 0.051, 0.017, 0.033);
   Person.LegBody := Person.LegBody + PointF(0.02, 0.025);
   Person.Neck := Person.LegBody + PointF(0.04, -0.077);
 
-  SlideAnim(4, 10, 0.02, 0.025);
+  SlideAnim(3, 10, 0.02, 0.025);
   
 //  PushToQueue(Person, 4*10);
 //
@@ -440,13 +440,14 @@ begin
   PushToQueue(Person, baseFrames);
   Person.RightHand.Create (-0.041, 0.03, -0.005, 0.051);
   Person.LeftHand.Create  (-0.039, 0.031, -0.005, 0.047);
-  Person.LegBody := Person.LegBody + PointF(0.02, -0.008);
+  Person.LegBody := Person.LegBody + PointF(0.02*1.5, -0.008*1.5);
   Person.Neck := Person.LegBody + PointF(0.04, -0.077);
+
   // Обратно
   PushToQueue(Person, baseFrames);
   Person.RightHand.Create (-0.008, 0.05, 0.017, 0.024);
   Person.LeftHand.Create  (-0.014, 0.051, 0.017, 0.033);
-  Person.LegBody := Person.LegBody + PointF(0.02, -0.008);
+  Person.LegBody := Person.LegBody + PointF(0.02*1.5, -0.008*1.5);
   Person.Neck := Person.LegBody + PointF(0.04, -0.077);
 
   SlideAnim(baseFrames, 8, 0.02, -0.008);
@@ -455,13 +456,13 @@ begin
   PushToQueue(Person, baseFrames);
   Person.RightHand.Create (-0.041, 0.03, -0.005, 0.051);
   Person.LeftHand.Create  (-0.039, 0.031, -0.005, 0.047);
-  Person.LegBody := Person.LegBody + PointF(0.02, -0.008);
+  Person.LegBody := Person.LegBody + PointF(0.02*1.5, -0.008*1.5);
   Person.Neck := Person.LegBody + PointF(0.04, -0.077);
-  // Обратно
+//   Обратно
   PushToQueue(Person, baseFrames);
   Person.RightHand.Create (-0.008, 0.05, 0.017, 0.024);
   Person.LeftHand.Create  (-0.014, 0.051, 0.017, 0.033);
-  Person.LegBody := Person.LegBody + PointF(0.02, -0.008);
+  Person.LegBody := Person.LegBody + PointF(0.02*1.5, -0.008*1.5);
   Person.Neck := Person.LegBody + PointF(0.04, -0.077);
 
   
@@ -501,13 +502,15 @@ begin
   Person.LegBody := Person.LegBody + PointF(0, -0.05);
   Person.Neck := Person.LegBody + PointF(0, -0.15);
 
-  PushToQueue(Person, baseFrames);
-
+  PushToQueue(Person, 10);
+  PushToQueue(Person, 10);
   
   baseFrames:= 10;
-  step:= 0.06;
+  step:= 0.00;
   for var i := 0 to 1 do
   begin
+    if (i = 0) then step:= 0
+    else step:= 0.08;
     // Установка позиций каждой конечности
     //1
     Person.RightHand.Create ( 0.026, 0.031, 0.06, 0);
@@ -526,6 +529,7 @@ begin
     //PushToQueue(Person, 10000);
     PushToQueue(Person, baseFrames);
 
+    step:= 0.06;
     //3
     Person.RightHand.Create ( -0.012, 0.017, 0.025, 0.037);
     Person.LeftHand.Create  (-0.023, 0.044, 0.012, 0.074);
@@ -580,8 +584,8 @@ begin
   setLength(result, countCadrs);
   // при -1 никакие кадры (промежуточные и крайние) создаваться не будут
   // при 0 будет создаваться только начальный кадр (без промежуточных и конечного)
-  // при 1 будут создаваться 2 крайних кадра без промежуточных
-  // при >1 будут создаваться countCadrs-1 промежуточных кадров
+  // при 1 будет создаваться крайний и промежуточный кадр
+  // при >1 будут создаваться countCadrs промежуточных кадров + начальный кадр
 
   for i := 0 to countCadrs-1 do
   begin
