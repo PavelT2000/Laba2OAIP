@@ -36,6 +36,7 @@ object Form1: TForm1
     Height = 19
     Caption = '0, 0'
     TabOrder = 1
+    Visible = False
   end
   object CursorHint: TStaticText
     Left = 8
@@ -44,6 +45,7 @@ object Form1: TForm1
     Height = 19
     Caption = 'q = start, e = end'
     TabOrder = 2
+    Visible = False
   end
   object FPS: TTimer
     Interval = 40

@@ -53,7 +53,7 @@ type
 
 var PLocation: TPointF;
   StartDrag, StopDrag: TPointF;
-  IsDragging: Boolean;
+  IsDragging, CanDebug: Boolean;
   Snowflakes: array [1..CountSF] of TSnowflake;
   NikTestMaxCadrsCount, SkisPolesMaxCadrsCount: Integer;
   TempCursorStart: TPoint;
@@ -86,6 +86,7 @@ begin
 
 
   IsDragging := false;
+  CanDebug := false;
 
   // Snowflakes
   for i := 1 to CountSF do
@@ -98,7 +99,7 @@ begin
   end;
 
   //Music.TurnOn(CalmMind);
-  allCadrs:= 150;
+  allCadrs:= 0;
 end;
 
 procedure NextPaint();
@@ -123,17 +124,20 @@ begin
 
   if (allCadrs > 0) and (allCadrs <= NikTestMaxCadrsCount) then NikManTest.DrawPerson(allCadrs);
 
-  //едет на трассу
-  if (allCadrs > 260) and (allCadrs <= 380) then PLocation:= PLocation + PointF(-0.003, 0);
-  //разгоняется
-  if (allCadrs > 380) and (allCadrs <= 460) then PLocation:= PLocation + PointF(-0.012, -0.0055);
-  //начало полёта
-  if (allCadrs > 525) and (allCadrs <= 600) then PLocation:= PLocation + PointF(-0.004, -0.0018);
-  //летит
-  if (allCadrs > 600) and (allCadrs <= 800) then PLocation:= PLocation + PointF(-0.007, -0.005);
-  //приземлился
-  if (allCadrs > 800) and (allCadrs <= 850) then PLocation:= PLocation + PointF(-0.003, 0);
 
+  if not CanDebug then
+  begin
+    //едет на трассу
+    if (allCadrs > 260) and (allCadrs <= 380) then PLocation:= PLocation + PointF(-0.003, 0);
+    //разгоняется
+    if (allCadrs > 380) and (allCadrs <= 460) then PLocation:= PLocation + PointF(-0.012, -0.0055);
+    //начало полёта
+    if (allCadrs > 525) and (allCadrs <= 600) then PLocation:= PLocation + PointF(-0.004, -0.0018);
+    //летит
+    if (allCadrs > 600) and (allCadrs <= 800) then PLocation:= PLocation + PointF(-0.007, -0.005);
+    //приземлился
+    if (allCadrs > 800) and (allCadrs <= 850) then PLocation:= PLocation + PointF(-0.003, 0);
+  end;
   // mod не обязателен, он для повторения анимации
   //NikManTest.DrawPerson(allCadrs+1);
 
@@ -150,12 +154,15 @@ begin
 
 
   // Cursor hint
-  Form1.Canvas.Pen.Color := clRed;
-  Form1.Canvas.Brush.Color := clRed;
-  Form1.Canvas.Pen.Width := Round(PointConverter.GetPixels * 1.4);
+  if CanDebug then
+  begin
+    Form1.Canvas.Pen.Color := clRed;
+    Form1.Canvas.Brush.Color := clRed;
+    Form1.Canvas.Pen.Width := Round(PointConverter.GetPixels * 1.4);
 
-  Form1.Canvas.MoveTo(TempCursorStart.X, TempCursorStart.Y);
-  Form1.Canvas.LineTo(TempCursorEnd.X, TempCursorEnd.Y);
+    Form1.Canvas.MoveTo(TempCursorStart.X, TempCursorStart.Y);
+    Form1.Canvas.LineTo(TempCursorEnd.X, TempCursorEnd.Y);
+  end;
 
 end;
 
@@ -201,51 +208,70 @@ var
   CursorPosF: TPointF;
   X, Y: String;
 begin
-  case key of
-  'q':
-    begin
-      CursorPos := Form1.ScreenToClient(Mouse.CursorPos);
-      TempCursorStart := CursorPos;
-      CursorPos := TempCursorEnd - TempCursorStart;
-      CursorPosF := PointConverter.ConvertBack(CursorPos);
+  if CanDebug then
+    case key of
+    'q':
+      begin
+        CursorPos := Form1.ScreenToClient(Mouse.CursorPos);
+        TempCursorStart := CursorPos;
+        CursorPos := TempCursorEnd - TempCursorStart;
+        CursorPosF := PointConverter.ConvertBack(CursorPos);
 
-      X := FloatToStr(RoundTo(CursorPosF.X, -3));
-      X := StringReplace(X, ',', '.', [rfReplaceAll]);
-      Y := FloatToStr(RoundTo(CursorPosF.Y, -3));
-      Y := StringReplace(Y, ',', '.', [rfReplaceAll]);
+        X := FloatToStr(RoundTo(CursorPosF.X, -3));
+        X := StringReplace(X, ',', '.', [rfReplaceAll]);
+        Y := FloatToStr(RoundTo(CursorPosF.Y, -3));
+        Y := StringReplace(Y, ',', '.', [rfReplaceAll]);
 
-      Form1.CursorPosition.Caption := X + ', ' + Y;
+        Form1.CursorPosition.Caption := X + ', ' + Y;
+      end;
+    'e':
+      begin
+
+        CursorPos := Form1.ScreenToClient(Mouse.CursorPos);
+        TempCursorEnd := CursorPos;
+        CursorPos := TempCursorEnd - TempCursorStart;
+        CursorPosF := PointConverter.ConvertBack(CursorPos);
+
+        X := FloatToStr(RoundTo(CursorPosF.X, -3));
+        X := StringReplace(X, ',', '.', [rfReplaceAll]);
+        Y := FloatToStr(RoundTo(CursorPosF.Y, -3));
+        Y := StringReplace(Y, ',', '.', [rfReplaceAll]);
+
+        Form1.CursorPosition.Caption := X + ', ' + Y;
+
+      end;
+    'r':
+      begin
+        CursorPos := TempCursorEnd - TempCursorStart;
+        CursorPosF := PointConverter.ConvertBack(CursorPos);
+
+        X := FloatToStr(RoundTo(CursorPosF.X, -3));
+        X := StringReplace(X, ',', '.', [rfReplaceAll]);
+        Y := FloatToStr(RoundTo(CursorPosF.Y, -3));
+        Y := StringReplace(Y, ',', '.', [rfReplaceAll]);
+
+        Clipboard.AsText := X + ', ' + Y;
+        ShowMessage(X + ', ' + Y + ' <-- это скопировано в буфер обмена');
+      end;
     end;
-  'e':
-    begin
 
-      CursorPos := Form1.ScreenToClient(Mouse.CursorPos);
-      TempCursorEnd := CursorPos;
-      CursorPos := TempCursorEnd - TempCursorStart;
-      CursorPosF := PointConverter.ConvertBack(CursorPos);
-
-      X := FloatToStr(RoundTo(CursorPosF.X, -3));
-      X := StringReplace(X, ',', '.', [rfReplaceAll]);
-      Y := FloatToStr(RoundTo(CursorPosF.Y, -3));
-      Y := StringReplace(Y, ',', '.', [rfReplaceAll]);
-
-      Form1.CursorPosition.Caption := X + ', ' + Y;
-
+    if key = 'i' then
+      begin
+      CanDebug := not CanDebug;
+      if CanDebug then
+      begin
+        CursorPosition.Visible := true;
+        CursorHint.Visible := true;
+        StopDrag := PLocation;
+      end
+      else
+      begin
+        CursorPosition.Visible := false;
+        CursorHint.Visible := false;
+      end;
     end;
-  'r':
-    begin
-      CursorPos := TempCursorEnd - TempCursorStart;
-      CursorPosF := PointConverter.ConvertBack(CursorPos);
 
-      X := FloatToStr(RoundTo(CursorPosF.X, -3));
-      X := StringReplace(X, ',', '.', [rfReplaceAll]);
-      Y := FloatToStr(RoundTo(CursorPosF.Y, -3));
-      Y := StringReplace(Y, ',', '.', [rfReplaceAll]);
 
-      Clipboard.AsText := X + ', ' + Y;
-      ShowMessage(X + ', ' + Y + ' <-- это скопировано в буфер обмена');
-    end;
-  end;
 end;
 
 procedure TForm1.FormMouseDown(Sender: TObject; Button: TMouseButton;
@@ -259,7 +285,7 @@ end;
 procedure TForm1.FormMouseMove(Sender: TObject; Shift: TShiftState; X,
   Y: Integer);
 begin
-  if IsDragging then
+  if IsDragging and CanDebug then
   begin
     // Берем координаты локации и прибавляем к ней координаты перетащенного курсора
     PLocation := pointF(StopDrag.X + X/ ClientWidth - StartDrag.X, StopDrag.Y + Y/ ClientHeight - StartDrag.Y);
