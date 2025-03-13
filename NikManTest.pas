@@ -197,13 +197,13 @@ var
   step: single;
   baseFrames: integer;
 
-  procedure SlideAnim(cadrs, range: Integer; X, Y: Real);
-  begin
-    PushToQueue(Person, cadrs*range);
+procedure SlideAnim(cadrs, range: Integer; X, Y: Real);
+begin
+  PushToQueue(Person, cadrs*range);
 
-    Person.LegBody := Person.LegBody + PointF(X*range, Y*range);
-    Person.Neck := Person.LegBody + PointF(0.04, -0.077);
-  end;
+  Person.LegBody := Person.LegBody + PointF(X*range, Y*range);
+  Person.Neck := Person.LegBody + PointF(0.04, -0.077);
+end;
   
 begin
   SetLength(FavoritePositions, 100);
@@ -551,6 +551,11 @@ begin
     Person.Neck:= Person.Neck - PointF(0.019, 0.022);
 
   end;
+  //1
+    Person.RightHand.Create ( 0.026, 0.031, 0.06, 0);
+    Person.LeftHand.Create  ( 0.013, 0.06, 0.045, 0.039);
+    //PushToQueue(Person, 10000);
+    PushToQueue(Person, baseFrames);
 
   PushToQueue(Person, baseFrames+9999);
   PushToQueue(Person, baseFrames+9999);
