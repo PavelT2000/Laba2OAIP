@@ -96,6 +96,15 @@ var
   SkisPoles: TSkisPolesPos;
   step, hight: single;
   baseFrames: integer;
+
+procedure SlideAnim(cadrs, range: Integer; X, Y: Real);
+begin
+  PushToQueue(SkisPoles, cadrs*range);
+
+  SkisPoles.LeftSki:= Add2Rect(SkisPoles.LeftSki, RectF(X*range, Y*range, X*range, Y*range));
+  SkisPoles.RightSki:= Add2Rect(SkisPoles.RightSki, RectF(X*range, Y*range, X*range, Y*range));
+end;
+
 begin
 
   hight:= 0.24;
@@ -180,6 +189,103 @@ begin
 
   SkisPoles.LeftSki:= Add2Rect(SkisPoles.LeftSki, RectF(step, 0, step, 0));
   SkisPoles.RightSki:= Add2Rect(SkisPoles.RightSki, RectF(step, 0, step, 0));
+
+
+  PushToQueue(SkisPoles, 10);
+  PushToQueue(SkisPoles, 15);
+
+  PushToQueue(SkisPoles, 3);
+
+  // Толчек
+  PushToQueue(SkisPoles, 3);
+  SkisPoles.LeftSki:= Add2Rect(SkisPoles.LeftSki, RectF(0.02, 0.025, 0.02, 0.025));
+  SkisPoles.RightSki:= Add2Rect(SkisPoles.RightSki, RectF(0.02, 0.025, 0.02, 0.025));
+
+  PushToQueue(SkisPoles, 3);
+  SkisPoles.LeftSki:= Add2Rect(SkisPoles.LeftSki, RectF(0.02, 0.025, 0.02, 0.025));
+  SkisPoles.RightSki:= Add2Rect(SkisPoles.RightSki, RectF(0.02, 0.025, 0.02, 0.025));
+
+  SlideAnim(3, 10, 0.02, 0.025);
+
+//  PushToQueue(Person, 4*10);
+//
+//  Person.LegBody := Person.LegBody + PointF(0.02*10, 0.025*10);
+//  Person.Neck := Person.LegBody + PointF(0.04, -0.077);
+  baseFrames:= 2;
+  // Толчек
+  PushToQueue(SkisPoles, baseFrames);
+  SkisPoles.LeftSki:= Add2Rect(SkisPoles.LeftSki, RectF(0.02, 0.025, 0.02, 0.025));
+  SkisPoles.RightSki:= Add2Rect(SkisPoles.RightSki, RectF(0.02, 0.025, 0.02, 0.025));
+  // Обратно
+  PushToQueue(SkisPoles, baseFrames);
+  SkisPoles.LeftSki:= Add2Rect(SkisPoles.LeftSki, RectF(0.02, 0.025, 0.02, 0.025));
+  SkisPoles.RightSki:= Add2Rect(SkisPoles.RightSki, RectF(0.02, 0.025, 0.02, 0.025));
+
+  SlideAnim(baseFrames, 6, 0.02, 0.025);
+
+  // Толчек
+  PushToQueue(SkisPoles, baseFrames);
+  SkisPoles.LeftSki:= Add2Rect(SkisPoles.LeftSki, RectF(0.03, -0.0012, 0.03, -0.0012));
+  SkisPoles.RightSki:= Add2Rect(SkisPoles.RightSki, RectF(0.03, -0.0012, 0.03, -0.0012));
+
+  // Обратно
+  PushToQueue(SkisPoles, baseFrames);
+  SkisPoles.LeftSki:= Add2Rect(SkisPoles.LeftSki, RectF(0.03, -0.0012, 0.03, -0.0012));
+  SkisPoles.RightSki:= Add2Rect(SkisPoles.RightSki, RectF(0.03, -0.0012, 0.03, -0.0012));
+
+  SlideAnim(baseFrames, 8, 0.02, -0.008);
+
+  // Толчек
+  PushToQueue(SkisPoles, baseFrames);
+  SkisPoles.LeftSki:= Add2Rect(SkisPoles.LeftSki, RectF(0.03, -0.0012, 0.03, -0.0012));
+  SkisPoles.RightSki:= Add2Rect(SkisPoles.RightSki, RectF(0.03, -0.0012, 0.03, -0.0012));
+//   Обратно
+  PushToQueue(SkisPoles, baseFrames);
+  SkisPoles.LeftSki:= Add2Rect(SkisPoles.LeftSki, RectF(0.03, -0.0012, 0.03, -0.0012));
+  SkisPoles.RightSki:= Add2Rect(SkisPoles.RightSki, RectF(0.03, -0.0012, 0.03, -0.0012));
+
+
+  SlideAnim(baseFrames, 8, 0.02, -0.008);
+
+  // Падение
+
+  SlideAnim(baseFrames, 7, 0.02, -0.008);
+
+  SlideAnim(baseFrames, 5, 0.02, -0.004);
+
+  SlideAnim(baseFrames, 3, 0.02, 0.00);
+
+  SlideAnim(3, 5, 0.02, 0.004);
+
+  SlideAnim(3, 7, 0.02, 0.008);
+
+  SlideAnim(3, 10, 0.02, 0.016);
+
+  SlideAnim(3, 7, 0.02, 0.02);
+
+  SlideAnim(3, 5, 0.02, 0.03);
+
+  SlideAnim(4, 19, 0.02, 0.04);
+
+  // Приземление
+  SlideAnim(4, 2, 0.02, 0.00);
+
+  SlideAnim(6, 2, 0.02, 0.00);
+
+  SlideAnim(8, 1, 0.02, 0.00);
+
+  PushToQueue(SkisPoles, 20);
+
+//  Person.RightLeg.Create  ( 0.015, 0.043,  0.018, 0.093);
+//  Person.LeftLeg.Create   (- 0.012, 0.062, -0.015, 0.146);
+//  Person.LegBody := Person.LegBody + PointF(0, -0.05);
+//  Person.Neck := Person.LegBody + PointF(0, -0.15);
+
+  PushToQueue(SkisPoles, 10);
+  PushToQueue(SkisPoles, 10);
+
+  baseFrames:= 10;
+
   // ��� ��� ����� ��� � � ������
   PushToQueue(SkisPoles, baseFrames+9999);
   PushToQueue(SkisPoles, baseFrames);
