@@ -41,7 +41,7 @@ var
 implementation
 
 const
-  CountSF = 16;
+  CountSF = 50;
 
 type
   TSnowflake = record
@@ -71,7 +71,7 @@ begin
   drawSomeThing.createCadrArr();
   MakeAllCadrs(drawSomeThing.ArrMainCadrs1);
 
-  PLocation := pointF(0, 0);
+  PLocation := pointF(0, 0);  //0 0
   StopDrag := PLocation;
 
   NikManTest.SetSize(1);
@@ -86,7 +86,7 @@ begin
 
 
   IsDragging := false;
-  CanDebug := false;
+  CanDebug := False;   //false
 
   // Snowflakes
   for i := 1 to CountSF do
@@ -99,7 +99,7 @@ begin
   end;
 
   //Music.TurnOn(CalmMind);
-  allCadrs:= 0;
+  allCadrs:= 00;
 end;
 
 procedure NextPaint();
@@ -136,7 +136,7 @@ begin
     //летит
     if (allCadrs > 600) and (allCadrs <= 800) then PLocation:= PLocation + PointF(-0.007, -0.005);
     //приземлился
-    if (allCadrs > 800) and (allCadrs <= 850) then PLocation:= PLocation + PointF(-0.003, 0);
+    if (allCadrs > 800) and (allCadrs <= 950) then PLocation:= PLocation + PointF(-0.0037, 0);
   end;
   // mod не обязателен, он для повторения анимации
   //NikManTest.DrawPerson(allCadrs+1);

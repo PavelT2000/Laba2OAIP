@@ -216,8 +216,8 @@ begin
 
   p3 := p4;
   p6 := p5;
-  p4 := Convert(PointF(3, 2.1)+pos);
-  p5 := Convert(PointF(2.95, 1.95+0.4)+pos);
+  p4 := Convert(PointF(3.4, 2.1)+pos);
+  p5 := Convert(PointF(3.35, 1.95+0.4)+pos);
   myCanvas.Polygon([p3, p4, p5, p6]);
 
   //black side

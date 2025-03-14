@@ -389,8 +389,12 @@ begin
 
   end;
 
+  //1
+    Person.RightHand.Create ( 0.026, 0.031, 0.06, 0);
+    Person.LeftHand.Create  ( 0.013, 0.06, 0.045, 0.039);
+    //PushToQueue(Person, 10000);
+    PushToQueue(Person, baseFrames);
 
-  PushToQueue(Person, baseFrames);
   PushToQueue(Person, 15);
 
   Person.RightHand.Create (-0.008, 0.05, 0.017, 0.024);
@@ -401,6 +405,7 @@ begin
   Person.Neck := Person.LegBody + PointF(0.04, -0.077);
 
   PushToQueue(Person, 3);
+  ///PushToQueue(Person, 3000);
 
   // Толчек
   PushToQueue(Person, 3);
@@ -489,11 +494,11 @@ begin
   SlideAnim(4, 19, 0.02, 0.04);
 
   // Приземление
-  SlideAnim(4, 2, 0.02, 0.00);
+  SlideAnim(4, 2, 0.04, 0.00);
 
-  SlideAnim(6, 2, 0.02, 0.00);
+  SlideAnim(6, 2, 0.06, 0.00);
 
-  SlideAnim(8, 1, 0.02, 0.00);
+  SlideAnim(8, 1, 0.06, 0.00);
 
   PushToQueue(Person, 20);
 
@@ -507,7 +512,7 @@ begin
   
   baseFrames:= 10;
   step:= 0.00;
-  for var i := 0 to 1 do
+  for var i := 0 to 2 do
   begin
     if (i = 0) then step:= 0
     else step:= 0.08;
