@@ -98,9 +98,9 @@ begin
     Snowflakes[i].Ratio := Random(41) / 100 + 0.4; // 0.4/0.8
     Snowflakes[i].Speed := Random(5) / 500 + 0.004; // 0.004/0.012
   end;
-
+  Music.PreLoad;
   Music.TurnOn(SnowSong);
-  allCadrs:= 0;
+  allCadrs:= 400;
 end;
 
 procedure NextPaint();

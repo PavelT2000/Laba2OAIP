@@ -7,10 +7,11 @@ type
     DrumRoll, Audience);
 
 procedure TurnOn(music: Allmusic);
+procedure PreLoad;
 
 implementation
 
-uses Main, System.SysUtils, Vcl.Dialogs;
+uses Main, System.SysUtils, Vcl.Dialogs, Vcl.MPlayer;
 
 const
     MusicLocation: array[allMusic] of string = (
@@ -25,13 +26,34 @@ const
 
 var
     musicPlaying: boolean = false;
+    MediaPlayers: array[allMusic] of TMediaPlayer;
+
+
+procedure PreLoad;
+begin
+  for var i := Low(MusicLocation) to High(MusicLocation) do
+  begin
+    MediaPlayers[i] := TMediaPlayer.Create(Main.Form1 );
+    MediaPlayers[i].Parent := Main.Form1;
+    MediaPlayers[i].Visible := false;
+    MediaPlayers[i].FileName := MusicLocation[i];
+    MediaPlayers[i].Open;
+  end;
+end;
+
 
 procedure TurnOn(music: Allmusic);
 begin
   try
-    Main.Form1.MediaPlayer1.FileName:= MusicLocation[music];
-    Main.Form1.MediaPlayer1.Open;
-    Main.Form1.MediaPlayer1.Play;
+    // Можно будет вынести в отдельную функцию,
+    // если надо будет несколько звуков одновременно
+    for var i := Low(MediaPlayers) to High(MediaPlayers) do
+      MediaPlayers[i].Stop;
+
+    MediaPlayers[music].FileName := MusicLocation[music];
+
+    MediaPlayers[music].Play;
+
     musicPlaying:= True;
   except
     showMessage('Файлы музыки были повреждены!');
@@ -41,8 +63,9 @@ end;
 procedure TurnOff();
 begin
   if (musicPlaying = true) then begin
-    Main.Form1.MediaPlayer1.Stop;
-    Main.Form1.MediaPlayer1.Close;
+    for var i := Low(MediaPlayers) to High(MediaPlayers) do
+      MediaPlayers[i].Stop;
+
     musicPlaying:= False;
   end;
 end;
