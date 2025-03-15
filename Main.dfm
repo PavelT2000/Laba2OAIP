@@ -47,6 +47,15 @@ object Form1: TForm1
     TabOrder = 2
     Visible = False
   end
+  object FramesCountHint: TStaticText
+    Left = 8
+    Top = 60
+    Width = 10
+    Height = 19
+    Caption = '0'
+    TabOrder = 3
+    Visible = False
+  end
   object FPS: TTimer
     Interval = 40
     OnTimer = FPSTimer

@@ -3,7 +3,8 @@
 interface
 
 type
-    AllMusic = (CalmMind);
+    AllMusic = (CalmMind, SnowSong, SlowMo, GameAward, SnowAmbient,
+    DrumRoll, Audience);
 
 procedure TurnOn(music: Allmusic);
 
@@ -12,7 +13,15 @@ implementation
 uses Main, System.SysUtils, Vcl.Dialogs;
 
 const
-    MusicLocation: array[allMusic] of string = ('music\calmMind.mp3');
+    MusicLocation: array[allMusic] of string = (
+    'music\calmMind.mp3',
+    'music\InTheSnowSong.mp3',
+    'music\SlowMo.mp3',
+    'music\GameAward.mp3',
+    'music\SnowAmbient.mp3',
+    'music\DrumRoll.mp3',
+    'music\Audience.mp3'
+    );
 
 var
     musicPlaying: boolean = false;

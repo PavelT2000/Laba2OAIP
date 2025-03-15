@@ -20,6 +20,7 @@ type
     FPS: TTimer;
     CursorPosition: TStaticText;
     CursorHint: TStaticText;
+    FramesCountHint: TStaticText;
     procedure FormPaint(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FPSTimer(Sender: TObject);
@@ -98,8 +99,8 @@ begin
     Snowflakes[i].Speed := Random(5) / 500 + 0.004; // 0.004/0.012
   end;
 
-  //Music.TurnOn(CalmMind);
-  allCadrs:= 00;
+  Music.TurnOn(SnowSong);
+  allCadrs:= 0;
 end;
 
 procedure NextPaint();
@@ -179,6 +180,22 @@ var
 begin
   inc(allCadrs);
   // Тута играемся с переменными для выставления определенных локаций, поз и т.д.
+  if CanDebug then
+    FramesCountHint.Caption := IntToStr(allCadrs);
+
+
+  if allCadrs = 550 then
+    Music.TurnOn(SlowMo)
+  else if allCadrs = 620 then
+    Music.TurnOn(DrumRoll)
+  else if allCadrs = 780 then
+    Music.TurnOn(Audience)
+  else if allCadrs = 930 then
+    Music.TurnOn(SnowAmbient)
+  else if allCadrs = 990 then
+    Music.TurnOn(GameAward);
+
+
 
 
   // SnowFlakes
@@ -262,12 +279,14 @@ begin
       begin
         CursorPosition.Visible := true;
         CursorHint.Visible := true;
+        FramesCountHint.Visible := true;
         StopDrag := PLocation;
       end
       else
       begin
         CursorPosition.Visible := false;
         CursorHint.Visible := false;
+        FramesCountHint.Visible := false;
       end;
     end;
 
