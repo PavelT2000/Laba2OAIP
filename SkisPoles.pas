@@ -204,6 +204,14 @@ begin
   SkisPoles.RightPole:= Add2Rect(SkisPoles.RightPole, RectF(0.02, 0.025, 0.02, 0.025));
   SkisPoles.LeftSki:= Add2Rect(SkisPoles.LeftSki, RectF(0.02, 0.025, 0.02, 0.025));
   SkisPoles.RightSki:= Add2Rect(SkisPoles.RightSki, RectF(0.02, 0.025, 0.02, 0.025));
+
+  // поворот лыж в положение вниз
+  SkisPoles.LeftSki:= Add2Rect(SkisPoles.LeftSki,
+  RectF(-0.02, +0.08, +0.02, -0.08));
+  SkisPoles.RightSki:= Add2Rect(SkisPoles.RightSki,
+  RectF(-0.02+0.0125, +0.08-0.0125,
+  +0.02+0.0125, -0.08-0.0125));
+
   // Обратно
   PushToQueue(SkisPoles, 3);
   rect:= RectF(0.01, -0.01, 0.04, 0.09);
@@ -256,6 +264,15 @@ begin
   SkisPoles.RightPole:= Add2Rect(SkisPoles.RightPole, RectF(0.03, step, 0.03, step));
   SkisPoles.LeftSki:= Add2Rect(SkisPoles.LeftSki, RectF(0.03, step, 0.03, step));
   SkisPoles.RightSki:= Add2Rect(SkisPoles.RightSki, RectF(0.03, step, 0.03, step));
+
+
+  // поворот лыж в положение вверх
+  SkisPoles.LeftSki:= Add2Rect(SkisPoles.LeftSki,
+  RectF(0.012-0.005, -0.11-0.005,
+  -0.012-0.005, 0.11-0.005));
+  SkisPoles.RightSki:= Add2Rect(SkisPoles.RightSki,
+  RectF(0.012+0.01, -0.11+0.01,
+  -0.012+0.01, 0.11+0.01));
 
   // Обратно
   PushToQueue(SkisPoles, baseFrames);
@@ -313,6 +330,12 @@ begin
   SlideAnim(3, 5, 0.02, 0.03);
 
   SlideAnim(4, 19, 0.02, 0.04);
+
+  // поворот лыж в вертикальное положение
+  SkisPoles.LeftSki:= Add2Rect(SkisPoles.LeftSki,
+  RectF(0.013, +0.035, -0.003, -0.025));
+  SkisPoles.RightSki:= Add2Rect(SkisPoles.RightSki,
+  RectF(-0.0145, 0.0325, -0.0305, -0.0275));
 
   // Приземление
   SlideAnim(4, 2, 0.04, 0.00);
