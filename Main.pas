@@ -171,15 +171,30 @@ begin
 
 
   if allCadrs = 550 then
-    Music.TurnOn(SlowMo)
+  begin
+    Music.TurnOff(SnowSong);
+    Music.TurnOn(SlowMo);
+  end
   else if allCadrs = 620 then
-    Music.TurnOn(DrumRoll)
+  begin
+    Music.TurnOff(SlowMo);
+    Music.TurnOn(DrumRoll);
+  end
   else if allCadrs = 780 then
-    Music.TurnOn(Audience)
+  begin
+    Music.TurnOff(DrumRoll);
+    Music.TurnOn(Audience);
+  end
   else if allCadrs = 930 then
-    Music.TurnOn(SnowAmbient)
+  begin
+    Music.TurnOff(Audience);
+    Music.TurnOn(SnowAmbient);
+  end
   else if allCadrs = 990 then
+  begin
+    Music.TurnOff(SnowAmbient);
     Music.TurnOn(GameAward);
+  end;
 
   if not CanDebug then
   begin
