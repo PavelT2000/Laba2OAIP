@@ -7,6 +7,8 @@ type
     DrumRoll, Audience, film);
 
 procedure TurnOn(music: Allmusic);
+procedure TurnOffAll;
+procedure TurnOff(music: Allmusic);
 procedure PreLoad;
 
 implementation
@@ -61,10 +63,22 @@ begin
   end;
 end;
 
-procedure TurnOff();
+procedure TurnOff(music: Allmusic);
 begin
   if (musicPlaying = true) then begin
-    for var i := Low(MediaPlayers) to High(MediaPlayers) do
+
+      MediaPlayers[music].Stop;
+
+    musicPlaying:= False;
+  end;
+end;
+
+
+
+procedure TurnOffAll();
+begin
+  if (musicPlaying = true) then begin
+   for var i := Low(MediaPlayers) to High(MediaPlayers) do
       MediaPlayers[i].Stop;
 
     musicPlaying:= False;

@@ -173,11 +173,20 @@ begin
   {if allCadrs = 550 then
     Music.TurnOn(SlowMo)
   else if allCadrs = 620 then
-    Music.TurnOn(DrumRoll)
+  begin
+    Music.TurnOff(SlowMo);
+    Music.TurnOn(DrumRoll);
+  end
   else if allCadrs = 780 then
-    Music.TurnOn(Audience)
+  begin
+    Music.TurnOff(DrumRoll);
+    Music.TurnOn(Audience);
+  end
   else if allCadrs = 930 then
-    Music.TurnOn(SnowAmbient)
+  begin
+    Music.TurnOff(Audience);
+    Music.TurnOn(SnowAmbient);
+  end
   else if allCadrs = 990 then
     Music.TurnOn(GameAward);}
 
