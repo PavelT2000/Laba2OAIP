@@ -98,9 +98,9 @@ begin
     Snowflakes[i].Ratio := Random(41) / 100 + 0.4; // 0.4/0.8
     Snowflakes[i].Speed := Random(5) / 500 + 0.004; // 0.004/0.012
   end;
-  Music.PreLoad;
-  Music.TurnOn(SnowSong);
-  allCadrs:= 00;
+  //Music.PreLoad;
+  Music.TurnOn(film);
+  allCadrs:= 0;
 end;
 
 procedure NextPaint();
@@ -170,7 +170,7 @@ begin
     FramesCountHint.Caption := IntToStr(allCadrs);
 
 
-  if allCadrs = 550 then
+  {if allCadrs = 550 then
     Music.TurnOn(SlowMo)
   else if allCadrs = 620 then
     Music.TurnOn(DrumRoll)
@@ -179,7 +179,7 @@ begin
   else if allCadrs = 930 then
     Music.TurnOn(SnowAmbient)
   else if allCadrs = 990 then
-    Music.TurnOn(GameAward);
+    Music.TurnOn(GameAward);}
 
   if not CanDebug then
   begin

@@ -4,7 +4,7 @@ interface
 
 type
     AllMusic = (CalmMind, SnowSong, SlowMo, GameAward, SnowAmbient,
-    DrumRoll, Audience);
+    DrumRoll, Audience, film);
 
 procedure TurnOn(music: Allmusic);
 procedure PreLoad;
@@ -21,7 +21,8 @@ const
     'music\GameAward.mp3',
     'music\SnowAmbient.mp3',
     'music\DrumRoll.mp3',
-    'music\Audience.mp3'
+    'music\Audience.mp3',
+    'music\film.mp3'
     );
 
 var
@@ -47,12 +48,12 @@ begin
   try
     // Можно будет вынести в отдельную функцию,
     // если надо будет несколько звуков одновременно
-    for var i := Low(MediaPlayers) to High(MediaPlayers) do
-      MediaPlayers[i].Stop;
+    //for var i := Low(MediaPlayers) to High(MediaPlayers) do
+      //MediaPlayers[i].Stop;
 
-    MediaPlayers[music].FileName := MusicLocation[music];
-
-    MediaPlayers[music].Play;
+    Form1.MediaPlayer1.FileName := MusicLocation[music];
+    Form1.MediaPlayer1.Open;
+    Form1.MediaPlayer1.Play;
 
     musicPlaying:= True;
   except
