@@ -59,7 +59,7 @@ var PLocation: TPointF;
   NikTestMaxCadrsCount, SkisPolesMaxCadrsCount: Integer;
   TempCursorStart, TempCursorEnd: TPoint;
   allCadrs: Integer;
-  startsize: single = 1.36;
+  startsize: single = 1.6;
 
 
 procedure TForm1.FormCreate(Sender: TObject);
@@ -110,12 +110,6 @@ begin
   DrawLocation3(PLocation);
   NikManTest.SetPos(PLocation);
   SkisPoles.SetPos(PLocation);
-
-  if (allCadrs > 0) and (allCadrs < 120) and (startSize > 0) then begin
-    startSize:= startSize - 0.003;
-    NikManTest.SetSize(startSize);
-    //SkisPoles.SetSize(startSize);
-  end;
 
   if (allCadrs > 0) and (allCadrs <= SkisPolesMaxCadrsCount) then SkisPoles.DrawSkisPoles(allCadrs);
 
@@ -177,6 +171,11 @@ begin
     if (allCadrs > 800) and (allCadrs <= 950) then PLocation:= PLocation + PointF(-0.0037, 0);
   end;
 
+
+  if (allCadrs > 0) and (allCadrs < 120) and (startSize > 0) then begin
+    startSize:= startSize - 0.005;
+    NikManTest.SetSize(startSize);
+  end;
 
   // SnowFlakes
   for i := 1 to CountSF do
