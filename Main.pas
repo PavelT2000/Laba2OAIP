@@ -59,18 +59,14 @@ var PLocation: TPointF;
   NikTestMaxCadrsCount, SkisPolesMaxCadrsCount: Integer;
   TempCursorStart: TPoint;
   TempCursorEnd: TPoint;
+  allCadrs: Integer;
 
 
 procedure TForm1.FormCreate(Sender: TObject);
 var i: Integer;
 begin
-//  drawSomeThing.SetSize(1);
   drawSomeThing.SetCanvas(Canvas);
   Location.SetCanvas(Canvas);
-//  drawSomeThing.myNeck:= PointF(0.5, 0.5);
-//  drawSomeThing.myLegBody:= PointF(0.5, 0.65);
-//  drawSomeThing.createCadrArr();
-//  MakeAllCadrs(drawSomeThing.ArrMainCadrs1);
 
   PLocation := pointF(0, 0);  //0 0
   StopDrag := PLocation;
@@ -115,20 +111,10 @@ begin
   NikManTest.SetPos(PLocation);
   SkisPoles.SetPos(PLocation);
 
-  {if (allCadrs > 0) and (allCadrs <= 1000) then begin
-    prDrawPerson;
-  end;}
-  //DrawPerson(drawSomeThing.MenSki1);
-  //DrawPerson(drawSomeThing.MenSki2);
 
   if (allCadrs > 0) and (allCadrs <= SkisPolesMaxCadrsCount) then SkisPoles.DrawSkisPoles(allCadrs);
 
   if (allCadrs > 0) and (allCadrs <= NikTestMaxCadrsCount) then NikManTest.DrawPerson(allCadrs);
-
-  // mod не обязателен, он для повторения анимации
-  //NikManTest.DrawPerson(allCadrs+1);
-
-
 
 
   // SnowFlakes
