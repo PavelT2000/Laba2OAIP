@@ -64,13 +64,13 @@ var PLocation: TPointF;
 procedure TForm1.FormCreate(Sender: TObject);
 var i: Integer;
 begin
-  drawSomeThing.SetSize(1);
+//  drawSomeThing.SetSize(1);
   drawSomeThing.SetCanvas(Canvas);
   Location.SetCanvas(Canvas);
-  drawSomeThing.myNeck:= PointF(0.5, 0.5);
-  drawSomeThing.myLegBody:= PointF(0.5, 0.65);
-  drawSomeThing.createCadrArr();
-  MakeAllCadrs(drawSomeThing.ArrMainCadrs1);
+//  drawSomeThing.myNeck:= PointF(0.5, 0.5);
+//  drawSomeThing.myLegBody:= PointF(0.5, 0.65);
+//  drawSomeThing.createCadrArr();
+//  MakeAllCadrs(drawSomeThing.ArrMainCadrs1);
 
   PLocation := pointF(0, 0);  //0 0
   StopDrag := PLocation;
@@ -98,7 +98,7 @@ begin
     Snowflakes[i].Ratio := Random(41) / 100 + 0.4; // 0.4/0.8
     Snowflakes[i].Speed := Random(5) / 500 + 0.004; // 0.004/0.012
   end;
-  //Music.PreLoad;
+
   Music.TurnOn(film);
   allCadrs:= 0;
 end;
@@ -169,26 +169,6 @@ begin
   if CanDebug then
     FramesCountHint.Caption := IntToStr(allCadrs);
 
-
-  {if allCadrs = 550 then
-    Music.TurnOn(SlowMo)
-  else if allCadrs = 620 then
-  begin
-    Music.TurnOff(SlowMo);
-    Music.TurnOn(DrumRoll);
-  end
-  else if allCadrs = 780 then
-  begin
-    Music.TurnOff(DrumRoll);
-    Music.TurnOn(Audience);
-  end
-  else if allCadrs = 930 then
-  begin
-    Music.TurnOff(Audience);
-    Music.TurnOn(SnowAmbient);
-  end
-  else if allCadrs = 990 then
-    Music.TurnOn(GameAward);}
 
   if not CanDebug then
   begin

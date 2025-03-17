@@ -8,12 +8,10 @@ type
 
 procedure TurnOn(music: Allmusic);
 procedure TurnOffAll;
-procedure TurnOff(music: Allmusic);
-procedure PreLoad;
 
 implementation
 
-uses Main, System.SysUtils, Vcl.Dialogs, Vcl.MPlayer;
+uses Main, System.SysUtils, Vcl.Dialogs;
 
 const
     MusicLocation: array[allMusic] of string = (
@@ -29,20 +27,18 @@ const
 
 var
     musicPlaying: boolean = false;
-    MediaPlayers: array[allMusic] of TMediaPlayer;
 
-
-procedure PreLoad;
-begin
-  for var i := Low(MusicLocation) to High(MusicLocation) do
-  begin
-    MediaPlayers[i] := TMediaPlayer.Create(Main.Form1 );
-    MediaPlayers[i].Parent := Main.Form1;
-    MediaPlayers[i].Visible := false;
-    MediaPlayers[i].FileName := MusicLocation[i];
-    MediaPlayers[i].Open;
-  end;
-end;
+//procedure PreLoad;
+//begin
+//  for var i := Low(MusicLocation) to High(MusicLocation) do
+//  begin
+//    MediaPlayers[i] := TMediaPlayer.Create(Main.Form1 );
+//    MediaPlayers[i].Parent := Main.Form1;
+//    MediaPlayers[i].Visible := false;
+//    MediaPlayers[i].FileName := MusicLocation[i];
+//    MediaPlayers[i].Open;
+//  end;
+//end;
 
 
 procedure TurnOn(music: Allmusic);
@@ -63,23 +59,11 @@ begin
   end;
 end;
 
-procedure TurnOff(music: Allmusic);
-begin
-  if (musicPlaying = true) then begin
-
-      MediaPlayers[music].Stop;
-
-    musicPlaying:= False;
-  end;
-end;
-
-
 
 procedure TurnOffAll();
 begin
   if (musicPlaying = true) then begin
-   for var i := Low(MediaPlayers) to High(MediaPlayers) do
-      MediaPlayers[i].Stop;
+    Form1.MediaPlayer1.Stop;
 
     musicPlaying:= False;
   end;
