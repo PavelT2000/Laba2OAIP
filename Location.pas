@@ -139,6 +139,12 @@ begin
   p2 := PointF(1.36, 0.55);
   rect:= ConvertRect((AddPosRect(RectF(p1.X, p1.Y, p2.x, p2.y), pos)));
   myCanvas.Rectangle(rect);
+
+  p1 := PointF(-0.01, 0.03);
+  p2 := PointF(1.36, 0.101);
+  rect:= ConvertRect((AddPosRect(RectF(p1.X, p1.Y, p2.x, p2.y), pos)));
+  myCanvas.Rectangle(rect);
+
   //closet
   p3:= Convert(AddPos(PointF(0.32, 0.1), pos));
   myCanvas.MoveTo(p3.X, p3.Y);
@@ -149,6 +155,14 @@ begin
   myCanvas.MoveTo(p3.X, p3.Y);
   p3:= Convert(AddPos(PointF(0.48, 0.55), pos));
   myCanvas.LineTo(p3.X, p3.Y);
+
+  //void bg
+  myCanvas.Brush.Color:= RGB(173, 216, 230);
+  p1 := PointF(0.32, 0.1);
+  p2 := PointF(0.48, 0.55);
+  rect:= ConvertRect((AddPosRect(RectF(p1.X, p1.Y, p2.x, p2.y), pos)));
+  myCanvas.Rectangle(rect);
+
   //door
   p3:= Convert(PointF(0.48, 0.1)+pos);
   //myCanvas.MoveTo(p3.X, p3.Y);

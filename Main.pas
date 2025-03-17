@@ -1,4 +1,4 @@
-﻿unit Main;
+unit Main;
 
 
 {$R *.dfm}
@@ -64,13 +64,13 @@ var PLocation: TPointF;
 procedure TForm1.FormCreate(Sender: TObject);
 var i: Integer;
 begin
-  drawSomeThing.SetSize(1);
+//  drawSomeThing.SetSize(1);
   drawSomeThing.SetCanvas(Canvas);
   Location.SetCanvas(Canvas);
-  drawSomeThing.myNeck:= PointF(0.5, 0.5);
-  drawSomeThing.myLegBody:= PointF(0.5, 0.65);
-  drawSomeThing.createCadrArr();
-  MakeAllCadrs(drawSomeThing.ArrMainCadrs1);
+//  drawSomeThing.myNeck:= PointF(0.5, 0.5);
+//  drawSomeThing.myLegBody:= PointF(0.5, 0.65);
+//  drawSomeThing.createCadrArr();
+//  MakeAllCadrs(drawSomeThing.ArrMainCadrs1);
 
   PLocation := pointF(0, 0);  //0 0
   StopDrag := PLocation;
@@ -99,7 +99,7 @@ begin
     Snowflakes[i].Speed := Random(5) / 500 + 0.004; // 0.004/0.012
   end;
 
-  Music.TurnOn(SnowSong);
+  Music.TurnOn(film);
   allCadrs:= 0;
 end;
 
@@ -184,18 +184,19 @@ begin
     FramesCountHint.Caption := IntToStr(allCadrs);
 
 
-  if allCadrs = 550 then
-    Music.TurnOn(SlowMo)
-  else if allCadrs = 620 then
-    Music.TurnOn(DrumRoll)
-  else if allCadrs = 780 then
-    Music.TurnOn(Audience)
-  else if allCadrs = 930 then
-    Music.TurnOn(SnowAmbient)
-  else if allCadrs = 990 then
-    Music.TurnOn(GameAward);
-
-
+  if not CanDebug then
+  begin
+    //едет на трассу
+    if (allCadrs > 260) and (allCadrs <= 380) then PLocation:= PLocation + PointF(-0.003, 0);
+    //разгоняется
+    if (allCadrs > 380) and (allCadrs <= 460) then PLocation:= PLocation + PointF(-0.012, -0.0055);
+    //начало полёта
+    if (allCadrs > 525) and (allCadrs <= 600) then PLocation:= PLocation + PointF(-0.004, -0.0018);
+    //летит
+    if (allCadrs > 600) and (allCadrs <= 800) then PLocation:= PLocation + PointF(-0.007, -0.005);
+    //приземлился
+    if (allCadrs > 800) and (allCadrs <= 950) then PLocation:= PLocation + PointF(-0.0037, 0);
+  end;
 
 
   // SnowFlakes
