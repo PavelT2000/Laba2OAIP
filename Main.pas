@@ -1,4 +1,4 @@
-﻿unit Main;
+unit Main;
 
 
 {$R *.dfm}
@@ -115,6 +115,25 @@ begin
   if (allCadrs > 0) and (allCadrs <= SkisPolesMaxCadrsCount) then SkisPoles.DrawSkisPoles(allCadrs);
 
   if (allCadrs > 0) and (allCadrs <= NikTestMaxCadrsCount) then NikManTest.DrawPerson(allCadrs);
+
+
+  if not CanDebug then
+  begin
+    //едет на трассу
+    if (allCadrs > 260) and (allCadrs <= 380) then PLocation:= PLocation + PointF(-0.003, 0);
+    //разгоняется
+    if (allCadrs > 380) and (allCadrs <= 460) then PLocation:= PLocation + PointF(-0.012, -0.0055);
+    //начало полёта
+    if (allCadrs > 525) and (allCadrs <= 600) then PLocation:= PLocation + PointF(-0.004, -0.0018);
+    //летит
+    if (allCadrs > 600) and (allCadrs <= 800) then PLocation:= PLocation + PointF(-0.007, -0.005);
+    //приземлился
+    if (allCadrs > 800) and (allCadrs <= 950) then PLocation:= PLocation + PointF(-0.0037, 0);
+  end;
+  // mod не обязателен, он для повторения анимации
+  //NikManTest.DrawPerson(allCadrs+1);
+
+
 
 
   // SnowFlakes
