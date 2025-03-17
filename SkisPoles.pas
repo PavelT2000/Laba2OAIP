@@ -56,6 +56,11 @@ begin
   basicSize := size;
 end;
 
+function GetSize(): single;
+begin
+  result:= basicSize;
+end;
+
 procedure SetPos(newPos: TPointF);
 begin
   pos:= newPos;

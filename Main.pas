@@ -57,9 +57,9 @@ var PLocation: TPointF;
   IsDragging, CanDebug: Boolean;
   Snowflakes: array [1..CountSF] of TSnowflake;
   NikTestMaxCadrsCount, SkisPolesMaxCadrsCount: Integer;
-  TempCursorStart: TPoint;
-  TempCursorEnd: TPoint;
+  TempCursorStart, TempCursorEnd: TPoint;
   allCadrs: Integer;
+  startsize: single = 1.36;
 
 
 procedure TForm1.FormCreate(Sender: TObject);
@@ -71,7 +71,7 @@ begin
   PLocation := pointF(0, 0);  //0 0
   StopDrag := PLocation;
 
-  NikManTest.SetSize(1);
+  NikManTest.SetSize(startsize);
   NikManTest.SetCanvas(Canvas);
   NikManTest.Start;
   NikTestMaxCadrsCount := NikManTest.GetMaxCadrsCount;
@@ -111,6 +111,11 @@ begin
   NikManTest.SetPos(PLocation);
   SkisPoles.SetPos(PLocation);
 
+  if (allCadrs > 0) and (allCadrs < 120) and (startSize > 0) then begin
+    startSize:= startSize - 0.003;
+    NikManTest.SetSize(startSize);
+    //SkisPoles.SetSize(startSize);
+  end;
 
   if (allCadrs > 0) and (allCadrs <= SkisPolesMaxCadrsCount) then SkisPoles.DrawSkisPoles(allCadrs);
 

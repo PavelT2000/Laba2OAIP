@@ -190,11 +190,18 @@ begin
   QueuePositions[High(QueuePositions)] := ToPush;
 end;
 
+function Add2Rect(Rect1, Rect2: TRectF):TRectF;
+begin
+  result.Top:= Rect1.Top + Rect2.Top;
+  result.Bottom:= Rect1.Bottom + Rect2.Bottom;
+  result.Right:= Rect1.Right + Rect2.Right;
+  result.Left:= Rect1.Left + Rect2.Left;
+end;
 
 procedure SetPersonPositions;
 var
   Person: TPersonPos;
-  step: single;
+  step, step2: single;
   baseFrames: integer;
 
 procedure SlideAnim(cadrs, range: Integer; X, Y: Real);
@@ -204,14 +211,15 @@ begin
   Person.LegBody := Person.LegBody + PointF(X*range, Y*range);
   Person.Neck := Person.LegBody + PointF(0.04, -0.077);
 end;
-  
+
 begin
   SetLength(FavoritePositions, 100);
   step:= 0.009;
+  step2:= -0.0084;
   baseFrames:= 3;
   //стартовая позиция
-  Person.Neck := PointF   (0.1, 0.45);
-  Person.LegBody := PointF(0.1, 0.6);
+  Person.Neck := PointF   (0.1, 0.7);
+  Person.LegBody := PointF(0.1, 0.85);
 
   for var i := 0 to 5 do
   begin
@@ -221,8 +229,8 @@ begin
     Person.LeftHand.Create  (- 0.04, 0.055, 0.005, 0.075);
     Person.RightLeg.Create  (0.034, 0.06, 0.03, 0.13);
     Person.LeftLeg.Create   (- 0.02, 0.062, -0.05, 0.13);
-    Person.Neck.X:= Person.Neck.X + step;
-    person.LegBody.X:= person.LegBody.X + step;
+    Person.Neck:= Person.Neck + PointF(step, step2);
+    Person.LegBody:= Person.LegBody + PointF(step, step2);
 
     // Позиция и кол-во кадров для плавного перехода к следующей позиции
     PushToQueue(Person, baseFrames);
@@ -231,8 +239,8 @@ begin
     Person.LeftHand.Create  (- 0.026, 0.055, 0.012, 0.088);
     Person.RightLeg.Create  (0.025, 0.06, 0.013, 0.13);
     Person.LeftLeg.Create   (- 0.012, 0.062, - 0.023, 0.13);
-    Person.Neck.X:= Person.Neck.X + step;
-    person.LegBody.X:= person.LegBody.X + step;
+    Person.Neck:= Person.Neck + PointF(step, step2);
+    Person.LegBody:= Person.LegBody + PointF(step, step2);
     PushToQueue(Person, baseFrames);
 
     //3
@@ -240,8 +248,8 @@ begin
     Person.LeftHand.Create  (-0.015, 0.055, 0.027, 0.075);
     Person.RightLeg.Create  (0.008, 0.06, 0.001, 0.13);
     Person.LeftLeg.Create   (-0.004, 0.062, -0.015, 0.13);
-    Person.Neck.X:= Person.Neck.X + step;
-    person.LegBody.X:= person.LegBody.X + step;
+    Person.Neck:= Person.Neck + PointF(step, step2);
+    Person.LegBody:= Person.LegBody + PointF(step, step2);
     PushToQueue(Person, baseFrames);
 
     //4
@@ -249,8 +257,8 @@ begin
     Person.LeftHand.Create  (0.008, 0.062, 0.042, 0.052);
     Person.RightLeg.Create  (-0.004, 0.062, -0.015, 0.13);
     Person.LeftLeg.Create   (0.008, 0.06, 0.001, 0.13);
-    Person.Neck.X:= Person.Neck.X + step;
-    person.LegBody.X:= person.LegBody.X + step;
+    Person.Neck:= Person.Neck + PointF(step, step2);
+    Person.LegBody:= Person.LegBody + PointF(step, step2);
     PushToQueue(Person, -1);
     // при -1 никаких кадров создаваться не будет
     // Подробнее в функции MakeCadrsBetween
@@ -269,8 +277,8 @@ begin
     Person.LeftHand.Create  (- 0.026, 0.055, 0.012, 0.088);
     Person.RightLeg.Create  (0.025, 0.06, 0.013, 0.13);
     Person.LeftLeg.Create   (- 0.012, 0.062, - 0.023, 0.13);
-    Person.Neck.X:= Person.Neck.X + step;
-    person.LegBody.X:= person.LegBody.X + step;
+    Person.Neck:= Person.Neck + PointF(step, step2);
+    Person.LegBody:= Person.LegBody + PointF(step, step2);
     PushToQueue(Person, baseFrames);
   end;
 
