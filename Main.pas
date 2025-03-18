@@ -1,4 +1,4 @@
-unit Main;
+﻿unit Main;
 
 
 {$R *.dfm}
@@ -57,25 +57,21 @@ var PLocation: TPointF;
   IsDragging, CanDebug: Boolean;
   Snowflakes: array [1..CountSF] of TSnowflake;
   NikTestMaxCadrsCount, SkisPolesMaxCadrsCount: Integer;
-  TempCursorStart: TPoint;
-  TempCursorEnd: TPoint;
+  TempCursorStart, TempCursorEnd: TPoint;
+  allCadrs: Integer;
+  startsize: single = 1.6;
 
 
 procedure TForm1.FormCreate(Sender: TObject);
 var i: Integer;
 begin
-//  drawSomeThing.SetSize(1);
   drawSomeThing.SetCanvas(Canvas);
   Location.SetCanvas(Canvas);
-//  drawSomeThing.myNeck:= PointF(0.5, 0.5);
-//  drawSomeThing.myLegBody:= PointF(0.5, 0.65);
-//  drawSomeThing.createCadrArr();
-//  MakeAllCadrs(drawSomeThing.ArrMainCadrs1);
 
   PLocation := pointF(0, 0);  //0 0
   StopDrag := PLocation;
 
-  NikManTest.SetSize(1);
+  NikManTest.SetSize(startsize);
   NikManTest.SetCanvas(Canvas);
   NikManTest.Start;
   NikTestMaxCadrsCount := NikManTest.GetMaxCadrsCount;
@@ -115,32 +111,9 @@ begin
   NikManTest.SetPos(PLocation);
   SkisPoles.SetPos(PLocation);
 
-  {if (allCadrs > 0) and (allCadrs <= 1000) then begin
-    prDrawPerson;
-  end;}
-  //DrawPerson(drawSomeThing.MenSki1);
-  //DrawPerson(drawSomeThing.MenSki2);
-
   if (allCadrs > 0) and (allCadrs <= SkisPolesMaxCadrsCount) then SkisPoles.DrawSkisPoles(allCadrs);
 
   if (allCadrs > 0) and (allCadrs <= NikTestMaxCadrsCount) then NikManTest.DrawPerson(allCadrs);
-
-
-  if not CanDebug then
-  begin
-    //едет на трассу
-    if (allCadrs > 260) and (allCadrs <= 380) then PLocation:= PLocation + PointF(-0.003, 0);
-    //разгоняется
-    if (allCadrs > 380) and (allCadrs <= 460) then PLocation:= PLocation + PointF(-0.012, -0.0055);
-    //начало полёта
-    if (allCadrs > 525) and (allCadrs <= 600) then PLocation:= PLocation + PointF(-0.004, -0.0018);
-    //летит
-    if (allCadrs > 600) and (allCadrs <= 800) then PLocation:= PLocation + PointF(-0.007, -0.005);
-    //приземлился
-    if (allCadrs > 800) and (allCadrs <= 950) then PLocation:= PLocation + PointF(-0.0037, 0);
-  end;
-  // mod не обязателен, он для повторения анимации
-  //NikManTest.DrawPerson(allCadrs+1);
 
 
 
@@ -198,6 +171,11 @@ begin
     if (allCadrs > 800) and (allCadrs <= 950) then PLocation:= PLocation + PointF(-0.0037, 0);
   end;
 
+
+  if (allCadrs > 0) and (allCadrs < 120) and (startSize > 0) then begin
+    startSize:= startSize - 0.005;
+    NikManTest.SetSize(startSize);
+  end;
 
   // SnowFlakes
   for i := 1 to CountSF do
