@@ -657,25 +657,9 @@ procedure DrawPerson(nowCadr: Integer);
 var
   ToDrawPos: TPersonPos;
 
-  {myRightHand, myLeftHand, myRightLeg, myLeftLeg: TRectF;
-  myNeck, myLegBody: TPointF;}
 begin
 
   ToDrawPos := PersonAllPos[nowCadr-1];
-
-  {myRightHand:= AddPosRect(ToDrawPos.RightHand, pos);
-  myLeftHand:=  AddPosRect(ToDrawPos.LeftHand, pos);
-  myRightLeg:= AddPosRect(ToDrawPos.RightLeg, pos);
-  myLeftLeg:= AddPosRect(ToDrawPos.LeftLeg, pos);
-  myNeck:= ToDrawPos.Neck + pos;
-  myLegBody:= ToDrawPos.LegBody + pos;
-
-  DrawHead(myNeck, myLegBody, basicSize);
-  DrawBody(myNeck, myLegBody, basicSize);
-  DrawHand(myRightHand, myNeck, basicSize);
-  DrawHand(myLeftHand, myNeck, basicSize);
-  DrawLeg(myRightLeg, myLegBody, basicSize);
-  DrawLeg(myLeftLeg, myLegBody, basicSize);}
 
   DrawHead(ToDrawPos.Neck, ToDrawPos.LegBody, basicSize);
   DrawBody(ToDrawPos.Neck, ToDrawPos.LegBody, basicSize);
