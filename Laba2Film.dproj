@@ -123,15 +123,26 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="Main.pas">
-            <Form>Form1</Form>
+        <DCCReference Include="OurLaba\Main.pas">
+            <Form>OurForm</Form>
         </DCCReference>
-        <DCCReference Include="drawSomeThing.pas"/>
-        <DCCReference Include="Location.pas"/>
-        <DCCReference Include="PointConverter.pas"/>
-        <DCCReference Include="Music.pas"/>
-        <DCCReference Include="NikManTest.pas"/>
-        <DCCReference Include="SkisPoles.pas"/>
+        <DCCReference Include="OurLaba\drawSomeThing.pas"/>
+        <DCCReference Include="OurLaba\Location.pas"/>
+        <DCCReference Include="OurLaba\PointConverter.pas"/>
+        <DCCReference Include="OurLaba\Music.pas"/>
+        <DCCReference Include="OurLaba\NikManTest.pas"/>
+        <DCCReference Include="OurLaba\SkisPoles.pas"/>
+        <DCCReference Include="KolaLaba\BackGroundController.pas"/>
+        <DCCReference Include="KolaLaba\CharacterController.pas"/>
+        <DCCReference Include="KolaLaba\EventController.pas"/>
+        <DCCReference Include="MishaLaba\film.pas">
+            <Form>Form1</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="KolaLaba\ColaMain.pas">
+            <Form>Form2</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
@@ -155,6 +166,12 @@
             </Delphi.Personality>
             <Deployment Version="4">
                 <DeployFile LocalName="Win32\Debug\Laba2Film.exe" Configuration="Debug" Class="ProjectOutput"/>
+                <DeployFile LocalName="Win32\Debug\Laba2Film.exe" Configuration="Debug" Class="ProjectOutput">
+                    <Platform Name="Win32">
+                        <RemoteName>Laba2Film.exe</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployClass Name="AdditionalDebugSymbols">
                     <Platform Name="iOSSimulator">
                         <Operation>1</Operation>
