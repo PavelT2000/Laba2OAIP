@@ -11,6 +11,8 @@ procedure SetCanvas(canvas: TCanvas);
 procedure DrawSnowflake(SFPosF: TPointF; Length: Integer;
   size, Ratio, OffsetAngle: single);
 
+procedure CoolTransition2(SFPosF: TPointF);
+
 implementation
 
 uses PointConverter;
@@ -18,6 +20,7 @@ uses PointConverter;
 const
 
   SFColor: TColor = clAqua;
+  CTColor: TColor = clBlack;
 
 var
   myCanvas: TCanvas;
@@ -85,5 +88,25 @@ begin
       BranchPoints[i].Y + Round(sin(angle[i] - Pi / 6) * Offset));
   end;
 end;
+
+
+procedure CoolTransition2(SFPosF: TPointF);// Length: Integer);
+var
+  SFPos: TPoint;
+  Size: Integer;
+begin
+  myCanvas.Pen.Color := CTColor;
+  myCanvas.Brush.Color := CTColor;
+  myCanvas.Pen.Width := 1;
+
+  Size := PointConverter.Convert(PointF(1,1)).X;
+
+  SFPos := PointConverter.Convert(SFPosF);
+
+  myCanvas.Rectangle(SFPos.X, SFPos.Y + Size, SFPos.X + Size, SFPos.Y);
+
+end;
+
+
 
 end.

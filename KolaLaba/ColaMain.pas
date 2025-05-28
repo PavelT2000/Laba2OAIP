@@ -11,7 +11,6 @@ uses
 
 type
   TForm2 = class(TForm)
-    MediaPlayer1: TMediaPlayer;
     procedure OnPaint(Sender: TObject);
     procedure OnCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -381,7 +380,7 @@ begin
   Driver.AddDrawObj(Character);
   Driver.AddDrawObj(CoolCircle);
   Driver.AddDrawObj(CoolTransition);
-  Form2.MediaPlayer1.Play;
+//  Form2.MediaPlayer1.Play;
 end;
 
 procedure TForm2.OnPaint(Sender: TObject);

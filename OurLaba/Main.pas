@@ -103,6 +103,7 @@ procedure NextPaint();
 var
   FormRect: TRect;
   i: Integer;
+  CTstart, CTend: Integer;
 begin
   FormRect := Rect(0, 0, OurForm.ClientWidth, OurForm.ClientHeight);
   PointConverter.SetFieldRect(FormRect);
@@ -116,14 +117,29 @@ begin
   if (allCadrs > 0) and (allCadrs <= NikTestMaxCadrsCount) then NikManTest.DrawPerson(allCadrs);
 
 
-
-
   // SnowFlakes
   for i := 1 to CountSF do
     drawSomeThing.DrawSnowflake(
     PointF(Snowflakes[i].X, Snowflakes[i].Y),
     Snowflakes[i].Length, 1.5, Snowflakes[i].Ratio, Snowflakes[i].Y*200
     );
+
+
+  // CoolTransation
+  CTstart := 275;
+  CTend := 295;
+  // При (CTend - CTstart) div 2 будет закрыто полностью окно
+  if (allCadrs > CTstart) and (allCadrs <= CTend) then
+  begin
+    CoolTransition2(PointF((1-(allCadrs-CTstart)/(CTend-CTstart)*2), 0));
+  end;
+  // (1-(allCadrs-CTstart)/(CTend-CTstart)*2) - координата CoolTransation
+  // Объясняю - по такой формуле считается что если allCadrs = CTstart
+  // то по формуле будет X = 1
+  // если allCadrs = CTend, то будет -1
+  // если allCadrs = между CTstart и CTend, то будет 0 (перекроет всё окно)
+
+
 
 
 
