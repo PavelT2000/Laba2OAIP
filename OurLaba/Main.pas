@@ -60,7 +60,7 @@ var PLocation: TPointF;
   TempCursorStart, TempCursorEnd: TPoint;
   allCadrs: Integer;
   startsize: single = 1.6;
-
+//  startsize: single = 1;
 
 procedure TOurForm.FormCreate(Sender: TObject);
 var i: Integer;
@@ -127,7 +127,7 @@ begin
 
   // CoolTransation
   CTstart := 275;
-  CTend := 295;
+  CTend := CTstart + 20;
   // При (CTend - CTstart) div 2 будет закрыто полностью окно
   if (allCadrs > CTstart) and (allCadrs <= CTend) then
   begin
@@ -139,8 +139,12 @@ begin
   // если allCadrs = CTend, то будет -1
   // если allCadrs = между CTstart и CTend, то будет 0 (перекроет всё окно)
 
-
-
+  CTstart := 405;
+  CTend := CTstart + 20;
+  if (allCadrs > CTstart) and (allCadrs <= CTend) then
+  begin
+    CoolTransition2(PointF((1-(allCadrs-CTstart)/(CTend-CTstart)*2), 0));
+  end;
 
 
   // Cursor hint
@@ -175,10 +179,18 @@ begin
 
   if not CanDebug then
   begin
+    // после CoolTransition
+    if (allCadrs = 285) then PLocation:= PLocation + PointF(0.34, 1.35);
+    
     //едет на трассу
-    if (allCadrs > 260) and (allCadrs <= 380) then PLocation:= PLocation + PointF(-0.003, 0);
+//    if (allCadrs > 260) and (allCadrs <= 380) then PLocation:= PLocation + PointF(-0.003, 0);
     //разгоняется
-    if (allCadrs > 380) and (allCadrs <= 460) then PLocation:= PLocation + PointF(-0.012, -0.0055);
+//    if (allCadrs > 380) and (allCadrs <= 460) then PLocation:= PLocation + PointF(-0.012, -0.0055);
+
+    // после второго CoolTransition
+    if allCadrs = 415 then PLocation := PLocation - PointF(0.34, 1.35) + pointF(-(380-260)*0.003, 0) + pointF(-(415-380)*0.012, -(415-380)*0.0055); 
+//    разгоняется (новое)
+    if (allCadrs > 415) and (allCadrs <= 460) then PLocation:= PLocation + PointF(-0.012, -0.0055);     
     //начало полёта
     if (allCadrs > 525) and (allCadrs <= 600) then PLocation:= PLocation + PointF(-0.004, -0.0018);
     //летит

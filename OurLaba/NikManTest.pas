@@ -363,7 +363,19 @@ begin
     Person.Neck.X:= Person.Neck.X + step;
     person.LegBody.X:= person.LegBody.X + step;
     //PushToQueue(Person, 10000);
-    PushToQueue(Person, baseFrames);
+
+    // Телепорт на 2ую локацию
+    if i = 1 then
+    begin
+      PushToQueue(Person, -1);
+      Person.Neck.X := Person.Neck.X - 0.7;
+      Person.Neck.Y := Person.Neck.Y - 1.2;
+      Person.LegBody.X := person.LegBody.X - 0.7;
+      Person.LegBody.Y := person.LegBody.Y - 1.2;
+      PushToQueue(Person, baseFrames-1);
+    end
+    else
+      PushToQueue(Person, baseFrames);
 
     //2
     Person.RightHand.Create ( 0.013, 0.031, 0.049, 0.023);
@@ -391,7 +403,20 @@ begin
     Person.Neck.X:= Person.Neck.X + step;
     person.LegBody.X:= person.LegBody.X + step;
     //PushToQueue(Person, 100);
-    PushToQueue(Person, baseFrames);
+//    PushToQueue(Person, baseFrames);
+
+    // Телепорт обратно
+    if i = 3 then
+    begin
+      PushToQueue(Person, -1);
+      Person.Neck.X := Person.Neck.X + 0.7;
+      Person.Neck.Y := Person.Neck.Y + 1.2;
+      Person.LegBody.X := person.LegBody.X + 0.7;
+      Person.LegBody.Y := person.LegBody.Y + 1.2;
+      PushToQueue(Person, baseFrames-1);
+    end
+    else
+      PushToQueue(Person, baseFrames);
 
     Person.Neck:= Person.Neck - PointF(0.019, 0.022);
 

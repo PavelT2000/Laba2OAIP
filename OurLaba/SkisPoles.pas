@@ -154,7 +154,20 @@ begin
     SkisPoles.RightSki:= Add2Rect(SkisPoles.RightSki, RectF(step, 0, step, 0));
     SkisPoles.LeftPole:= Add2Rect(SkisPoles.LeftPole, RectF(step, 0, step, 0));
     SkisPoles.RightPole:= Add2Rect(SkisPoles.RightPole, RectF(step, 0, step, 0));
-    PushToQueue(SkisPoles, baseFrames);
+    //PushToQueue(SkisPoles, baseFrames);
+
+    // Телепорт на 2ую локацию
+    if i = 1 then
+    begin
+      PushToQueue(SkisPoles, -1);
+      SkisPoles.LeftSki:= Add2Rect(SkisPoles.LeftSki, RectF(-0.7, -1.2, -0.7, -1.2));
+      SkisPoles.RightSki:= Add2Rect(SkisPoles.RightSki, RectF(-0.7, -1.2, -0.7, -1.2));
+      SkisPoles.LeftPole:= Add2Rect(SkisPoles.LeftPole, RectF(-0.7, -1.2, -0.7, -1.2));
+      SkisPoles.RightPole:= Add2Rect(SkisPoles.RightPole, RectF(-0.7, -1.2, -0.7, -1.2));
+      PushToQueue(SkisPoles, baseFrames-1);
+    end
+    else
+      PushToQueue(SkisPoles, baseFrames);
 
     //2
     SkisPoles.LeftPole:= Add2Rect(SkisPoles.LeftPole, RectF(0.005, 0.048, -0.02, -0.005));
@@ -187,7 +200,23 @@ begin
     SkisPoles.RightSki:= Add2Rect(SkisPoles.RightSki, RectF(step, 0, step, 0));
     SkisPoles.LeftPole:= Add2Rect(SkisPoles.LeftPole, RectF(step, 0, step, 0));
     SkisPoles.RightPole:= Add2Rect(SkisPoles.RightPole, RectF(step, 0, step, 0));
-    PushToQueue(SkisPoles, baseFrames);
+//    PushToQueue(SkisPoles, baseFrames);
+
+    // Телепорт обратно
+    if i = 3 then
+    begin
+      PushToQueue(SkisPoles, -1);
+      SkisPoles.LeftSki:= Add2Rect(SkisPoles.LeftSki, RectF(0.7, 1.2, 0.7, 1.2));
+      SkisPoles.RightSki:= Add2Rect(SkisPoles.RightSki, RectF(0.7, 1.2, 0.7, 1.2));
+      SkisPoles.LeftPole:= Add2Rect(SkisPoles.LeftPole, RectF(0.7, 1.2, 0.7, 1.2));
+      SkisPoles.RightPole:= Add2Rect(SkisPoles.RightPole, RectF(0.7, 1.2, 0.7, 1.2));
+      PushToQueue(SkisPoles, baseFrames-1);
+    end
+    else
+      PushToQueue(SkisPoles, baseFrames);
+
+
+
 
     SkisPoles.LeftPole:= Add2Rect(SkisPoles.LeftPole, RectF(-0.005, -0.048, 0.02, 0.005));
     SkisPoles.RightPole:= Add2Rect(SkisPoles.RightPole, RectF(-0.005, -0.048, 0.02, 0.005));

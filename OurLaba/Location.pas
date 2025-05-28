@@ -75,6 +75,13 @@ var
     //colorArr: array[0..1] of TColor;
     num: integer;
     color1, color2, color3: Tcolor;
+    Loc2Off: single;
+
+    // Location2
+    polyPoints: array of TPoint;
+    maxX: Single; // Максимальная X-координата в исходном коде
+    maxY: Single;  // Максимальная Y-координата в исходном коде
+    Offset: Single;
 begin
   myCanvas.Pen.Width:= Round(PointConverter.GetPixels()/3.2);
   myCanvas.Pen.Color:=clBlack;
@@ -245,6 +252,107 @@ begin
   p9 := Convert(PointF(0-1.16, 0.99)+pos);
   p10 := Convert(PointF(0.2, 0.99)+pos);
   myCanvas.Polygon([p3, p4, p5, p6, p7, p8, p9, p10]);
+
+
+
+  // Локация2 (Коли)
+
+  maxX := 2000/1.2;
+  maxY:= 1000/1.2;
+  Offset := 0;
+  myCanvas.Pen.Color := clBlack;
+  myCanvas.Brush.Color := clWhite;
+
+  pos := pos - PointF(1.5, 1.5);
+
+//  Loc2Off := 100;
+//  myCanvas.Rectangle()
+
+                        // Первый прямоугольник
+  p1 := PointF(910/maxX, 700/maxY);
+  p2 := PointF(990/maxX, 550/maxY);
+  rect := ConvertRect(AddPosRect(RectF(p1.X, p1.Y, p2.X, p2.Y), pos));
+  myCanvas.Rectangle(rect);
+
+  // Второй прямоугольник
+  p1 := PointF(1410/maxX, 700/maxY);
+  p2 := PointF(1490/maxX, 550/maxY);
+  rect := ConvertRect(AddPosRect(RectF(p1.X, p1.Y, p2.X, p2.Y), pos));
+  myCanvas.Rectangle(rect);
+
+  // Третий прямоугольник
+  p1 := PointF(1910/maxX, 700/maxY);
+  p2 := PointF(1990/maxX, 550/maxY);
+  rect := ConvertRect(AddPosRect(RectF(p1.X, p1.Y, p2.X, p2.Y), pos));
+  myCanvas.Rectangle(rect);
+
+  // Четвертый прямоугольник (с учетом Offset)
+  p1 := PointF((2410 - Offset)/maxX, 700/maxY);
+  p2 := PointF((2490 - Offset)/maxX, 550/maxY);
+  rect := ConvertRect(AddPosRect(RectF(p1.X, p1.Y, p2.X, p2.Y), pos));
+  myCanvas.Rectangle(rect);
+
+  // Эллипсы (TEllipse)
+  // Первый эллипс
+  p1 := PointF(800/maxX, 600/maxY);
+  p2 := PointF(1100/maxX, 200/maxY);
+  rect := ConvertRect(AddPosRect(RectF(p1.X, p1.Y, p2.X, p2.Y), pos));
+  myCanvas.Ellipse(rect);
+
+  // Второй эллипс
+  p1 := PointF(1300/maxX, 600/maxY);
+  p2 := PointF(1600/maxX, 200/maxY);
+  rect := ConvertRect(AddPosRect(RectF(p1.X, p1.Y, p2.X, p2.Y), pos));
+  myCanvas.Ellipse(rect);
+
+  // Третий эллипс
+  p1 := PointF(1800/maxX, 600/maxY);
+  p2 := PointF(2100/maxX, 200/maxY);
+  rect := ConvertRect(AddPosRect(RectF(p1.X, p1.Y, p2.X, p2.Y), pos));
+  myCanvas.Ellipse(rect);
+
+  // Четвертый эллипс (с учетом Offset)
+  p1 := PointF((2300 - Offset)/maxX, 600/maxY);
+  p2 := PointF((2600 - Offset)/maxX, 200/maxY);
+  rect := ConvertRect(AddPosRect(RectF(p1.X, p1.Y, p2.X, p2.Y), pos));
+  myCanvas.Ellipse(rect);
+
+  // Создаем полигон из двух линий
+  SetLength(polyPoints, 4);
+  polyPoints[0] := Convert(AddPos(PointF(400/maxX, 785/maxY), pos)); // Начало первой линии
+  polyPoints[1] := Convert(AddPos(PointF(10000/maxX, 785/maxY), pos)); // Конец первой линии
+  polyPoints[2] := Convert(AddPos(PointF(10000/maxX, 840/maxY), pos)); // Конец второй линии (x взят от конца первой)
+  polyPoints[3] := Convert(AddPos(PointF(200/maxX, 840/maxY), pos)); // Начало второй линии
+
+  myCanvas.Polygon(polyPoints);
+
+  // Многоугольники (TPolyGon)
+  // Первый многоугольник
+  SetLength(polyPoints, 4);
+  polyPoints[0] := Convert(AddPos(PointF(700/maxX, -10/maxY), pos));
+  polyPoints[1] := Convert(AddPos(PointF(700/maxX, 700/maxY), pos));
+  polyPoints[2] := Convert(AddPos(PointF(-10/maxX, 900/maxY), pos));
+  polyPoints[3] := Convert(AddPos(PointF(-10/maxX, -10/maxY), pos));
+  myCanvas.Polygon(polyPoints);
+
+  // Второй многоугольник (дверной проем)
+  myCanvas.Brush.Color := clBlack; // он черный, этот проем
+  SetLength(polyPoints, 4);
+  polyPoints[0] := Convert(AddPos(PointF(400/maxX, 500/maxY), pos));
+  polyPoints[1] := Convert(AddPos(PointF(400/maxX, 785/maxY), pos));
+  polyPoints[2] := Convert(AddPos(PointF(200/maxX, 840/maxY), pos));
+  polyPoints[3] := Convert(AddPos(PointF(200/maxX, 555/maxY), pos));
+  myCanvas.Polygon(polyPoints);
+
+  // Третий многоугольник  (дверь)
+  myCanvas.Brush.Color := clWhite; // вернул цвет кисти
+  SetLength(polyPoints, 4);
+  polyPoints[0] := Convert(AddPos(PointF(400/maxX, 500/maxY), pos));
+  polyPoints[1] := Convert(AddPos(PointF(400/maxX, 785/maxY), pos));
+  polyPoints[2] := Convert(AddPos(PointF(600/maxX, 730/maxY), pos));
+  polyPoints[3] := Convert(AddPos(PointF(600/maxX, 445/maxY), pos));
+  myCanvas.Polygon(polyPoints);
+
 
 end;
 
