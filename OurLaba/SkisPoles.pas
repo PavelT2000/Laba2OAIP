@@ -206,10 +206,10 @@ begin
     if i = 3 then
     begin
       PushToQueue(SkisPoles, -1);
-      SkisPoles.LeftSki:= Add2Rect(SkisPoles.LeftSki, RectF(0.7, 1.2, 0.7, 1.2));
-      SkisPoles.RightSki:= Add2Rect(SkisPoles.RightSki, RectF(0.7, 1.2, 0.7, 1.2));
-      SkisPoles.LeftPole:= Add2Rect(SkisPoles.LeftPole, RectF(0.7, 1.2, 0.7, 1.2));
-      SkisPoles.RightPole:= Add2Rect(SkisPoles.RightPole, RectF(0.7, 1.2, 0.7, 1.2));
+      SkisPoles.LeftSki:= Add2Rect(SkisPoles.LeftSki, RectF(0.7 + 0.8, 1.2, 0.7  + 0.8, 1.2));
+      SkisPoles.RightSki:= Add2Rect(SkisPoles.RightSki, RectF(0.7 + 0.8, 1.2, 0.7 + 0.8, 1.2));
+      SkisPoles.LeftPole:= Add2Rect(SkisPoles.LeftPole, RectF(0.7 + 0.8, 1.2, 0.7 + 0.8, 1.2));
+      SkisPoles.RightPole:= Add2Rect(SkisPoles.RightPole, RectF(0.7 + 0.8, 1.2, 0.7 + 0.8, 1.2));
       PushToQueue(SkisPoles, baseFrames-1);
     end
     else

@@ -1,4 +1,4 @@
-﻿unit Main;
+unit Main;
 
 {$R *.dfm}
 
@@ -249,21 +249,15 @@ begin
     // if (allCadrs > 380) and (allCadrs <= 460) then PLocation:= PLocation + PointF(-0.012, -0.0055);
 
     // после второго CoolTransition
-    if allCadrs = 415 then
-      PLocation := PLocation - pointF(0.34, 1.35) + pointF(-(380 - 260) * 0.003,
-        0) + pointF(-(415 - 380) * 0.012, -(415 - 380) * 0.0055);
-    // разгоняется (новое)
-    if (allCadrs > 415) and (allCadrs <= 460) then
-      PLocation := PLocation + pointF(-0.012, -0.0055);
-    // начало полёта
-    if (allCadrs > 525) and (allCadrs <= 600) then
-      PLocation := PLocation + pointF(-0.004, -0.0018);
-    // летит
-    if (allCadrs > 600) and (allCadrs <= 800) then
-      PLocation := PLocation + pointF(-0.007, -0.005);
-    // приземлился
-    if (allCadrs > 800) and (allCadrs <= 950) then
-      PLocation := PLocation + pointF(-0.0037, 0);
+    if allCadrs = 415 then PLocation := PLocation - PointF(0.34+0.8, 1.35) + pointF(-(380-260)*0.003, 0) + pointF(-(415-380)*0.012, -(415-380)*0.0055);
+//    разгоняется (новое)
+    if (allCadrs > 415) and (allCadrs <= 460) then PLocation:= PLocation + PointF(-0.012, -0.0055);     
+    //начало полёта
+    if (allCadrs > 525) and (allCadrs <= 600) then PLocation:= PLocation + PointF(-0.004, -0.0018);
+    //летит
+    if (allCadrs > 600) and (allCadrs <= 800) then PLocation:= PLocation + PointF(-0.007, -0.005);
+    //приземлился
+    if (allCadrs > 800) and (allCadrs <= 950) then PLocation:= PLocation + PointF(-0.0037, 0);
   end;
 
   if (allCadrs > 0) and (allCadrs < 120) and (startsize > 0) then
