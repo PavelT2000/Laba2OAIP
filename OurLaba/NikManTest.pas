@@ -409,9 +409,9 @@ begin
     if i = 3 then
     begin
       PushToQueue(Person, -1);
-      Person.Neck.X := Person.Neck.X + 0.7;
+      Person.Neck.X := Person.Neck.X + 0.7 + 0.8;
       Person.Neck.Y := Person.Neck.Y + 1.2;
-      Person.LegBody.X := person.LegBody.X + 0.7;
+      Person.LegBody.X := person.LegBody.X + 0.7 + 0.8;
       Person.LegBody.Y := person.LegBody.Y + 1.2;
       PushToQueue(Person, baseFrames-1);
     end

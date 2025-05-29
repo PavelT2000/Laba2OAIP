@@ -69,7 +69,7 @@ end;
 Procedure DrawLocation3(pos: TPointF);
 var
     p1, p2: TPointF;
-    p3, p4, p5, p6, p7, p8, p9, p10 :TPoint;
+    p3, p4, p5, p6, p7, p8, p9, p10, p11 :TPoint;
     high, width: single;
     rect: TRect;
     //colorArr: array[0..1] of TColor;
@@ -197,7 +197,7 @@ begin
   myCanvas.Brush.Color:= color3;
   myCanvas.Polygon([p3, p4, p5, p6]);
 
-  pos:= pos + PointF(1.16, 0.05);
+  pos:= pos + PointF(1.16+0.8, 0.05);
 
   //точки для полегонов, верх лево, верх право, низ право, низ лево
 
@@ -213,6 +213,13 @@ begin
   p4 := Convert(PointF(1, 0.9)+pos);
   p5 := Convert(PointF(0.91, 0.81+0.4)+pos);
   myCanvas.Polygon([p3, p4, p5, p6]);}
+
+  p3 := Convert(PointF(0.2-0.8, 0.55)+pos);
+  p4 := Convert(PointF(0.2, 0.55)+pos);
+  p7 := Convert(PointF(0.2, 0.55+0.4)+pos);
+  p8 := Convert(PointF(-0.6, 0.55+0.4)+pos);
+
+  myCanvas.Polygon([p3, p4, p7, p8]);
 
   p3 := Convert(PointF(0.2, 0.55)+pos);
   p4 := Convert(PointF(0.6, 1.05)+pos);
@@ -243,6 +250,7 @@ begin
 
   //black side
   myCanvas.Brush.Color:= RGB(192, 192, 192);
+  p11:= Convert(PointF(0.2-0.8, 0.55+0.4)+pos);
   p3 := Convert(PointF(0.2, 0.55+0.4)+pos);
   p4 := Convert(PointF(0.54, 0.93+0.4)+pos);
   p5 := Convert(PointF(0.91, 0.81+0.4)+pos);
@@ -250,8 +258,8 @@ begin
   p7 := Convert(PointF(1.95, 1.95+0.4)+pos);
   p8 := Convert(PointF(0-1.16, 1.95+0.4)+pos);
   p9 := Convert(PointF(0-1.16, 0.99)+pos);
-  p10 := Convert(PointF(0.2, 0.99)+pos);
-  myCanvas.Polygon([p3, p4, p5, p6, p7, p8, p9, p10]);
+  p10 := Convert(PointF(0.2-0.8, 0.99)+pos);
+  myCanvas.Polygon([p11, p3, p4, p5, p6, p7, p8, p9, p10]);
 
 
 
@@ -263,7 +271,7 @@ begin
   myCanvas.Pen.Color := clBlack;
   myCanvas.Brush.Color := clWhite;
 
-  pos := pos - PointF(1.5, 1.5);
+  pos := pos - PointF(1.5+0.8, 1.5);
 
 //  Loc2Off := 100;
 //  myCanvas.Rectangle()
