@@ -268,7 +268,8 @@ begin
 //  Loc2Off := 100;
 //  myCanvas.Rectangle()
 
-                        // Первый прямоугольник
+  // Первый прямоугольник
+  myCanvas.Brush.Color := RGB(191, 119, 0);
   p1 := PointF(910/maxX, 700/maxY);
   p2 := PointF(990/maxX, 550/maxY);
   rect := ConvertRect(AddPosRect(RectF(p1.X, p1.Y, p2.X, p2.Y), pos));
@@ -293,6 +294,7 @@ begin
   myCanvas.Rectangle(rect);
 
   // Эллипсы (TEllipse)
+  myCanvas.Brush.Color := RGB(111, 250, 0);
   // Первый эллипс
   p1 := PointF(800/maxX, 600/maxY);
   p2 := PointF(1100/maxX, 200/maxY);
@@ -318,6 +320,7 @@ begin
   myCanvas.Ellipse(rect);
 
   // Создаем полигон из двух линий
+  myCanvas.Brush.Color := RGB(95, 158, 160);
   SetLength(polyPoints, 4);
   polyPoints[0] := Convert(AddPos(PointF(400/maxX, 785/maxY), pos)); // Начало первой линии
   polyPoints[1] := Convert(AddPos(PointF(10000/maxX, 785/maxY), pos)); // Конец первой линии
@@ -328,6 +331,7 @@ begin
 
   // Многоугольники (TPolyGon)
   // Первый многоугольник
+  myCanvas.Brush.Color:= color3;
   SetLength(polyPoints, 4);
   polyPoints[0] := Convert(AddPos(PointF(700/maxX, -10/maxY), pos));
   polyPoints[1] := Convert(AddPos(PointF(700/maxX, 700/maxY), pos));
@@ -345,7 +349,7 @@ begin
   myCanvas.Polygon(polyPoints);
 
   // Третий многоугольник  (дверь)
-  myCanvas.Brush.Color := clWhite; // вернул цвет кисти
+  myCanvas.Brush.Color := RGB(237, 187, 30); // вернул цвет кисти
   SetLength(polyPoints, 4);
   polyPoints[0] := Convert(AddPos(PointF(400/maxX, 500/maxY), pos));
   polyPoints[1] := Convert(AddPos(PointF(400/maxX, 785/maxY), pos));
