@@ -92,7 +92,7 @@ begin
   CurTime := GetTickCount - StartTime;
   Draw(CurTime, DrawObjects.Adr, Canvas);
   if CurTime < LengthTime then
-    Sender.Invalidate;
+//    Sender.Invalidate;
 end;
 
 procedure TDrawer.Clear(Adr: TDrawObjectAdr);
