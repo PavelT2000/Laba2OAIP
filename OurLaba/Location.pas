@@ -82,6 +82,7 @@ var
     maxX: Single; // Максимальная X-координата в исходном коде
     maxY: Single;  // Максимальная Y-координата в исходном коде
     Offset: Single;
+    xHouses: Single;
 begin
   myCanvas.Pen.Width:= Round(PointConverter.GetPixels()/3.2);
   myCanvas.Pen.Color:=clBlack;
@@ -365,6 +366,305 @@ begin
   polyPoints[3] := Convert(AddPos(PointF(600/maxX, 445/maxY), pos));
   myCanvas.Polygon(polyPoints);
 
+
+
+  // Локация3 (Миши)
+  maxX := 1000*1.2;
+  maxY:= 500*1.2;
+  myCanvas.Pen.Color := clBlack;
+  myCanvas.Brush.Color := clWhite;
+
+  pos := pos + PointF(4.4, 2.933);
+  xHouses := 1;
+
+  // Дом 1
+
+  // Основной контур дома
+  myCanvas.Brush.Color := RGB(210, 180, 140);
+  SetLength(polyPoints, 5);
+  polyPoints[0] := Convert(AddPos(PointF(xHouses/maxX, 400/maxY), pos));
+  polyPoints[1] := Convert(AddPos(PointF(xHouses/maxX, 50/maxY), pos));
+  polyPoints[2] := Convert(AddPos(PointF((xHouses + 200)/maxX, 50/maxY), pos));
+  polyPoints[3] := Convert(AddPos(PointF((xHouses + 200)/maxX, 400/maxY), pos));
+  polyPoints[4] := polyPoints[0]; // Замыкаем полигон
+  myCanvas.Polygon(polyPoints);
+
+  // Окно 1
+  myCanvas.Brush.Color := RGB(200, 230, 250);
+
+  SetLength(polyPoints, 5);
+  polyPoints[0] := Convert(AddPos(PointF((xHouses + 20)/maxX, 350/maxY), pos));
+  polyPoints[1] := Convert(AddPos(PointF((xHouses + 70)/maxX, 350/maxY), pos));
+  polyPoints[2] := Convert(AddPos(PointF((xHouses + 70)/maxX, 280/maxY), pos));
+  polyPoints[3] := Convert(AddPos(PointF((xHouses + 20)/maxX, 280/maxY), pos));
+  polyPoints[4] := polyPoints[0];
+  myCanvas.Polygon(polyPoints);
+
+  // Окно 2
+  polyPoints[0] := Convert(AddPos(PointF((xHouses + 20)/maxX, 250/maxY), pos));
+  polyPoints[1] := Convert(AddPos(PointF((xHouses + 70)/maxX, 250/maxY), pos));
+  polyPoints[2] := Convert(AddPos(PointF((xHouses + 70)/maxX, 180/maxY), pos));
+  polyPoints[3] := Convert(AddPos(PointF((xHouses + 20)/maxX, 180/maxY), pos));
+  polyPoints[4] := polyPoints[0];
+  myCanvas.Polygon(polyPoints);
+
+  // Окно 3
+  polyPoints[0] := Convert(AddPos(PointF((xHouses + 20)/maxX, 150/maxY), pos));
+  polyPoints[1] := Convert(AddPos(PointF((xHouses + 70)/maxX, 150/maxY), pos));
+  polyPoints[2] := Convert(AddPos(PointF((xHouses + 70)/maxX, 80/maxY), pos));
+  polyPoints[3] := Convert(AddPos(PointF((xHouses + 20)/maxX, 80/maxY), pos));
+  polyPoints[4] := polyPoints[0];
+  myCanvas.Polygon(polyPoints);
+
+  // Окна справа (3 окна)
+  // Окно 4
+  polyPoints[0] := Convert(AddPos(PointF((xHouses + 180)/maxX, 350/maxY), pos));
+  polyPoints[1] := Convert(AddPos(PointF((xHouses + 130)/maxX, 350/maxY), pos));
+  polyPoints[2] := Convert(AddPos(PointF((xHouses + 130)/maxX, 280/maxY), pos));
+  polyPoints[3] := Convert(AddPos(PointF((xHouses + 180)/maxX, 280/maxY), pos));
+  polyPoints[4] := polyPoints[0];
+  myCanvas.Polygon(polyPoints);
+
+  // Окно 5
+  polyPoints[0] := Convert(AddPos(PointF((xHouses + 180)/maxX, 250/maxY), pos));
+  polyPoints[1] := Convert(AddPos(PointF((xHouses + 130)/maxX, 250/maxY), pos));
+  polyPoints[2] := Convert(AddPos(PointF((xHouses + 130)/maxX, 180/maxY), pos));
+  polyPoints[3] := Convert(AddPos(PointF((xHouses + 180)/maxX, 180/maxY), pos));
+  polyPoints[4] := polyPoints[0];
+  myCanvas.Polygon(polyPoints);
+
+  // Окно 6
+  polyPoints[0] := Convert(AddPos(PointF((xHouses + 180)/maxX, 150/maxY), pos));
+  polyPoints[1] := Convert(AddPos(PointF((xHouses + 130)/maxX, 150/maxY), pos));
+  polyPoints[2] := Convert(AddPos(PointF((xHouses + 130)/maxX, 80/maxY), pos));
+  polyPoints[3] := Convert(AddPos(PointF((xHouses + 180)/maxX, 80/maxY), pos));
+  polyPoints[4] := polyPoints[0];
+  myCanvas.Polygon(polyPoints);
+
+
+  xHouses := 300;
+  // Дом 2
+
+  myCanvas.Brush.Color := RGB(200, 160, 160);
+  SetLength(polyPoints, 5);
+  polyPoints[0] := Convert(AddPos(PointF(xHouses/maxX, 400/maxY), pos));
+  polyPoints[1] := Convert(AddPos(PointF(xHouses/maxX, 70/maxY), pos));
+  polyPoints[2] := Convert(AddPos(PointF((xHouses + 150)/maxX, 70/maxY), pos));
+  polyPoints[3] := Convert(AddPos(PointF((xHouses + 150)/maxX, 400/maxY), pos));
+  polyPoints[4] := polyPoints[0];
+  myCanvas.Polygon(polyPoints);
+
+  myCanvas.Brush.Color := RGB(220, 240, 255);
+
+  // Окно 1
+  SetLength(polyPoints, 5);
+  polyPoints[0] := Convert(AddPos(PointF((xHouses + 20)/maxX, 350/maxY), pos));
+  polyPoints[1] := Convert(AddPos(PointF((xHouses + 70)/maxX, 350/maxY), pos));
+  polyPoints[2] := Convert(AddPos(PointF((xHouses + 70)/maxX, 280/maxY), pos));
+  polyPoints[3] := Convert(AddPos(PointF((xHouses + 20)/maxX, 280/maxY), pos));
+  polyPoints[4] := polyPoints[0];
+  myCanvas.Polygon(polyPoints);
+
+  // Окно 2
+  polyPoints[0] := Convert(AddPos(PointF((xHouses + 20)/maxX, 250/maxY), pos));
+  polyPoints[1] := Convert(AddPos(PointF((xHouses + 70)/maxX, 250/maxY), pos));
+  polyPoints[2] := Convert(AddPos(PointF((xHouses + 70)/maxX, 180/maxY), pos));
+  polyPoints[3] := Convert(AddPos(PointF((xHouses + 20)/maxX, 180/maxY), pos));
+  polyPoints[4] := polyPoints[0];
+  myCanvas.Polygon(polyPoints);
+
+  // Окно 3
+  polyPoints[0] := Convert(AddPos(PointF((xHouses + 20)/maxX, 150/maxY), pos));
+  polyPoints[1] := Convert(AddPos(PointF((xHouses + 70)/maxX, 150/maxY), pos));
+  polyPoints[2] := Convert(AddPos(PointF((xHouses + 70)/maxX, 80/maxY), pos));
+  polyPoints[3] := Convert(AddPos(PointF((xHouses + 20)/maxX, 80/maxY), pos));
+  polyPoints[4] := polyPoints[0];
+  myCanvas.Polygon(polyPoints);
+
+  // Окна справа
+  // Окно 4
+  polyPoints[0] := Convert(AddPos(PointF((xHouses + 130)/maxX, 350/maxY), pos));
+  polyPoints[1] := Convert(AddPos(PointF((xHouses + 80)/maxX, 350/maxY), pos));
+  polyPoints[2] := Convert(AddPos(PointF((xHouses + 80)/maxX, 280/maxY), pos));
+  polyPoints[3] := Convert(AddPos(PointF((xHouses + 130)/maxX, 280/maxY), pos));
+  polyPoints[4] := polyPoints[0];
+  myCanvas.Polygon(polyPoints);
+
+  // Окно 5
+  polyPoints[0] := Convert(AddPos(PointF((xHouses + 130)/maxX, 250/maxY), pos));
+  polyPoints[1] := Convert(AddPos(PointF((xHouses + 80)/maxX, 250/maxY), pos));
+  polyPoints[2] := Convert(AddPos(PointF((xHouses + 80)/maxX, 180/maxY), pos));
+  polyPoints[3] := Convert(AddPos(PointF((xHouses + 130)/maxX, 180/maxY), pos));
+  polyPoints[4] := polyPoints[0];
+  myCanvas.Polygon(polyPoints);
+
+  // Окно 6
+  polyPoints[0] := Convert(AddPos(PointF((xHouses + 130)/maxX, 150/maxY), pos));
+  polyPoints[1] := Convert(AddPos(PointF((xHouses + 80)/maxX, 150/maxY), pos));
+  polyPoints[2] := Convert(AddPos(PointF((xHouses + 80)/maxX, 80/maxY), pos));
+  polyPoints[3] := Convert(AddPos(PointF((xHouses + 130)/maxX, 80/maxY), pos));
+  polyPoints[4] := polyPoints[0];
+  myCanvas.Polygon(polyPoints);
+
+
+  // Дом 3
+  xHouses := 450;
+  myCanvas.Brush.Color := RGB(180, 210, 140);
+  SetLength(polyPoints, 5);
+  polyPoints[0] := Convert(AddPos(PointF(xHouses/maxX, 400/maxY), pos));
+  polyPoints[1] := Convert(AddPos(PointF(xHouses/maxX, 100/maxY), pos));
+  polyPoints[2] := Convert(AddPos(PointF((xHouses + 100)/maxX, 100/maxY), pos));
+  polyPoints[3] := Convert(AddPos(PointF((xHouses + 100)/maxX, 400/maxY), pos));
+  polyPoints[4] := polyPoints[0];
+  myCanvas.Polygon(polyPoints);
+
+  myCanvas.Brush.Color := RGB(200, 230, 250);
+  // Окно 1
+  SetLength(polyPoints, 5);
+  polyPoints[0] := Convert(AddPos(PointF((xHouses + 25)/maxX, 350/maxY), pos));
+  polyPoints[1] := Convert(AddPos(PointF((xHouses + 25)/maxX, 280/maxY), pos));
+  polyPoints[2] := Convert(AddPos(PointF((xHouses + 75)/maxX, 280/maxY), pos));
+  polyPoints[3] := Convert(AddPos(PointF((xHouses + 75)/maxX, 350/maxY), pos));
+  polyPoints[4] := polyPoints[0];
+  myCanvas.Polygon(polyPoints);
+
+  // Окно 2
+  polyPoints[0] := Convert(AddPos(PointF((xHouses + 25)/maxX, 200/maxY), pos));
+  polyPoints[1] := Convert(AddPos(PointF((xHouses + 25)/maxX, 130/maxY), pos));
+  polyPoints[2] := Convert(AddPos(PointF((xHouses + 75)/maxX, 130/maxY), pos));
+  polyPoints[3] := Convert(AddPos(PointF((xHouses + 75)/maxX, 200/maxY), pos));
+  polyPoints[4] := polyPoints[0];
+  myCanvas.Polygon(polyPoints);
+
+
+  // Дом 1 (4)
+  xHouses := 850;
+
+  // Основной контур дома
+  myCanvas.Brush.Color := RGB(140, 140, 210);
+  SetLength(polyPoints, 5);
+  polyPoints[0] := Convert(AddPos(PointF(xHouses/maxX, 400/maxY), pos));
+  polyPoints[1] := Convert(AddPos(PointF(xHouses/maxX, 50/maxY), pos));
+  polyPoints[2] := Convert(AddPos(PointF((xHouses + 200)/maxX, 50/maxY), pos));
+  polyPoints[3] := Convert(AddPos(PointF((xHouses + 200)/maxX, 400/maxY), pos));
+  polyPoints[4] := polyPoints[0]; // Замыкаем полигон
+  myCanvas.Polygon(polyPoints);
+
+  // Окно 1
+  myCanvas.Brush.Color := RGB(200, 230, 250);
+
+  SetLength(polyPoints, 5);
+  polyPoints[0] := Convert(AddPos(PointF((xHouses + 20)/maxX, 350/maxY), pos));
+  polyPoints[1] := Convert(AddPos(PointF((xHouses + 70)/maxX, 350/maxY), pos));
+  polyPoints[2] := Convert(AddPos(PointF((xHouses + 70)/maxX, 280/maxY), pos));
+  polyPoints[3] := Convert(AddPos(PointF((xHouses + 20)/maxX, 280/maxY), pos));
+  polyPoints[4] := polyPoints[0];
+  myCanvas.Polygon(polyPoints);
+
+  // Окно 2
+  polyPoints[0] := Convert(AddPos(PointF((xHouses + 20)/maxX, 250/maxY), pos));
+  polyPoints[1] := Convert(AddPos(PointF((xHouses + 70)/maxX, 250/maxY), pos));
+  polyPoints[2] := Convert(AddPos(PointF((xHouses + 70)/maxX, 180/maxY), pos));
+  polyPoints[3] := Convert(AddPos(PointF((xHouses + 20)/maxX, 180/maxY), pos));
+  polyPoints[4] := polyPoints[0];
+  myCanvas.Polygon(polyPoints);
+
+  // Окно 3
+  polyPoints[0] := Convert(AddPos(PointF((xHouses + 20)/maxX, 150/maxY), pos));
+  polyPoints[1] := Convert(AddPos(PointF((xHouses + 70)/maxX, 150/maxY), pos));
+  polyPoints[2] := Convert(AddPos(PointF((xHouses + 70)/maxX, 80/maxY), pos));
+  polyPoints[3] := Convert(AddPos(PointF((xHouses + 20)/maxX, 80/maxY), pos));
+  polyPoints[4] := polyPoints[0];
+  myCanvas.Polygon(polyPoints);
+
+  // Окна справа (3 окна)
+  // Окно 4
+  polyPoints[0] := Convert(AddPos(PointF((xHouses + 180)/maxX, 350/maxY), pos));
+  polyPoints[1] := Convert(AddPos(PointF((xHouses + 130)/maxX, 350/maxY), pos));
+  polyPoints[2] := Convert(AddPos(PointF((xHouses + 130)/maxX, 280/maxY), pos));
+  polyPoints[3] := Convert(AddPos(PointF((xHouses + 180)/maxX, 280/maxY), pos));
+  polyPoints[4] := polyPoints[0];
+  myCanvas.Polygon(polyPoints);
+
+  // Окно 5
+  polyPoints[0] := Convert(AddPos(PointF((xHouses + 180)/maxX, 250/maxY), pos));
+  polyPoints[1] := Convert(AddPos(PointF((xHouses + 130)/maxX, 250/maxY), pos));
+  polyPoints[2] := Convert(AddPos(PointF((xHouses + 130)/maxX, 180/maxY), pos));
+  polyPoints[3] := Convert(AddPos(PointF((xHouses + 180)/maxX, 180/maxY), pos));
+  polyPoints[4] := polyPoints[0];
+  myCanvas.Polygon(polyPoints);
+
+  // Окно 6
+  polyPoints[0] := Convert(AddPos(PointF((xHouses + 180)/maxX, 150/maxY), pos));
+  polyPoints[1] := Convert(AddPos(PointF((xHouses + 130)/maxX, 150/maxY), pos));
+  polyPoints[2] := Convert(AddPos(PointF((xHouses + 130)/maxX, 80/maxY), pos));
+  polyPoints[3] := Convert(AddPos(PointF((xHouses + 180)/maxX, 80/maxY), pos));
+  polyPoints[4] := polyPoints[0];
+  myCanvas.Polygon(polyPoints);
+
+  // Дом 2 (5)
+  xHouses := 1200;
+
+  myCanvas.Brush.Color := RGB(210, 180, 140);
+  SetLength(polyPoints, 5);
+  polyPoints[0] := Convert(AddPos(PointF(xHouses/maxX, 400/maxY), pos));
+  polyPoints[1] := Convert(AddPos(PointF(xHouses/maxX, 70/maxY), pos));
+  polyPoints[2] := Convert(AddPos(PointF((xHouses + 150)/maxX, 70/maxY), pos));
+  polyPoints[3] := Convert(AddPos(PointF((xHouses + 150)/maxX, 400/maxY), pos));
+  polyPoints[4] := polyPoints[0];
+  myCanvas.Polygon(polyPoints);
+
+  myCanvas.Brush.Color := RGB(220, 240, 255);
+
+  // Окно 1
+  SetLength(polyPoints, 5);
+  polyPoints[0] := Convert(AddPos(PointF((xHouses + 20)/maxX, 350/maxY), pos));
+  polyPoints[1] := Convert(AddPos(PointF((xHouses + 70)/maxX, 350/maxY), pos));
+  polyPoints[2] := Convert(AddPos(PointF((xHouses + 70)/maxX, 280/maxY), pos));
+  polyPoints[3] := Convert(AddPos(PointF((xHouses + 20)/maxX, 280/maxY), pos));
+  polyPoints[4] := polyPoints[0];
+  myCanvas.Polygon(polyPoints);
+
+  // Окно 2
+  polyPoints[0] := Convert(AddPos(PointF((xHouses + 20)/maxX, 250/maxY), pos));
+  polyPoints[1] := Convert(AddPos(PointF((xHouses + 70)/maxX, 250/maxY), pos));
+  polyPoints[2] := Convert(AddPos(PointF((xHouses + 70)/maxX, 180/maxY), pos));
+  polyPoints[3] := Convert(AddPos(PointF((xHouses + 20)/maxX, 180/maxY), pos));
+  polyPoints[4] := polyPoints[0];
+  myCanvas.Polygon(polyPoints);
+
+  // Окно 3
+  polyPoints[0] := Convert(AddPos(PointF((xHouses + 20)/maxX, 150/maxY), pos));
+  polyPoints[1] := Convert(AddPos(PointF((xHouses + 70)/maxX, 150/maxY), pos));
+  polyPoints[2] := Convert(AddPos(PointF((xHouses + 70)/maxX, 80/maxY), pos));
+  polyPoints[3] := Convert(AddPos(PointF((xHouses + 20)/maxX, 80/maxY), pos));
+  polyPoints[4] := polyPoints[0];
+  myCanvas.Polygon(polyPoints);
+
+  // Окна справа
+  // Окно 4
+  polyPoints[0] := Convert(AddPos(PointF((xHouses + 130)/maxX, 350/maxY), pos));
+  polyPoints[1] := Convert(AddPos(PointF((xHouses + 80)/maxX, 350/maxY), pos));
+  polyPoints[2] := Convert(AddPos(PointF((xHouses + 80)/maxX, 280/maxY), pos));
+  polyPoints[3] := Convert(AddPos(PointF((xHouses + 130)/maxX, 280/maxY), pos));
+  polyPoints[4] := polyPoints[0];
+  myCanvas.Polygon(polyPoints);
+
+  // Окно 5
+  polyPoints[0] := Convert(AddPos(PointF((xHouses + 130)/maxX, 250/maxY), pos));
+  polyPoints[1] := Convert(AddPos(PointF((xHouses + 80)/maxX, 250/maxY), pos));
+  polyPoints[2] := Convert(AddPos(PointF((xHouses + 80)/maxX, 180/maxY), pos));
+  polyPoints[3] := Convert(AddPos(PointF((xHouses + 130)/maxX, 180/maxY), pos));
+  polyPoints[4] := polyPoints[0];
+  myCanvas.Polygon(polyPoints);
+
+  // Окно 6
+  polyPoints[0] := Convert(AddPos(PointF((xHouses + 130)/maxX, 150/maxY), pos));
+  polyPoints[1] := Convert(AddPos(PointF((xHouses + 80)/maxX, 150/maxY), pos));
+  polyPoints[2] := Convert(AddPos(PointF((xHouses + 80)/maxX, 80/maxY), pos));
+  polyPoints[3] := Convert(AddPos(PointF((xHouses + 130)/maxX, 80/maxY), pos));
+  polyPoints[4] := polyPoints[0];
+  myCanvas.Polygon(polyPoints);
 
 end;
 
